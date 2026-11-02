@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 
 project(libchiaking_consumer LANGUAGES CXX)
 
-find_package(libchiaking 0.1 REQUIRED COMPONENTS chiaki_ng)
+find_package(libchiaking 2.0 REQUIRED COMPONENTS chiaki_ng)
 
 add_executable(libchiaking_cpp_consumer main.cpp)
 target_link_libraries(libchiaking_cpp_consumer PRIVATE libchiaking::chiaki_ng)

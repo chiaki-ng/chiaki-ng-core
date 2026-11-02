@@ -68,6 +68,7 @@ class SoftwareCrypto final : public libchiaking::platform::CryptoProvider {
   class Field;
   class Edwards;
   class P256;
+  class ScryptMemo;
 
   static auto view(Input input) noexcept -> Bytes;
   static auto raw(Output output) noexcept -> std::uint8_t*;
@@ -75,6 +76,7 @@ class SoftwareCrypto final : public libchiaking::platform::CryptoProvider {
 
   std::unique_ptr<Edwards> edwards_;
   std::unique_ptr<P256> p256_;
+  std::unique_ptr<ScryptMemo> scrypt_memo_;
 };
 
 }  // namespace test_support

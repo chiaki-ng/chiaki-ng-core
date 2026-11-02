@@ -122,10 +122,9 @@ class PickingPs final : public platform::HttpProvider {
         break;
       case 8:
         EXPECT_TRUE(request.url.view().ends_with("/datacenters"));
-        body = R"([{"dataCenter":"dc1","publicIp":"127.0.0.1","port":)" +
-               std::to_string(silent_port) + R"(,"maxBandwidth":20000},)" +
-               R"({"dataCenter":"dc2","publicIp":"127.0.0.1","port":)" +
-               std::to_string(silent_port) + R"(,"maxBandwidth":20000}])";
+        body =
+            R"([{"dataCenter":"dc1","publicIp":"","port":0,"maxBandwidth":20000},)"
+            R"({"dataCenter":"dc2","publicIp":"","port":0,"maxBandwidth":20000}])";
         response.headers.push_back(
             {"X-Gaikai-Session", libchiaking::SecretString{"datacenter-key"}});
         break;
@@ -154,7 +153,6 @@ class PickingPs final : public platform::HttpProvider {
   }
 
   platform::Mutex mutex{LiveProviders::threading()};
-  std::uint16_t silent_port{};
   std::uint16_t allocation_port{};
   unsigned calls{};
   std::string select_body;
@@ -210,13 +208,6 @@ class OfferSink final : public play::LinkEventSink {
 class CloudDatacenterPick : public ::testing::Test {
  protected:
   void SetUp() override {
-    auto silent = network_.sockets().create_udp_socket(
-        platform::IpAddress::loopback_ipv4());
-    ASSERT_TRUE(silent);
-    ASSERT_TRUE(
-        silent.value()->bind({platform::IpAddress::loopback_ipv4(), 0}));
-    http.silent_port = silent.value()->local_endpoint().value().port;
-    ASSERT_TRUE(silent.value()->close());
     auto peer = network_.sockets().create_udp_socket(
         platform::IpAddress::loopback_ipv4());
     ASSERT_TRUE(peer);

@@ -101,6 +101,7 @@ jobs:
   macos:
     needs: version
     runs-on: macos-26
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -120,6 +121,7 @@ jobs:
         run: |
           make darwin-test \
             DEPS_PREFIX="${{ steps.deps.outputs.prefix }}" \
+            CTEST_ARGS="--parallel $(sysctl -n hw.ncpu)" \
             CMAKE_ARGS="-DLIBCHIAKING_VERSION_PRERELEASE=${{ needs.version.outputs.prerelease }} -DLIBCHIAKING_COMMIT=${{ needs.version.outputs.commit }}"
 
       - name: Build

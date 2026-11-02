@@ -9,6 +9,7 @@ JOBS ?= $(shell getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/de
 PREFIX ?= /usr/local
 CMAKE_ARGS ?=
 CTEST_ARGS ?=
+TEST_BUILD_ARGS ?= -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=16 -DLIBCHIAKING_TESTS_PER_BINARY=ON
 AREA ?=
 PLATFORM_BUILD_ROOT ?= build
 DEPS_PREFIX ?=
@@ -47,7 +48,7 @@ endef
 define platform_test_rules
 $(1)-test:
 	$$(call platform_check,$(1))
-	$$(call platform_configure,$(1),$$(PLATFORM_BUILD_ROOT)/$(1)-tests) -DBUILD_TESTING=ON
+	$$(call platform_configure,$(1),$$(PLATFORM_BUILD_ROOT)/$(1)-tests) -DBUILD_TESTING=ON $$(TEST_BUILD_ARGS)
 	"$$(CMAKE)" --build "$$(PLATFORM_BUILD_ROOT)/$(1)-tests" --parallel "$$(JOBS)" --config "$$(BUILD_TYPE)"
 	"$$(CTEST)" --test-dir "$$(PLATFORM_BUILD_ROOT)/$(1)-tests" --build-config "$$(BUILD_TYPE)" \
 		--output-on-failure $$(CTEST_ARGS)
@@ -74,7 +75,7 @@ install: build
 
 test:
 	"$(CMAKE)" -S "$(SRC_DIR)" -B "$(TEST_BUILD_DIR)" $(generator_flag) \
-		-DCMAKE_BUILD_TYPE="$(BUILD_TYPE)" $(CMAKE_ARGS) -DBUILD_TESTING=ON
+		-DCMAKE_BUILD_TYPE="$(BUILD_TYPE)" $(CMAKE_ARGS) -DBUILD_TESTING=ON $(TEST_BUILD_ARGS)
 	"$(CMAKE)" --build "$(TEST_BUILD_DIR)" --parallel "$(JOBS)" --config "$(BUILD_TYPE)"
 	"$(CTEST)" --test-dir "$(TEST_BUILD_DIR)" --build-config "$(BUILD_TYPE)" \
 		--output-on-failure $(CTEST_ARGS)

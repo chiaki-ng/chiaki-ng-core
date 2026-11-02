@@ -1,4 +1,5 @@
 option(LIBCHIAKING_VENDORED_GTEST "Build the tests against the vendored GoogleTest even when one is installed" OFF)
+option(LIBCHIAKING_TESTS_PER_BINARY "Run each test binary as one ctest test instead of one process per test" OFF)
 
 if(NOT LIBCHIAKING_VENDORED_GTEST)
     find_package(GTest QUIET)
@@ -52,12 +53,19 @@ function(libchiaking_gtest_domain folder)
     # clocks, inside the standard library; the library itself stays checked.
     target_compile_options(${name} PRIVATE
         $<$<CXX_COMPILER_ID:GNU>:-Wno-array-bounds>
-        $<$<CXX_COMPILER_ID:GNU>:-Wno-restrict>)
+        $<$<CXX_COMPILER_ID:GNU>:-Wno-restrict>
+        $<$<CXX_COMPILER_ID:GNU,AppleClang>:-O0>)
     target_include_directories(${name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_compile_definitions(${name} PRIVATE ${libchiaking_test_fixtures} ${arg_DEFINES})
     target_link_libraries(${name} PRIVATE ${arg_LIBS} libchiaking_test_support GTest::gtest GTest::gtest_main)
-    gtest_discover_tests(${name}
-        TEST_PREFIX "${folder}/"
-        DISCOVERY_MODE PRE_TEST
-        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+    if(LIBCHIAKING_TESTS_PER_BINARY)
+        add_test(NAME ${folder}
+            COMMAND ${name} --gtest_brief=1
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+    else()
+        gtest_discover_tests(${name}
+            TEST_PREFIX "${folder}/"
+            DISCOVERY_MODE PRE_TEST
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+    endif()
 endfunction()

@@ -1,11 +1,14 @@
 #include "tests/support/crypto/software_crypto.hpp"
 
 #include "libchiaking/platform/byte_units.hpp"
+#include "tests/support/live_providers.hpp"
 
 #include <algorithm>
 #include <array>
 #include <cstring>
+#include <map>
 #include <optional>
+#include <utility>
 #include <vector>
 
 namespace test_support {
@@ -1061,8 +1064,48 @@ class SoftwareCrypto::P256 {
   Point base_;
 };
 
+class SoftwareCrypto::ScryptMemo {
+ public:
+  using Key = std::vector<std::byte>;
+
+  static auto key_of(Input password, Input salt,
+                     platform::ScryptParameters parameters,
+                     std::size_t output_size) -> Key {
+    const std::array<std::uint64_t, 5> shape{
+        parameters.cost, parameters.block_size, parameters.parallelization,
+        password.size(), output_size};
+    const auto header = std::as_bytes(std::span{shape});
+    Key key;
+    key.reserve(header.size() + password.size() + salt.size());
+    key.insert(key.end(), header.begin(), header.end());
+    key.insert(key.end(), password.begin(), password.end());
+    key.insert(key.end(), salt.begin(), salt.end());
+    return key;
+  }
+
+  auto recall(const Key& key, Output output) const -> bool {
+    const platform::Lock lock(mutex_);
+    const auto found = results_.find(key);
+    if (found == results_.end()) return false;
+    std::ranges::copy(found->second, output.begin());
+    return true;
+  }
+
+  void keep(Key key, Input result) {
+    const platform::Lock lock(mutex_);
+    results_.insert_or_assign(std::move(key),
+                              std::vector<std::byte>(result.begin(), result.end()));
+  }
+
+ private:
+  mutable platform::Mutex mutex_{LiveProviders::threading()};
+  std::map<Key, std::vector<std::byte>> results_;
+};
+
 SoftwareCrypto::SoftwareCrypto()
-    : edwards_(std::make_unique<Edwards>()), p256_(std::make_unique<P256>()) {}
+    : edwards_(std::make_unique<Edwards>()),
+      p256_(std::make_unique<P256>()),
+      scrypt_memo_(std::make_unique<ScryptMemo>()) {}
 
 SoftwareCrypto::~SoftwareCrypto() = default;
 
@@ -1145,9 +1188,12 @@ auto SoftwareCrypto::scrypt(Input password, Input salt,
       (parameters.cost & (parameters.cost - 1)) != 0 ||
       parameters.block_size == 0 || parameters.parallelization == 0)
     return invalid();
+  auto key = ScryptMemo::key_of(password, salt, parameters, output.size());
+  if (scrypt_memo_->recall(key, output)) return {};
   if (!Scrypt::derive(view(password), view(salt), parameters,
                       std::span<std::uint8_t>{raw(output), output.size()}))
     return libchiaking::unexpected(Error::backend_failure);
+  scrypt_memo_->keep(std::move(key), output);
   return {};
 }
 

@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'src/**'
+      - 'include/**'
+      - 'tests/**'
+      - 'proto/**'
+      - 'cmake/**'
+      - 'tools/ci/**'
+      - 'tools/docs/**'
+      - 'CMakeLists.txt'
+      - 'Makefile'
+      - 'VERSION.txt'
+      - '.github/workflows/tests.yml'
+      - '!**/*.md'
+
+permissions: read-all
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  macos:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: Install build tools
+        run: brew install ninja
+
+      - name: Fetch the macOS dependencies
+        id: deps
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          prefix=$(./tools/ci/native-deps.sh darwin-deps- "$RUNNER_TEMP/native-deps")
+          echo "prefix=${prefix}" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: |
+          make darwin-test \
+            DEPS_PREFIX="${{ steps.deps.outputs.prefix }}" \
+            CTEST_ARGS="--parallel $(sysctl -n hw.ncpu)"

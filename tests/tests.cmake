@@ -31,6 +31,54 @@ else()
     set(libchiaking_tests_have_kakusan 0)
 endif()
 
+set(libchiaking_unity_excluded_sources
+    src/core/play/adapters/links/internet/internet_link.cpp
+    src/core/play/adapters/links/internet/internet_pairer.cpp
+    src/core/play/adapters/links/internet/internet_start.cpp
+    src/platform/memory/secure_zero_darwin.cpp
+    tests/unit/core/catalog/model/launch_verdict_tests.cpp
+    tests/unit/core/catalog/usecases/played_games_tests.cpp
+    tests/unit/core/catalog/usecases/show_details/concept_details_tests.cpp
+    tests/unit/core/catalog/usecases/show_details/game_images_tests.cpp
+    tests/unit/core/catalog/usecases/show_details/listed_game_details_tests.cpp
+    tests/unit/core/catalog/usecases/show_details/product_details_tests.cpp
+    tests/unit/core/cloud/links/allocated_endpoint_tests.cpp
+    tests/unit/core/cloud/links/calibration_tests.cpp
+    tests/unit/core/cloud/links/handshake_key_tests.cpp
+    tests/unit/core/cloud/links/ping_target_tests.cpp
+    tests/unit/core/cloud/links/server_connect_tests.cpp
+    tests/unit/core/cloud/links/server_route_tests.cpp
+    tests/unit/core/cloud/links/services/old_service_launch_tests.cpp
+    tests/unit/core/cloud/links/services/old_service_session_tests.cpp
+    tests/unit/core/consoles/adapters/titles/title_start_cancel_tests.cpp
+    tests/unit/core/consoles/usecases/pair_at_home_deadline_tests.cpp
+    tests/unit/core/consoles/usecases/pair_at_home_progress_tests.cpp
+    tests/unit/core/consoles/usecases/pair_at_home_tests.cpp
+    tests/unit/core/consoles/usecases/pair_over_the_internet_tests.cpp
+    tests/unit/core/kakusan/pair_cloud_session_tests.cpp
+    tests/unit/core/kakusan/pair_devices_tests.cpp
+    tests/unit/core/kakusan/pair_real_time_tests.cpp
+    tests/unit/core/kakusan/pair_seat_reservation_tests.cpp
+    tests/unit/core/kakusan/pair_visit_endings_tests.cpp
+    tests/unit/core/kakusan/pair_visit_tests.cpp
+    tests/unit/core/play/adapters/cloud_launch/launch_waits_tests.cpp
+    tests/unit/core/play/adapters/links/internet/internet_route_progress_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/holepunch_offer_drive_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/holepunch_offer_inbox_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/holepunch_offer_psn_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/holepunch_offer_wait_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/remote_ctrl_inbox_tests.cpp
+    tests/unit/core/play/adapters/links/internet/wire/rudp_ctrl_receiver_tests.cpp
+    tests/unit/core/play/adapters/links/reconnecting_link_retry_tests.cpp
+    tests/unit/core/play/adapters/links/reconnecting_link_start_tests.cpp
+    tests/unit/core/play/adapters/links/reconnecting_link_stop_tests.cpp
+    tests/unit/core/play/adapters/media/haptic_block_tests.cpp
+    tests/unit/core/play/model/start_refusal_tests.cpp
+    tests/unit/core/utils/json/strict_json_object_reader_tests.cpp
+    tests/unit/core/utils/json/strict_json_tests.cpp
+)
+set_source_files_properties(${libchiaking_unity_excluded_sources} PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+
 include("${CMAKE_CURRENT_SOURCE_DIR}/tests/googletest.cmake")
 
 libchiaking_gtest_domain(core/trophies LIBS libchiaking)

@@ -1,0 +1,349 @@
+/// @namespace libchiaking::users::usecases
+/// @brief The users context's use cases: signing users in, renewing them and
+/// loading the saved ones.
+
+/// @namespace libchiaking::users::qr_sign_in_lifecycle
+/// @brief The state machine of a sign-in by an approved QR code.
+
+/// @namespace libchiaking::catalog::cache
+/// @brief The catalog's records on disk and the answers it holds in memory between requests.
+
+/// @namespace libchiaking::catalog::fetch_lifecycle
+/// @brief The state machine of an account's full catalog fetch.
+
+/// @namespace libchiaking::catalog::cloud_stream::clearance_lifecycle
+/// @brief The state machine of a cloud streaming launch clearance.
+
+/// @namespace libchiaking::catalog::ps
+/// @brief The catalog's adapters to PS's store, entitlement, resolver and feature configuration services.
+
+/// @namespace libchiaking::catalog::cloud_stream
+/// @brief PS5 cloud streaming rules: Premium and for-sale categories, access routes, exclusions.
+
+/// @namespace libchiaking::catalog::legacy_cloud_stream
+/// @brief LegacyCloudStream (the old streaming service) rules for listing shelf titles and owned copies.
+
+/// @namespace libchiaking::catalog::usecases
+/// @brief The catalog's use cases: listing games, details, launch checks and cache inspection.
+
+/// @namespace libchiaking::catalog::usecases::cloud_stream
+/// @brief The PS5 cloud streaming launch clearance and its exclusion check.
+
+/// @namespace libchiaking::catalog::usecases::legacy_cloud_stream
+/// @brief The LegacyCloudStream launch clearance.
+
+/// @namespace libchiaking::catalog::cache::category
+/// @brief The stored form of a store category record and the rules for serving it.
+
+/// @namespace libchiaking::messages
+/// @brief The messages context's face and use case.
+///
+/// @namespace libchiaking::messages::usecases
+/// @brief The messages context's use case: talking to PSN's message groups.
+///
+/// @namespace libchiaking::trophies::cache
+/// @brief The trophies kept in the record store between runs, per account.
+
+/// @namespace libchiaking::trophies::ps
+/// @brief The trophies context's paced requests to PSN's trophy service.
+
+/// @namespace libchiaking::trophies::usecases
+/// @brief The trophies context's use case: reading a player's trophies.
+
+/// @namespace libchiaking::play::usecases
+/// @brief The play context's use cases: starting a session and holding it
+/// while it is live.
+
+/// @namespace libchiaking::play::pin_lifecycle
+/// @brief The state machine of a remote start's login PIN request.
+
+/// @namespace libchiaking::play::seat_lifecycle
+/// @brief The state machine of one pad's seat on the console.
+
+/// @namespace libchiaking::play::start_lifecycle
+/// @brief The state machine of a start's retries: starting, reconnecting or
+/// given up, and whether the console was woken.
+
+/// @namespace libchiaking::play::session_lifecycle
+/// @brief The states and events of the Boost.SML machine behind
+/// SessionLifecycle.
+
+/// @namespace libchiaking::play::reconnection
+/// @brief The states and events of the Boost.SML machine with which a
+/// ReconnectingLink retries a failed console start.
+
+/// @namespace libchiaking::play::home_link_progress
+/// @brief The states and events of the Boost.SML machine that tracks a home
+/// console link through wake, session request and stream.
+
+/// @namespace libchiaking::play::internet_route_order
+/// @brief The states, events and effects of the Boost.SML machine that
+/// orders an internet start's routes: once the console is ready, the control
+/// route, then the data route.
+
+/// @namespace libchiaking::play::internet
+/// @brief The exchanges an internet start makes with the console: the
+/// hole-punch OFFER and ACCEPT trades through PSN, the registration over the
+/// hole-punched RUDP channel, and the control channel on it.
+
+/// @namespace libchiaking::play::internet::holepunch
+/// @brief The hole-punch OFFER and ACCEPT trades through PSN: preparing this
+/// side's offer, waiting for the console's, and acknowledging each.
+
+/// @namespace libchiaking::play::internet::remote_ctrl
+/// @brief The control channel on the hole-punched RUDP channel: connecting
+/// it, its session, and the effects each step asks for.
+
+/// @namespace libchiaking::consoles::home_pairing_lifecycle
+/// @brief The state machine of one attempt to pair a console at home with a
+/// PIN: its steps, events, effects and errors, free of sockets.
+
+/// @namespace libchiaking::consoles::usecases
+/// @brief The consoles context's use cases: finding consoles on the home
+/// network, pairing them at home or from the account, and waking them.
+
+/// @namespace libchiaking::kakusan::usecases
+/// @brief The Kakusan context's use cases: hosting a shared session and
+/// visiting one as a guest.
+
+/// @namespace libchiaking::kakusan::player_lifecycle
+/// @brief The state machines of a Kakusan visit: the shared channel, the
+/// host's progress with one guest and the guest's progress.
+
+/// @namespace libchiaking::psn::rest
+/// @brief Clients of PS's PSN REST services: entitlements, commerce,
+/// Kamaji, subscriptions, the store, cloud assisted navigation, the session
+/// manager, push and user profiles, each with its endpoint, credential and
+/// reply shape.
+
+/// @namespace libchiaking::psn::graphql
+/// @brief PSN GraphQL: persisted queries sent to the web and app endpoints,
+/// their replies, failures and per-operation statistics.
+
+/// @namespace libchiaking::psn::graphql::authenticated
+/// @brief The GraphQL operations sent with the user's app token.
+
+/// @namespace libchiaking::psn::graphql::public_web
+/// @brief The GraphQL operations sent anonymously, as the store web site
+/// sends them.
+
+/// @namespace libchiaking::psn::gk
+/// @brief The GK cloud streaming session: client ids, configuration,
+/// allocation, datacenter measurement and the launch specification.
+
+/// @namespace libchiaking::psn::remote_play
+/// @brief Remote Play over the internet as PSN signals it: the session
+/// manager session, the push channel and its notifications, the barriers a
+/// start waits at, and the holepunch messages exchanged with the console.
+
+/// @namespace libchiaking::psn::remote_play::two_signal_detail
+/// @brief The events, states and transition table behind TwoSignalBarrier.
+
+/// @namespace libchiaking::concurrency
+/// @brief Primitives that let threads share one request, one computation or a
+/// bounded number of places.
+
+/// @namespace libchiaking::containers
+/// @brief Containers with bounds the standard library does not offer.
+
+/// @namespace libchiaking::bytes
+/// @brief Reading and writing wire bytes: cursors, byte order and checksums.
+
+/// @namespace libchiaking::numeric
+/// @brief Unsigned arithmetic that cannot wrap silently, and wrapping
+/// sequence numbers.
+
+/// @namespace libchiaking::retry
+/// @brief Retrying a request once a refused credential has been renewed.
+
+/// @namespace libchiaking::text
+/// @brief Locale-independent text handling: ASCII, hexadecimal, integers and
+/// UUIDs.
+
+/// @namespace libchiaking::text::base64
+/// @brief The one Base64 encoder and decoder, standard and URL-safe.
+
+/// @namespace libchiaking::text::utf8
+/// @brief Validating, cutting and repairing UTF-8 text.
+
+/// @namespace libchiaking::timing
+/// @brief Deadlines on the monotonic clock and time arithmetic that cannot
+/// overflow.
+
+/// @namespace libchiaking::json
+/// @brief Bounded JSON reading on glaze, string escaping, and the tolerant
+/// dialect of PS's services.
+
+/// @namespace libchiaking::json::ps
+/// @brief Glaze options and lenient field types for PS's replies and the
+/// request bodies sent to it.
+
+/// @namespace libchiaking::json::strict
+/// @brief The strict, canonical JSON subset of Kakusan control messages.
+
+/// @namespace libchiaking::platform::detail
+/// @brief Details of the stock providers: the system socket stack over POSIX
+/// and Winsock, and certificate chain recovery for WebSockets.
+
+/// @namespace libchiaking::platform::evp
+/// @brief Symmetric primitives shared by the OpenSSL and BoringSSL crypto
+/// providers.
+
+/// @namespace libchiaking::platform::armv8
+/// @brief Crypto arithmetic on the ARMv8 cryptographic extension, shared by
+/// any provider that runs on a CPU with it.
+
+/// @namespace libchiaking::platform::micro_ecc
+/// @brief ECDH key pairs computed with the vendored micro-ecc library, for
+/// providers whose platform has no elliptic-curve support of its own.
+
+/// @namespace libchiaking::platform::curl_detail
+/// @brief The libcurl set-up shared by the stock HTTP and WebSocket
+/// providers.
+
+/// @namespace libchiaking::platform::runtime
+/// @brief Waiting on work moved to another thread, with a stop token and a
+/// deadline.
+
+/// @namespace libchiaking::platform::storage
+/// @brief The file operations behind the stock record store.
+
+/// @namespace libchiaking::platform::openssl::staging_lifecycle
+/// @brief The state machine of the OpenSSL secure datagram session's
+/// retransmission staging.
+
+/// @namespace libchiaking::platform::threading
+/// @brief Thread naming for the stock threading provider.
+
+/// @namespace libchiaking::net::nat::ice::agent_lifecycle
+/// @brief The state machine of an ICE agent: gathering, connecting, failure,
+/// closure, held checks and consent.
+
+/// @namespace libchiaking::net::kakusan::link_lifecycle
+/// @brief The state machine of a Kakusan link: running, stopped or closed,
+/// and whether it still routes records.
+
+/// @namespace libchiaking::net::ntp
+/// @brief A minimal SNTP client that learns UTC from public time servers,
+/// trusting only a time most of one provider's servers agree on.
+
+/// @namespace libchiaking::net::transport
+/// @brief The transports protocols run over: datagram pipes to one peer and
+/// the RUDP session layer.
+
+/// @namespace libchiaking::net::transport::datagram
+/// @brief Non-blocking datagram transports, and the one over the platform's
+/// UDP sockets.
+
+/// @namespace libchiaking::net::transport::rudp
+/// @brief RUDP, the reliable-UDP framing a PS5 uses for session init and ctrl
+/// over the internet before the stream switches to Takion.
+
+/// @namespace libchiaking::net::transport::rudp::handshake_lifecycle
+/// @brief The states, events and Boost.SML table of the RUDP init and cookie
+/// handshake.
+
+/// @namespace libchiaking::net::nat
+/// @brief Getting through NATs: public address discovery, Remote Play hole
+/// punching and ICE.
+
+/// @namespace libchiaking::net::nat::stun
+/// @brief STUN messages, Binding queries, public server lists and the NAT
+/// port allocation estimate built from them.
+
+/// @namespace libchiaking::net::nat::holepunch
+/// @brief Remote Play hole punching to a console over the internet: the
+/// session messages exchanged through PSN, candidates and probes.
+
+/// @namespace libchiaking::net::nat::ice
+/// @brief The sans-I/O ICE agent and parameters for Kakusan's direct UDP path.
+
+/// @namespace libchiaking::net
+/// @brief The library's networking: transports, the protocols spoken over
+/// them, and the sessions built from both.
+
+/// @namespace libchiaking::net::protocol
+/// @brief The wire protocols the library speaks: Takion, Senkusha and the
+/// Remote Play session layers built on them.
+
+/// @namespace libchiaking::net::protocol::senkusha
+/// @brief Senkusha, the connection test run over a short Takion session
+/// before a stream to measure round-trip time, MTU in both directions and
+/// downstream bandwidth.
+
+/// @namespace libchiaking::net::protocol::senkusha::lifecycle_detail
+/// @brief The Boost.SML state machine, events and effects that sequence one
+/// Senkusha test.
+
+/// @namespace libchiaking::net::protocol::takion
+/// @brief Takion, the UDP transport of Remote Play, LegacyCloudStream and CloudStream
+/// streaming (versions 7 to 25): its packet families and codecs, the
+/// SCTP-style handshake and reliable control channel, GKCrypt packet
+/// protection, version negotiation and the client that runs a session.
+
+/// @namespace libchiaking::net::protocol::takion::client_detail
+/// @brief The parts of takion::Client: its lifecycle machine, the inbound and
+/// outbound packet paths, version negotiation and limit checks.
+
+/// @namespace libchiaking::net::protocol::takion::client_detail::version_negotiation
+/// @brief The Boost.SML machine that decides when a negotiated Takion
+/// version is committed.
+
+/// @namespace libchiaking::net::protocol::takion::handshake_detail
+/// @brief The Boost.SML machine and context behind ConnectionHandshake.
+
+/// @namespace libchiaking::net::protocol::takion::generic_data_lifecycle
+/// @brief The Boost.SML machine that sequences outgoing generic-data
+/// transfers: announce, stream, resend missing chunks, conclude.
+
+/// @namespace libchiaking::net::protocol::takion::client_event
+/// @brief The notifications a takion::Client sends its takion::EventSink.
+
+/// @namespace libchiaking::net::protocol::remote_play::active_route_lifecycle
+/// @brief The state machine of an active session's route: running or
+/// stopped, Takion lost before it connected, and media kept past the stop.
+
+/// @namespace libchiaking::net::protocol::remote_play::ctrl_lifecycle_detail
+/// @brief The control channel's state machine: its states, events and the
+/// effects its owner carries out.
+
+/// @namespace libchiaking::net::protocol::remote_play::tcp_exchange_lifecycle
+/// @brief The state machine of one TCP request to a console's Remote Play
+/// service: open, connect, send, receive.
+
+/// @namespace libchiaking::net::protocol::remote_play::ctrl_crypt_counter
+/// @brief The fixed cipher counters that seal each encrypted header of the
+/// control request.
+
+/// @namespace libchiaking::net::protocol::remote_play::transport_switch_detail
+/// @brief The barrier that holds a PSN stream's data route until the console
+/// confirms the switch onto it.
+
+/// @namespace libchiaking::cloud
+/// @brief Cloud streaming values shared between the PSN cloud client and the
+/// stream, such as datacenter measurements.
+
+/// @namespace libchiaking::net::protocol::remote_play::command
+/// @brief The commands a caller sends into a running stream.
+
+/// @namespace libchiaking::net::protocol::remote_play::event
+/// @brief The events a stream reports to the play context.
+
+/// @namespace libchiaking::net::protocol::remote_play::fec8_detail
+/// @brief GF(2^8) arithmetic for the Cauchy erasure decoder.
+
+/// @namespace libchiaking::net::protocol::remote_play::local_pipeline_lifecycle
+/// @brief The state machine of a stream pipeline from Senkusha calibration
+/// to the active session.
+
+/// @namespace libchiaking::net::protocol::remote_play::local_ctrl_lifecycle
+/// @brief The state machine of one home control request, from sending it to
+/// a running control channel.
+
+/// @namespace libchiaking::net::protocol::remote_play::active_handshake_lifecycle
+/// @brief The state machine of the stream's BIG/BANG handshake and stream
+/// info.
+
+/// @namespace libchiaking::net::protocol::remote_play::feedback_event
+/// @brief Controller feedback an active session learns from the console's
+/// pad info.

@@ -1,0 +1,652 @@
+{
+  "revisionId": 1000000000000,
+  "start": 0,
+  "totalResults": 13,
+  "entitlements": [
+    {
+      "id": "EP0109-PPSA07015_00-FAKE0044TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07015_00-FAKE0044TITLE000-E001",
+      "productId": "EP0109-PPSA07015_00-FAKE0044TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Full Game Streams",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07015_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07015_00",
+        "name": "Full Game Streams (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07015_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000001",
+        "name": "Full Game Streams",
+        "iconUrl": "https://image.api.playstation.com/concept/1001.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07015_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07016_00-FAKE0080TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07016_00-FAKE0080TITLE000-E001",
+      "productId": "EP0109-PPSA07016_00-FAKE0080TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Streaming False",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07016_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07016_00",
+        "name": "Streaming False (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07016_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000002",
+        "name": "Streaming False",
+        "iconUrl": "https://image.api.playstation.com/concept/1002.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07016_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": false,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07017_00-FAKE0124TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07017_00-FAKE0124TITLE000-E001",
+      "productId": "EP0109-PPSA07017_00-FAKE0124TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Streaming Missing",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07017_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07017_00",
+        "name": "Streaming Missing (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07017_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000003",
+        "name": "Streaming Missing",
+        "iconUrl": "https://image.api.playstation.com/concept/1003.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07017_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07018_00-FAKE0129TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07018_00-FAKE0129TITLE000-E001",
+      "productId": "EP0109-PPSA07018_00-FAKE0129TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 1,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Trial Feature",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07018_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07018_00",
+        "name": "Trial Feature (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07018_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000004",
+        "name": "Trial Feature",
+        "iconUrl": "https://image.api.playstation.com/concept/1004.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07018_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07019_00-FAKE0035TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07019_00-FAKE0035TITLE000-E001",
+      "productId": "EP0109-PPSA07019_00-FAKE0035TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 5,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Disc Required",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07019_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07019_00",
+        "name": "Disc Required (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07019_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000005",
+        "name": "Disc Required",
+        "iconUrl": "https://image.api.playstation.com/concept/1005.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07019_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07020_00-FAKE0091TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07020_00-FAKE0091TITLE000-E001",
+      "productId": "EP0109-PPSA07020_00-FAKE0091TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 7,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Play First Trial",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07020_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07020_00",
+        "name": "Play First Trial (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07020_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000006",
+        "name": "Play First Trial",
+        "iconUrl": "https://image.api.playstation.com/concept/1006.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07020_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07021_00-FAKE0082TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 3,
+      "skuId": "EP0109-PPSA07021_00-FAKE0082TITLE000-E001",
+      "productId": "EP0109-PPSA07021_00-FAKE0082TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Not Unified",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07021_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07021_00",
+        "name": "Not Unified (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07021_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000007",
+        "name": "Not Unified",
+        "iconUrl": "https://image.api.playstation.com/concept/1007.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07021_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07022_00-FAKE0065TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07022_00-FAKE0065TITLE000-E001",
+      "productId": "EP0109-PPSA07022_00-FAKE0065TITLE000",
+      "activeFlag": false,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Inactive",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07022_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07022_00",
+        "name": "Inactive (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07022_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000008",
+        "name": "Inactive",
+        "iconUrl": "https://image.api.playstation.com/concept/1008.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07022_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07023_00-FAKE0101TITLE000",
+      "activeDate": "2030-01-01T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07023_00-FAKE0101TITLE000-E001",
+      "productId": "EP0109-PPSA07023_00-FAKE0101TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": true,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Preorder Sku Date",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07023_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07023_00",
+        "name": "Preorder Sku Date (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07023_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000009",
+        "name": "Preorder Sku Date",
+        "iconUrl": "https://image.api.playstation.com/concept/1009.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07023_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": "2031-05-01T00:00:00Z"
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": true,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07024_00-FAKE0098TITLE000",
+      "activeDate": "2031-06-01T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07024_00-FAKE0098TITLE000-E001",
+      "productId": "EP0109-PPSA07024_00-FAKE0098TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Preorder Active Only",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07024_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07024_00",
+        "name": "Preorder Active Only (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07024_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000010",
+        "name": "Preorder Active Only",
+        "iconUrl": "https://image.api.playstation.com/concept/1010.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07024_00.png"
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": true,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07025_00-FAKE0099TITLE000",
+      "activeDate": "2031-07-01T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07025_00-FAKE0099TITLE000-E001",
+      "productId": "EP0109-PPSA07025_00-FAKE0099TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": true,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Preorder Empty Date",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07025_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07025_00",
+        "name": "Preorder Empty Date (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07025_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000011",
+        "name": "Preorder Empty Date",
+        "iconUrl": "https://image.api.playstation.com/concept/1011.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07025_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": ""
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": true,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07026_00-FAKE0100TITLE000",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07026_00-FAKE0100TITLE000-E001",
+      "productId": "EP0109-PPSA07026_00-FAKE0100TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Preorder No Date",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07026_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07026_00",
+        "name": "Preorder No Date (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07026_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000012",
+        "name": "Preorder No Date",
+        "iconUrl": "https://image.api.playstation.com/concept/1012.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07026_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": true,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0109-PPSA07027_00-FAKE0045TITLE000",
+      "activeDate": "2031-08-01T00:00:00Z",
+      "inactiveDate": null,
+      "entitlementType": 5,
+      "skuId": "EP0109-PPSA07027_00-FAKE0045TITLE000-E001",
+      "productId": "EP0109-PPSA07027_00-FAKE0045TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps5",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Future Active Not Preorder",
+        "type": "PSGD",
+        "iconUrl": "https://image.api.playstation.com/game/PPSA07027_00/icon0.png",
+        "packageType": "PSGD"
+      },
+      "titleMeta": {
+        "titleId": "PPSA07027_00",
+        "name": "Future Active Not Preorder (title)",
+        "imageUrl": "https://image.api.playstation.com/title/PPSA07027_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "90000013",
+        "name": "Future Active Not Preorder",
+        "iconUrl": "https://image.api.playstation.com/concept/1013.png",
+        "minimumAge": 12
+      },
+      "productMeta": {
+        "imageUrl": "https://image.api.playstation.com/product/PPSA07027_00.png"
+      },
+      "skuMeta": {
+        "playabilityDate": null
+      },
+      "streamingSupported": true,
+      "preorderPlaceholderFlag": false,
+      "preorderCoreFlag": false,
+      "serviceType": 0
+    }
+  ]
+}

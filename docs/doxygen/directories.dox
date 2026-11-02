@@ -1,0 +1,203 @@
+/// @dir include/libchiaking
+/// @brief The headers a frontend builds against. The faces at the top are the public API, listed under Public API in the sidebar.
+
+/// @dir include/libchiaking/detail
+/// @brief The definitions the faces need, one folder per domain. Reached through the faces and never included directly.
+
+/// @dir include/libchiaking/platform
+/// @brief The provider interfaces, the portable default providers and the stock providers built on third-party libraries.
+
+/// @dir include/libchiaking/testing
+/// @brief In-memory stores, scripted doubles and conformance suites, for test code only.
+
+/// @dir src
+/// @brief The library's implementation.
+
+/// @dir src/core
+/// @brief The domains, the PSN and network protocols under them, and the utilities they share. One folder per domain, each split into model, usecases and adapters.
+
+/// @dir src/core/catalog
+/// @brief The catalog domain: the cloud list, the owned library, store categories, storefront answers, launch clearance and the fetch state machine.
+
+/// @dir src/core/catalog/model
+/// @brief The catalog's values and rules, and its state machines, with no I/O.
+
+/// @dir src/core/catalog/usecases
+/// @brief What the catalog does for a caller: listing games, details, launch checks, played games and cache inspection.
+
+/// @dir src/core/catalog/adapters
+/// @brief The catalog's links to the outside: PS services, held answers and records on disk, the fetch board and trusted time.
+
+/// @dir src/core/consoles
+/// @brief The consoles domain: known consoles, discovery on the local network, pairing at home and over the internet, waking and invitations.
+
+/// @dir src/core/consoles/model
+/// @brief The consoles' values and rules, and the pairing state machines.
+
+/// @dir src/core/consoles/usecases
+/// @brief What the consoles domain does for a caller: finding, pairing, starting and forgetting consoles.
+
+/// @dir src/core/consoles/adapters
+/// @brief The consoles' links to the network, PSN and the console store.
+
+/// @dir src/core/media
+/// @brief The media domain: video intake, audio decoding, the microphone encoder and media statistics.
+
+/// @dir src/core/media/adapters
+/// @brief The audio decoder, audio output layout and microphone encoder over their codecs.
+
+/// @dir src/core/kakusan
+/// @brief The Kakusan domain: sharing a live session with invited players elsewhere.
+
+/// @dir src/core/kakusan/model
+/// @brief Kakusan's values, rules and state machines.
+
+/// @dir src/core/kakusan/usecases
+/// @brief Hosting a shared session and visiting one as a guest.
+
+/// @dir src/core/kakusan/adapters
+/// @brief Kakusan's links to the network, the session being shared and the device store.
+
+/// @dir src/core/messages
+/// @brief The messages domain: reading and sending PSN messages.
+
+/// @dir src/core/messages/usecases
+/// @brief Talking to PSN's message groups.
+
+/// @dir src/core/play
+/// @brief The play domain: starting sessions at home, over the internet and in the cloud, and everything done with a live one.
+
+/// @dir src/core/play/model
+/// @brief Session values and rules, start policies and the session state machine.
+
+/// @dir src/core/play/usecases
+/// @brief Starting a session in each place and launching in the cloud.
+
+/// @dir src/core/play/adapters
+/// @brief The links, media delivery, controllers, seats and cloud launch that drive a live session.
+
+/// @dir src/core/trophies
+/// @brief The trophies domain: trophy titles, groups and progress.
+
+/// @dir src/core/trophies/model
+/// @brief Trophy values and rules.
+
+/// @dir src/core/trophies/usecases
+/// @brief Reading trophy titles and progress for a user.
+
+/// @dir src/core/trophies/adapters
+/// @brief The trophy service client and its held answers.
+
+/// @dir src/core/users
+/// @brief The users domain: signing in, renewing tokens, saved sign-ins and the calls made as a user.
+
+/// @dir src/core/users/model
+/// @brief User values and rules, and the sign-in state machines.
+
+/// @dir src/core/users/usecases
+/// @brief Signing users in, renewing them and loading saved ones.
+
+/// @dir src/core/users/adapters
+/// @brief The credential store, token caches and the authorised calls made as a user.
+
+/// @dir src/core/psn
+/// @brief Clients for PSN's services, used by the domains above.
+
+/// @dir src/core/psn/account
+/// @brief The account service client.
+
+/// @dir src/core/psn/auth
+/// @brief Sign-in: exchanging an NPSSO or approved code for tokens, and renewing them.
+
+/// @dir src/core/psn/gk
+/// @brief The cloud streaming session service: launch specifications, datacenter probes and session allocation.
+
+/// @dir src/core/psn/graphql
+/// @brief PSN's GraphQL gateway: persisted queries, the anonymous and app-token clients, and the queries they send.
+
+/// @dir src/core/psn/remote_play
+/// @brief Remote play signalling over PSN: push notifications, the notification inbox and holepunch messages.
+
+/// @dir src/core/psn/rest
+/// @brief PSN's REST services: accounts, commerce, entitlements, game lists, store, user notifications and more.
+
+/// @dir src/core/net
+/// @brief Network protocols and transports below the domains.
+
+/// @dir src/core/net/kakusan
+/// @brief Kakusan's wire protocol: control channel, messages, congestion and controller frames.
+
+/// @dir src/core/net/nat
+/// @brief Getting through routers: STUN, ICE candidates and PSN holepunch.
+
+/// @dir src/core/net/ntp
+/// @brief Trusted time from NTP servers.
+
+/// @dir src/core/net/protocol
+/// @brief The streaming protocols: remote play control, Takion and Senkusha.
+
+/// @dir src/core/net/transport
+/// @brief The transports: UDP datagrams, RUDP and the HTTP client.
+
+/// @dir src/core/utils
+/// @brief Utilities shared by the domains, one job per folder.
+
+/// @dir src/core/utils/bytes
+/// @brief Byte reading, writing and encoding.
+
+/// @dir src/core/utils/concurrency
+/// @brief Shared flights and other synchronisation helpers.
+
+/// @dir src/core/utils/containers
+/// @brief Bounded queues.
+
+/// @dir src/core/utils/diagnostics
+/// @brief Logs, the API capture, the HTTP call log and session journals.
+
+/// @dir src/core/utils/json
+/// @brief JSON reading and the reply shapes PS services use.
+
+/// @dir src/core/utils/memory
+/// @brief Wiping memory and holding secrets.
+
+/// @dir src/core/utils/numeric
+/// @brief Checked arithmetic and wrapping sequence numbers.
+
+/// @dir src/core/utils/retry
+/// @brief Retrying a call once after renewing its credential.
+
+/// @dir src/core/utils/text
+/// @brief Text encoding, UUIDs and string helpers.
+
+/// @dir src/core/utils/timing
+/// @brief Deadlines, saturating durations and token buckets.
+
+/// @dir src/platform
+/// @brief The stock providers, one folder per capability and one file per operating system or library.
+
+/// @dir src/platform/crypto
+/// @brief Crypto providers over OpenSSL, BoringSSL, the console SDK, ARMv8 instructions and micro-ecc.
+
+/// @dir src/platform/curl
+/// @brief Shared libcurl transfer handling for the HTTP and WebSocket providers.
+
+/// @dir src/platform/diagnostics
+/// @brief System logging for each operating system.
+
+/// @dir src/platform/http
+/// @brief The HTTP provider over libcurl.
+
+/// @dir src/platform/net
+/// @brief Sockets, polling, DNS and interfaces for each operating system.
+
+/// @dir src/platform/runtime
+/// @brief Runtime helpers shared by the providers.
+
+/// @dir src/platform/storage
+/// @brief The file-backed record store.
+
+/// @dir src/platform/threading
+/// @brief Threads, mutexes and condition variables for each operating system.
+
+/// @dir src/platform/websocket
+/// @brief The WebSocket provider over libcurl.

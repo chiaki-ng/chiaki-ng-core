@@ -1,0 +1,34 @@
+/// @defgroup api_start Entry point
+/// @brief libchiaking::ChiakiNg, the one object every service comes from, from libchiaking/chiaki_ng.hpp.
+///
+/// Open it with libchiaking::ChiakiNg::open, giving it the stores of
+/// libchiaking::ChiakiNg::Stores. A frontend includes the face headers and
+/// nothing else; the headers under `libchiaking/detail/` hold the definitions
+/// the faces need and are never included directly.
+
+/// @defgroup api_users Users
+/// @brief Signing in, saved sign-ins and the calls made as a user, from libchiaking/users.hpp.
+
+/// @defgroup api_consoles Consoles
+/// @brief Known consoles, pairing, waking and invitations, from libchiaking/consoles.hpp.
+
+/// @defgroup api_catalog Catalog
+/// @brief The cloud list, the owned library and the fetch state, from libchiaking/catalog.hpp.
+
+/// @defgroup api_trophies Trophies
+/// @brief Trophy titles, groups and progress, from libchiaking/trophies.hpp.
+
+/// @defgroup api_messages Messages
+/// @brief Reading and sending PSN messages, from libchiaking/messages.hpp.
+
+/// @defgroup api_play Play
+/// @brief Starting sessions and everything done with a live one, from libchiaking/play.hpp.
+
+/// @defgroup api_kakusan Kakusan
+/// @brief Sharing a live session with invited players, from libchiaking/kakusan.hpp.
+
+/// @defgroup api_platform Platform
+/// @brief The interfaces a host provides and the stock providers, from libchiaking/platform/platform.hpp, libchiaking/platform/defaults.hpp and libchiaking/platform/stock_providers.hpp.
+
+/// @defgroup api_testing Testing
+/// @brief In-memory stores, scripted links and the service builder for test code, from libchiaking/testing/.

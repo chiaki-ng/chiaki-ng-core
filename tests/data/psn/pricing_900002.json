@@ -1,0 +1,1621 @@
+{
+  "data": {
+    "conceptRetrieve": {
+      "__typename": "Concept",
+      "defaultProduct": {
+        "__typename": "Product",
+        "id": "EP0109-PPSA17001_00-FAKE0056TITLE000",
+        "mobilectas": [
+          {
+            "__typename": "GameCTA",
+            "action": {
+              "__typename": "Action",
+              "param": [
+                {
+                  "__typename": "ActionParam",
+                  "name": "skuId",
+                  "values": [
+                    "EP0109-PPSA17001_00-FAKE0056TITLE000-E008"
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "entitlementIds",
+                  "values": [
+                    "EP0109-PPSA17001_00-FAKE0056TITLE000",
+                    "EP0109-PPSA27022_00-0000000000000000"
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "userId",
+                  "values": [
+                    null
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "rewardId",
+                  "values": [
+                    "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "isEntitledViaSubscription",
+                  "values": [
+                    "false"
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "rewardId",
+                  "values": [
+                    "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                  ]
+                }
+              ],
+              "type": "BACKGROUND_PURCHASE_AND_DOWNLOAD"
+            },
+            "cloudStreamingMessage": "Add to your library, and then stream and play instantly on PS Portal or PS5 (only with PS Plus Premium).",
+            "cloudStreamingMessageSecondary": null,
+            "meta": {
+              "__typename": "CTAMeta",
+              "exclusive": false,
+              "ineligibilityReasons": [
+                {
+                  "__typename": "IneligibilityReason",
+                  "names": [],
+                  "type": "UNKNOWN"
+                }
+              ],
+              "preOrder": false,
+              "upSellService": "NONE"
+            },
+            "price": {
+              "__typename": "Price",
+              "basePrice": "£44.99",
+              "basePriceValue": 4499,
+              "campaignId": null,
+              "currencyCode": "GBP",
+              "discountedPrice": "Included",
+              "discountedValue": 0,
+              "displayDiscountText": "Included",
+              "displayUpsellText": "Included with the Game Catalogue in your PlayStation Plus subscription",
+              "endTime": null,
+              "history": null,
+              "includesBundleOffer": false,
+              "isExclusive": false,
+              "isFree": true,
+              "isTiedToSubscription": true,
+              "qualifications": [
+                {
+                  "__typename": "Qualification",
+                  "type": "ENTITLED_TO",
+                  "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                }
+              ],
+              "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+              "savingTag": "",
+              "serviceBranding": [
+                "PS_PLUS"
+              ],
+              "telemetryData": {
+                "experimentData": [],
+                "experimentNotShownData": []
+              }
+            },
+            "type": "DOWNLOAD_PS_PLUS_GAME_CATALOG"
+          },
+          {
+            "__typename": "GameCTA",
+            "action": {
+              "__typename": "Action",
+              "param": [
+                {
+                  "__typename": "ActionParam",
+                  "name": "skuId",
+                  "values": [
+                    "EP0109-PPSA17001_00-FAKE0056TITLE000-E008"
+                  ]
+                },
+                {
+                  "__typename": "ActionParam",
+                  "name": "rewardId",
+                  "values": [
+                    "OUTRIGHT"
+                  ]
+                }
+              ],
+              "type": "ADD_TO_CART"
+            },
+            "cloudStreamingMessage": "Buy this game, and then stream and play instantly on PS Portal or PS5 (only with PS Plus Premium).",
+            "cloudStreamingMessageSecondary": null,
+            "meta": {
+              "__typename": "CTAMeta",
+              "exclusive": false,
+              "ineligibilityReasons": [
+                {
+                  "__typename": "IneligibilityReason",
+                  "names": [],
+                  "type": "UNKNOWN"
+                }
+              ],
+              "preOrder": false,
+              "upSellService": "NONE"
+            },
+            "price": {
+              "__typename": "Price",
+              "basePrice": "£44.99",
+              "basePriceValue": 4499,
+              "campaignId": null,
+              "currencyCode": "GBP",
+              "discountedPrice": "£44.99",
+              "discountedValue": 4499,
+              "displayDiscountText": null,
+              "displayUpsellText": null,
+              "endTime": null,
+              "history": null,
+              "includesBundleOffer": false,
+              "isExclusive": false,
+              "isFree": false,
+              "isTiedToSubscription": false,
+              "qualifications": [],
+              "rewardId": "",
+              "savingTag": "",
+              "serviceBranding": [
+                "NONE"
+              ],
+              "telemetryData": {
+                "experimentData": [],
+                "experimentNotShownData": []
+              }
+            },
+            "type": "ADD_TO_CART"
+          }
+        ],
+        "personalizedMeta": {
+          "__typename": "PersonalizedMeta",
+          "media": [
+            {
+              "__typename": "Media",
+              "role": "PREVIEW",
+              "type": "VIDEO",
+              "url": "https://vulcan.dl.playstation.net/img/rnd/202410/2917/c6d21172c71fcb5e03174a848b11b5608961d174cf4a923c.mp4"
+            },
+            {
+              "__typename": "Media",
+              "role": "EDITION_KEY_ART",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c0b8df9fd1c06837b444f641a575bcf81b31ab7d7dec73bf.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "FOUR_BY_THREE_BANNER",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/2597dc370d15e74b8453b19a7c730131f70ddf07c42f42f6.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "GAMEHUB_COVER_ART",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/5fd726c4304def9de2e215b236b2d7662333080833657ca5.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "LOGO",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/3fd03cc38ddde9d4b8322cbed5e793283e2f80e5d5ea8105.png"
+            },
+            {
+              "__typename": "Media",
+              "role": "PORTRAIT_BANNER",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/24c6e14af8227a4e8d984826a6e99fa506903bd406567926.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "SCREENSHOT",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/373e5f71263537725a9e02fa09ff02674201ac6fc5a7287c.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "SCREENSHOT",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/c04eaa6c71257ec8aa0aad625c3f4d6ba098b039b089b24e.jpg"
+            },
+            {
+              "__typename": "Media",
+              "role": "MASTER",
+              "type": "IMAGE",
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c062c4ad8698dadb2cd579acea84ad2da1e94171b4792bbc.png"
+            }
+          ]
+        },
+        "price": {
+          "__typename": "SkuPrice",
+          "basePrice": "£44.99",
+          "basePriceValue": 4499,
+          "campaignId": null,
+          "currencyCode": "GBP",
+          "discountedPrice": "Included",
+          "discountedValue": 0,
+          "displayDiscountText": null,
+          "displayUpsellText": null,
+          "endTime": null,
+          "includesBundleOffer": false,
+          "isExclusive": false,
+          "isFree": true,
+          "isTiedToSubscription": true,
+          "qualifications": [
+            {
+              "__typename": "Qualification",
+              "type": "ENTITLED_TO",
+              "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+            }
+          ],
+          "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+          "serviceBranding": [
+            "PS_PLUS"
+          ],
+          "skuId": "EP0109-PPSA17001_00-FAKE0056TITLE000-E008",
+          "telemetryData": {
+            "experimentData": [],
+            "experimentNotShownData": []
+          },
+          "upsellServiceBranding": [
+            "NONE"
+          ]
+        }
+      },
+      "id": "900002",
+      "isInWishlist": false,
+      "isWishlistable": false,
+      "ownedTitles": [],
+      "personalizedMeta": {
+        "__typename": "PersonalizedMeta",
+        "media": [
+          {
+            "__typename": "Media",
+            "role": "PREVIEW",
+            "type": "VIDEO",
+            "url": "https://vulcan.dl.playstation.net/img/rnd/202011/1122/ATY9ZSMvTYifuYsuHwCnjmMM.mp4"
+          },
+          {
+            "__typename": "Media",
+            "role": "BACKGROUND_LAYER_ART",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/1cwJLCDoAZuhEqavJarDP7ll.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "FOUR_BY_THREE_BANNER",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/1u7poh4vM91bXH3nZ91OgYiB.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "GAMEHUB_COVER_ART",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/cdL0GuG7hnjZNRGnp91koowV.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "HERO_CHARACTER",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/oGoXCdtWZtctlkHZZrtr4wpp.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "LOGO",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/paGPGKzDTGWSsQCVQZTWelTt.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "PORTRAIT_BANNER",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/gsDP2wLVHoV6hrpFmJqdAGLs.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "SCREENSHOT",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdtHFvSR6MLzt3bPtPr8N8w/1.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "SCREENSHOT",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdt7GG3UqE5DaoUbTQm8DEl/2.png"
+          },
+          {
+            "__typename": "Media",
+            "role": "MASTER",
+            "type": "IMAGE",
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202010/0221/CSfWXulbxkflf6hpVP4clsXV.png"
+          }
+        ]
+      },
+      "selectableProducts": {
+        "__typename": "SelectableProducts",
+        "purchasableProducts": [
+          {
+            "__typename": "Product",
+            "isInWishlist": false,
+            "isWishlistable": true,
+            "mobilectas": [
+              {
+                "__typename": "GameCTA",
+                "action": {
+                  "__typename": "Action",
+                  "param": [
+                    {
+                      "__typename": "ActionParam",
+                      "name": "skuId",
+                      "values": [
+                        "EP0109-PPSA17001_00-FAKE0056TITLE000-E008"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "entitlementIds",
+                      "values": [
+                        "EP0109-PPSA17001_00-FAKE0056TITLE000",
+                        "EP0109-PPSA27022_00-0000000000000000"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "userId",
+                      "values": [
+                        null
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "isEntitledViaSubscription",
+                      "values": [
+                        "false"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                      ]
+                    }
+                  ],
+                  "type": "BACKGROUND_PURCHASE_AND_DOWNLOAD"
+                },
+                "cloudStreamingMessage": "Add to your library, and then stream and play instantly on PS Portal or PS5 (only with PS Plus Premium).",
+                "cloudStreamingMessageSecondary": null,
+                "meta": {
+                  "__typename": "CTAMeta",
+                  "exclusive": false,
+                  "ineligibilityReasons": [
+                    {
+                      "__typename": "IneligibilityReason",
+                      "names": [],
+                      "type": "UNKNOWN"
+                    }
+                  ],
+                  "preOrder": false,
+                  "upSellService": "NONE"
+                },
+                "price": {
+                  "__typename": "Price",
+                  "basePrice": "£44.99",
+                  "basePriceValue": 4499,
+                  "campaignId": null,
+                  "currencyCode": "GBP",
+                  "discountedPrice": "Included",
+                  "discountedValue": 0,
+                  "displayDiscountText": "Included",
+                  "displayUpsellText": "Included with the Game Catalogue in your PlayStation Plus subscription",
+                  "endTime": null,
+                  "history": null,
+                  "includesBundleOffer": false,
+                  "isExclusive": false,
+                  "isFree": true,
+                  "isTiedToSubscription": true,
+                  "qualifications": [
+                    {
+                      "__typename": "Qualification",
+                      "type": "ENTITLED_TO",
+                      "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                    }
+                  ],
+                  "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+                  "savingTag": "",
+                  "serviceBranding": [
+                    "PS_PLUS"
+                  ],
+                  "telemetryData": {
+                    "experimentData": [],
+                    "experimentNotShownData": []
+                  }
+                },
+                "type": "DOWNLOAD_PS_PLUS_GAME_CATALOG"
+              },
+              {
+                "__typename": "GameCTA",
+                "action": {
+                  "__typename": "Action",
+                  "param": [
+                    {
+                      "__typename": "ActionParam",
+                      "name": "skuId",
+                      "values": [
+                        "EP0109-PPSA17001_00-FAKE0056TITLE000-E008"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "OUTRIGHT"
+                      ]
+                    }
+                  ],
+                  "type": "ADD_TO_CART"
+                },
+                "cloudStreamingMessage": "Buy this game, and then stream and play instantly on PS Portal or PS5 (only with PS Plus Premium).",
+                "cloudStreamingMessageSecondary": null,
+                "meta": {
+                  "__typename": "CTAMeta",
+                  "exclusive": false,
+                  "ineligibilityReasons": [
+                    {
+                      "__typename": "IneligibilityReason",
+                      "names": [],
+                      "type": "UNKNOWN"
+                    }
+                  ],
+                  "preOrder": false,
+                  "upSellService": "NONE"
+                },
+                "price": {
+                  "__typename": "Price",
+                  "basePrice": "£44.99",
+                  "basePriceValue": 4499,
+                  "campaignId": null,
+                  "currencyCode": "GBP",
+                  "discountedPrice": "£44.99",
+                  "discountedValue": 4499,
+                  "displayDiscountText": null,
+                  "displayUpsellText": null,
+                  "endTime": null,
+                  "history": null,
+                  "includesBundleOffer": false,
+                  "isExclusive": false,
+                  "isFree": false,
+                  "isTiedToSubscription": false,
+                  "qualifications": [],
+                  "rewardId": "",
+                  "savingTag": "",
+                  "serviceBranding": [
+                    "NONE"
+                  ],
+                  "telemetryData": {
+                    "experimentData": [],
+                    "experimentNotShownData": []
+                  }
+                },
+                "type": "ADD_TO_CART"
+              }
+            ],
+            "personalizedMeta": {
+              "__typename": "PersonalizedMeta",
+              "media": [
+                {
+                  "__typename": "Media",
+                  "role": "PREVIEW",
+                  "type": "VIDEO",
+                  "url": "https://vulcan.dl.playstation.net/img/rnd/202410/2917/c6d21172c71fcb5e03174a848b11b5608961d174cf4a923c.mp4"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "EDITION_KEY_ART",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c0b8df9fd1c06837b444f641a575bcf81b31ab7d7dec73bf.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "FOUR_BY_THREE_BANNER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/2597dc370d15e74b8453b19a7c730131f70ddf07c42f42f6.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "GAMEHUB_COVER_ART",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/5fd726c4304def9de2e215b236b2d7662333080833657ca5.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "LOGO",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/3fd03cc38ddde9d4b8322cbed5e793283e2f80e5d5ea8105.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "PORTRAIT_BANNER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/24c6e14af8227a4e8d984826a6e99fa506903bd406567926.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "SCREENSHOT",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/373e5f71263537725a9e02fa09ff02674201ac6fc5a7287c.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "SCREENSHOT",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/c04eaa6c71257ec8aa0aad625c3f4d6ba098b039b089b24e.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "MASTER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c062c4ad8698dadb2cd579acea84ad2da1e94171b4792bbc.png"
+                }
+              ]
+            },
+            "price": {
+              "__typename": "SkuPrice",
+              "basePrice": "£44.99",
+              "basePriceValue": 4499,
+              "campaignId": null,
+              "currencyCode": "GBP",
+              "discountedPrice": "Included",
+              "discountedValue": 0,
+              "displayDiscountText": null,
+              "displayUpsellText": null,
+              "endTime": null,
+              "includesBundleOffer": false,
+              "isExclusive": false,
+              "isFree": true,
+              "isTiedToSubscription": true,
+              "qualifications": [
+                {
+                  "__typename": "Qualification",
+                  "type": "ENTITLED_TO",
+                  "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                }
+              ],
+              "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+              "serviceBranding": [
+                "PS_PLUS"
+              ],
+              "skuId": "EP0109-PPSA17001_00-FAKE0056TITLE000-E008",
+              "telemetryData": {
+                "experimentData": [],
+                "experimentNotShownData": []
+              },
+              "upsellServiceBranding": [
+                "NONE"
+              ]
+            },
+            "accessibilityNoticesByPlatform": {
+              "Common": null,
+              "PS4": null,
+              "PS5": null,
+              "__typename": "AccessibilityNotices"
+            },
+            "backwardsCompatibilityCategory": null,
+            "combinedLocalizedGenres": [
+              {
+                "__typename": "LocalizedGenreSubGenre",
+                "value": "Role Playing Games"
+              },
+              {
+                "__typename": "LocalizedGenreSubGenre",
+                "value": "Action"
+              }
+            ],
+            "compatibilityNoticesByPlatform": {
+              "__typename": "CompatibilityNotices",
+              "Common": [
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": null,
+                  "type": "NO_OF_PLAYERS",
+                  "value": "1"
+                },
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": null,
+                  "type": "REMOTE_PLAY_SUPPORTED",
+                  "value": "true"
+                },
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": [
+                    "PS5",
+                    "DWC"
+                  ],
+                  "type": "STREAMING_SUPPORTED",
+                  "value": "OPTIONAL"
+                }
+              ],
+              "PS4": null,
+              "PS5": [
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": [
+                    "PS5"
+                  ],
+                  "type": "PS5_VIBRATION",
+                  "value": "OPTIONAL"
+                },
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": [
+                    "PS5"
+                  ],
+                  "type": "PS5_TRIGGER_EFFECT",
+                  "value": "OPTIONAL"
+                },
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": [
+                    "PS5"
+                  ],
+                  "type": "GRAPHICS_ENHANCED",
+                  "value": "true"
+                }
+              ]
+            },
+            "contentRating": {
+              "__typename": "ProductContentRating",
+              "authority": "PEGI",
+              "description": "PEGI 16",
+              "descriptors": [
+                {
+                  "__typename": "ProductContentRatingDescriptor",
+                  "description": "Violence",
+                  "name": "PEGI_VIOLENCE",
+                  "url": "https://image.api.playstation.com/grc/images/descriptors/4k/pegi/violence.png"
+                }
+              ],
+              "interactiveElements": [],
+              "name": "PEGI_16",
+              "url": "https://image.api.playstation.com/grc/images/ratings/4k/pegi/16.png"
+            },
+            "descriptions": [
+              {
+                "__typename": "Description",
+                "type": "SHORT",
+                "value": "THE SKY REMEMBERS"
+              },
+              {
+                "__typename": "Description",
+                "type": "STREAMING_COMPATIBILITY_NOTICE",
+                "value": "Streaming currently supported: Skyline Zero Ember™ Remastered<br/><br/>Streaming currently not supported: Skyline Zero Ember™ Artbook<br/><br/>PS5 cloud streaming supported only with PlayStation Plus Premium subscription<br/><br/>"
+              },
+              {
+                "__typename": "Description",
+                "type": "LONG",
+                "value": "Edition includes:<br/>Skyline Zero Ember™ Remastered<br/><br/>Earth is ours no mo..."
+              },
+              {
+                "__typename": "Description",
+                "type": "COMPATIBILITY_NOTICE",
+                "value": "Vibration function and trigger effect supported (DualSense wireless controller)<br/>1 players<br/>PS5 Pro Enhanced<br/>Remote Play supported"
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br><br>Download of this product is subject to the PlayStation Terms of Service ..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>You can download and play this content on the main PS5 console associated wi..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>See <a href=\"https://www.playstation.com/legal/health-warning/\">Health Warni..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>Library programs ©Example Publisher exclusively licensed t..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br/>Skyline Zero Ember™ ©2024 Example Publisher. Published b..."
+              }
+            ],
+            "edition": {
+              "__typename": "ProductEdition",
+              "features": [
+                "Skyline Zero Ember™ Remastered",
+                "The Frost Reach Expansion",
+                "Ridge Storm Ranger Outfit & Bow",
+                "Pine Trailblazer Outfit & Bow",
+                "Pine Traveller Pack",
+                "Vale Keeper Pack",
+                "Ridge Trader Pack",
+                "Digital art book"
+              ],
+              "invariantName": "",
+              "name": "",
+              "ordering": null,
+              "type": "FAKE0120"
+            },
+            "id": "EP0109-PPSA17001_00-FAKE0056TITLE000",
+            "invariantName": "Skyline Zero Ember™ Remastered",
+            "localizedStoreDisplayClassification": "Full Game",
+            "media": [
+              {
+                "__typename": "Media",
+                "media": [
+                  {
+                    "__typename": "Media",
+                    "role": null,
+                    "type": "IMAGE",
+                    "url": "https://image.api.playstation.com/vulcan/img/rnd/202410/2917/cf4a31e8aaa3fd7b1f226598104457b0bf9ca7abb9210f72.png"
+                  }
+                ],
+                "role": "PREVIEW",
+                "type": "VIDEO",
+                "url": "https://vulcan.dl.playstation.net/img/rnd/202410/2917/c6d21172c71fcb5e03174a848b11b5608961d174cf4a923c.mp4"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "EDITION_KEY_ART",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c0b8df9fd1c06837b444f641a575bcf81b31ab7d7dec73bf.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "FOUR_BY_THREE_BANNER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/2597dc370d15e74b8453b19a7c730131f70ddf07c42f42f6.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "GAMEHUB_COVER_ART",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/5fd726c4304def9de2e215b236b2d7662333080833657ca5.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "LOGO",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/3fd03cc38ddde9d4b8322cbed5e793283e2f80e5d5ea8105.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "PORTRAIT_BANNER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/24c6e14af8227a4e8d984826a6e99fa506903bd406567926.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "SCREENSHOT",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/373e5f71263537725a9e02fa09ff02674201ac6fc5a7287c.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "SCREENSHOT",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2717/c04eaa6c71257ec8aa0aad625c3f4d6ba098b039b089b24e.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "MASTER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/ap/rnd/202409/2716/c062c4ad8698dadb2cd579acea84ad2da1e94171b4792bbc.png"
+              }
+            ],
+            "name": "Skyline Zero Ember™ Remastered",
+            "npTitleId": "PPSA17001_00",
+            "platforms": [
+              "PS5"
+            ],
+            "privacyPolicy": null,
+            "publisherName": "Example Publisher",
+            "releaseDate": "2024-10-31T00:00:00Z",
+            "screenLanguages": [
+              "fr",
+              "fi",
+              "ru",
+              "de",
+              "no",
+              "nl",
+              "pl",
+              "da",
+              "pt_BR",
+              "pt",
+              "ar",
+              "es",
+              "zh",
+              "ja",
+              "sv",
+              "it",
+              "es_MX",
+              "en",
+              "ko",
+              "ch"
+            ],
+            "screenLanguagesByPlatform": [
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS4",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS4TEST",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS5",
+                "screenLanguages": [
+                  "ar",
+                  "es",
+                  "zh",
+                  "fr",
+                  "ja",
+                  "fi",
+                  "ru",
+                  "sv",
+                  "de",
+                  "no",
+                  "nl",
+                  "pl",
+                  "da",
+                  "it",
+                  "pt_BR",
+                  "en",
+                  "es_MX",
+                  "ko",
+                  "pt",
+                  "ch"
+                ]
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS3",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "VITA",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PSPC",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "DWC",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "",
+                "screenLanguages": []
+              }
+            ],
+            "skus": [
+              {
+                "__typename": "Sku",
+                "id": "EP0109-PPSA17001_00-FAKE0056TITLE000-E008",
+                "name": "Game"
+              }
+            ],
+            "spokenLanguages": [
+              "en",
+              "it",
+              "ar",
+              "es",
+              "fr",
+              "pl",
+              "de",
+              "pt",
+              "ru"
+            ],
+            "spokenLanguagesByPlatform": [
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS4",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS4TEST",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS5",
+                "spokenLanguages": [
+                  "en",
+                  "it",
+                  "ar",
+                  "es",
+                  "fr",
+                  "pl",
+                  "de",
+                  "pt",
+                  "ru"
+                ]
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS3",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "VITA",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PSPC",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "DWC",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "",
+                "spokenLanguages": []
+              }
+            ],
+            "storeDisplayClassification": "FULL_GAME",
+            "subType": "FULL_GAME",
+            "topCategory": "GAME",
+            "type": "GAME"
+          },
+          {
+            "__typename": "Product",
+            "isInWishlist": false,
+            "isWishlistable": true,
+            "mobilectas": [
+              {
+                "__typename": "GameCTA",
+                "action": {
+                  "__typename": "Action",
+                  "param": [
+                    {
+                      "__typename": "ActionParam",
+                      "name": "skuId",
+                      "values": [
+                        "EP0109-CUSA17003_00-FAKE0059TITLE000-E008"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "entitlementIds",
+                      "values": [
+                        "EP0109-CUSA07025_00-FAKE0033TITLE000",
+                        "EP0109-CUSA17003_00-FAKE0059TITLE000"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "userId",
+                      "values": [
+                        null
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "isEntitledViaSubscription",
+                      "values": [
+                        "false"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                      ]
+                    }
+                  ],
+                  "type": "BACKGROUND_PURCHASE_AND_DOWNLOAD"
+                },
+                "cloudStreamingMessage": null,
+                "cloudStreamingMessageSecondary": null,
+                "meta": {
+                  "__typename": "CTAMeta",
+                  "exclusive": false,
+                  "ineligibilityReasons": [],
+                  "preOrder": false,
+                  "upSellService": "NONE"
+                },
+                "price": {
+                  "__typename": "Price",
+                  "basePrice": "£34.99",
+                  "basePriceValue": 3499,
+                  "campaignId": null,
+                  "currencyCode": "GBP",
+                  "discountedPrice": "Included",
+                  "discountedValue": 0,
+                  "displayDiscountText": "Included",
+                  "displayUpsellText": "Included with the Game Catalogue in your PlayStation Plus subscription",
+                  "endTime": null,
+                  "history": null,
+                  "includesBundleOffer": false,
+                  "isExclusive": false,
+                  "isFree": true,
+                  "isTiedToSubscription": true,
+                  "qualifications": [
+                    {
+                      "__typename": "Qualification",
+                      "type": "ENTITLED_TO",
+                      "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                    }
+                  ],
+                  "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+                  "savingTag": "",
+                  "serviceBranding": [
+                    "PS_PLUS"
+                  ],
+                  "telemetryData": {
+                    "experimentData": [],
+                    "experimentNotShownData": []
+                  }
+                },
+                "type": "DOWNLOAD_PS_PLUS_GAME_CATALOG"
+              },
+              {
+                "__typename": "GameCTA",
+                "action": {
+                  "__typename": "Action",
+                  "param": [
+                    {
+                      "__typename": "ActionParam",
+                      "name": "skuId",
+                      "values": [
+                        "EP0109-CUSA17003_00-FAKE0059TITLE000-E008"
+                      ]
+                    },
+                    {
+                      "__typename": "ActionParam",
+                      "name": "rewardId",
+                      "values": [
+                        "OUTRIGHT"
+                      ]
+                    }
+                  ],
+                  "type": "ADD_TO_CART"
+                },
+                "cloudStreamingMessage": null,
+                "cloudStreamingMessageSecondary": null,
+                "meta": {
+                  "__typename": "CTAMeta",
+                  "exclusive": false,
+                  "ineligibilityReasons": [],
+                  "preOrder": false,
+                  "upSellService": "NONE"
+                },
+                "price": {
+                  "__typename": "Price",
+                  "basePrice": "£34.99",
+                  "basePriceValue": 3499,
+                  "campaignId": null,
+                  "currencyCode": "GBP",
+                  "discountedPrice": "£34.99",
+                  "discountedValue": 3499,
+                  "displayDiscountText": null,
+                  "displayUpsellText": null,
+                  "endTime": null,
+                  "history": null,
+                  "includesBundleOffer": false,
+                  "isExclusive": false,
+                  "isFree": false,
+                  "isTiedToSubscription": false,
+                  "qualifications": [],
+                  "rewardId": "",
+                  "savingTag": "",
+                  "serviceBranding": [
+                    "NONE"
+                  ],
+                  "telemetryData": {
+                    "experimentData": [],
+                    "experimentNotShownData": []
+                  }
+                },
+                "type": "ADD_TO_CART"
+              }
+            ],
+            "personalizedMeta": {
+              "__typename": "PersonalizedMeta",
+              "media": [
+                {
+                  "__typename": "Media",
+                  "role": "PREVIEW",
+                  "type": "VIDEO",
+                  "url": "https://apollo2.dl.playstation.net/cdn/EP0109/CUSA17003_00/FREE_c8lJEdtZ49DAGGpHnLrgYuhrvN9/HZD_ACCOLADES_CE_30_009_RJ_EN.mp4"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "BACKGROUND",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/3000/gY4934li42rzfZzaoWVyvt52.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "EDITION_KEY_ART",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/3000/ceBHQ8Of9tjC0a7Q3khWZGa4.jpg"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "FOUR_BY_THREE_BANNER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/ZQZtbhHOm7NVYGv1HMQnYygj.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "GAMEHUB_COVER_ART",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/BYqDcyxaBBphC5wLZjcunlXO.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "LOGO",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/IhfWJNJHic5IBw7r3EuoFd2b.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "PORTRAIT_BANNER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/I6YCbiCn65eRqcLv89bWN4zg.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "SCREENSHOT",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdtHFvSR6MLzt3bPtPr8N8w/1.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "SCREENSHOT",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdt7GG3UqE5DaoUbTQm8DEl/2.png"
+                },
+                {
+                  "__typename": "Media",
+                  "role": "MASTER",
+                  "type": "IMAGE",
+                  "url": "https://image.api.playstation.com/vulcan/img/rnd/202011/1018/MOEWD2PWGFRzgRDskXbbn3h3.png"
+                }
+              ]
+            },
+            "price": {
+              "__typename": "SkuPrice",
+              "basePrice": "£34.99",
+              "basePriceValue": 3499,
+              "campaignId": null,
+              "currencyCode": "GBP",
+              "discountedPrice": "Included",
+              "discountedValue": 0,
+              "displayDiscountText": null,
+              "displayUpsellText": null,
+              "endTime": null,
+              "includesBundleOffer": false,
+              "isExclusive": false,
+              "isFree": true,
+              "isTiedToSubscription": true,
+              "qualifications": [
+                {
+                  "__typename": "Qualification",
+                  "type": "ENTITLED_TO",
+                  "value": "SUB001-SUBC00002_00-FIXTUREREWARD001"
+                }
+              ],
+              "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+              "serviceBranding": [
+                "PS_PLUS"
+              ],
+              "skuId": "EP0109-CUSA17003_00-FAKE0059TITLE000-E008",
+              "telemetryData": {
+                "experimentData": [],
+                "experimentNotShownData": []
+              },
+              "upsellServiceBranding": [
+                "NONE"
+              ]
+            },
+            "accessibilityNoticesByPlatform": {
+              "Common": null,
+              "PS4": null,
+              "PS5": null,
+              "__typename": "AccessibilityNotices"
+            },
+            "backwardsCompatibilityCategory": "COMPATIBLE",
+            "combinedLocalizedGenres": [
+              {
+                "__typename": "LocalizedGenreSubGenre",
+                "value": "Role Playing Games"
+              },
+              {
+                "__typename": "LocalizedGenreSubGenre",
+                "value": "Action"
+              }
+            ],
+            "compatibilityNoticesByPlatform": {
+              "__typename": "CompatibilityNotices",
+              "Common": [
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": null,
+                  "type": "NO_OF_PLAYERS",
+                  "value": "1"
+                },
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": null,
+                  "type": "REMOTE_PLAY_SUPPORTED",
+                  "value": "true"
+                }
+              ],
+              "PS4": [
+                {
+                  "__typename": "CompatibilityNotice",
+                  "targetPlatforms": [
+                    "PS4"
+                  ],
+                  "type": "DUALSHOCK4_VIBRATION",
+                  "value": "true"
+                }
+              ],
+              "PS5": null
+            },
+            "contentRating": {
+              "__typename": "ProductContentRating",
+              "authority": "PEGI",
+              "description": "PEGI 16",
+              "descriptors": [
+                {
+                  "__typename": "ProductContentRatingDescriptor",
+                  "description": "Violence",
+                  "name": "PEGI_VIOLENCE",
+                  "url": "https://image.api.playstation.com/grc/images/descriptors/4k/pegi/violence.png"
+                }
+              ],
+              "interactiveElements": [],
+              "name": "PEGI_16",
+              "url": "https://image.api.playstation.com/grc/images/ratings/4k/pegi/16.png"
+            },
+            "descriptions": [
+              {
+                "__typename": "Description",
+                "type": "SHORT",
+                "value": "THE SKY REMEMBERS"
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "To play this game on PS5, your system may need to be updated to the latest syste..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LONG",
+                "value": "THE SKY REMEMBERS<br/><br/>Experience Kara of the Vale’s entire legendary qu..."
+              },
+              {
+                "__typename": "Description",
+                "type": "COMPATIBILITY_NOTICE",
+                "value": "1 players<br/>Remote Play supported<br/>DUALSHOCK 4 vibration"
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br><br>Download of this product is subject to the PlayStation Terms of Service ..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>One-time licence fee to download to multiple PS4 systems. Sign in to PlaySta..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>See <a href=\"https://www.playstation.com/legal/health-warning/\">Health Warni..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br>Library programs ©Example Publisher exclusively licensed t..."
+              },
+              {
+                "__typename": "Description",
+                "type": "LEGAL",
+                "value": "<br/>Skyline Zero Ember™ ©2017 Example Publisher. Published b..."
+              }
+            ],
+            "edition": {
+              "__typename": "ProductEdition",
+              "features": [],
+              "invariantName": "",
+              "name": "",
+              "ordering": null,
+              "type": "OTHER"
+            },
+            "id": "EP0109-CUSA17003_00-FAKE0059TITLE000",
+            "invariantName": "Skyline Zero Ember™ Complete Edition",
+            "localizedStoreDisplayClassification": "Full Game",
+            "media": [
+              {
+                "__typename": "Media",
+                "media": [
+                  {
+                    "__typename": "Media",
+                    "role": null,
+                    "type": "IMAGE",
+                    "url": "https://image.api.playstation.com/transcode/54be336fc87962b7f7812b1937d82a1ddcc8d8a3/frame_0000.jpg"
+                  }
+                ],
+                "role": "PREVIEW",
+                "type": "VIDEO",
+                "url": "https://apollo2.dl.playstation.net/cdn/EP0109/CUSA17003_00/FREE_c8lJEdtZ49DAGGpHnLrgYuhrvN9/HZD_ACCOLADES_CE_30_009_RJ_EN.mp4"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "BACKGROUND",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/3000/gY4934li42rzfZzaoWVyvt52.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "EDITION_KEY_ART",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/3000/ceBHQ8Of9tjC0a7Q3khWZGa4.jpg"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "FOUR_BY_THREE_BANNER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/ZQZtbhHOm7NVYGv1HMQnYygj.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "GAMEHUB_COVER_ART",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/BYqDcyxaBBphC5wLZjcunlXO.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "LOGO",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/IhfWJNJHic5IBw7r3EuoFd2b.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "PORTRAIT_BANNER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202009/2923/I6YCbiCn65eRqcLv89bWN4zg.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "SCREENSHOT",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdtHFvSR6MLzt3bPtPr8N8w/1.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "SCREENSHOT",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/cdn/EP0109/CUSA17003_00/FREE_c8lJEdt7GG3UqE5DaoUbTQm8DEl/2.png"
+              },
+              {
+                "__typename": "Media",
+                "media": null,
+                "role": "MASTER",
+                "type": "IMAGE",
+                "url": "https://image.api.playstation.com/vulcan/img/rnd/202011/1018/MOEWD2PWGFRzgRDskXbbn3h3.png"
+              }
+            ],
+            "name": "Skyline Zero Ember™ Complete Edition",
+            "npTitleId": "CUSA17003_00",
+            "platforms": [
+              "PS4"
+            ],
+            "privacyPolicy": null,
+            "publisherName": "Example Publisher",
+            "releaseDate": "2017-12-06T00:00:00Z",
+            "screenLanguages": [
+              "da",
+              "de",
+              "en",
+              "es",
+              "fr",
+              "it",
+              "nl",
+              "no",
+              "pl",
+              "pt",
+              "fi",
+              "sv",
+              "ru",
+              "ar",
+              "es_MX",
+              "pt_BR"
+            ],
+            "screenLanguagesByPlatform": [
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS4",
+                "screenLanguages": [
+                  "da",
+                  "de",
+                  "en",
+                  "es",
+                  "fr",
+                  "it",
+                  "nl",
+                  "no",
+                  "pl",
+                  "pt",
+                  "fi",
+                  "sv",
+                  "ru",
+                  "ar",
+                  "es_MX",
+                  "pt_BR"
+                ]
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS4TEST",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS5",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PS3",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "VITA",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "PSPC",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "DWC",
+                "screenLanguages": []
+              },
+              {
+                "__typename": "ScreenLanguagesByPlatformElement",
+                "platform": "",
+                "screenLanguages": []
+              }
+            ],
+            "skus": [
+              {
+                "__typename": "Sku",
+                "id": "EP0109-CUSA17003_00-FAKE0059TITLE000-E007",
+                "name": "Game"
+              },
+              {
+                "__typename": "Sku",
+                "id": "EP0109-CUSA17003_00-FAKE0059TITLE000-E008",
+                "name": "Game"
+              }
+            ],
+            "spokenLanguages": [
+              "en",
+              "pl",
+              "ru"
+            ],
+            "spokenLanguagesByPlatform": [
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS4",
+                "spokenLanguages": [
+                  "en",
+                  "pl",
+                  "ru"
+                ]
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS4TEST",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS5",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PS3",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "VITA",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "PSPC",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "DWC",
+                "spokenLanguages": []
+              },
+              {
+                "__typename": "SpokenLanguagesByPlatformElement",
+                "platform": "",
+                "spokenLanguages": []
+              }
+            ],
+            "storeDisplayClassification": "FULL_GAME",
+            "subType": "FULL_GAME",
+            "topCategory": "GAME",
+            "type": "GAME"
+          }
+        ],
+        "purchasedTitles": []
+      }
+    }
+  }
+}

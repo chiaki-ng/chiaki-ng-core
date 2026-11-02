@@ -1,0 +1,51 @@
+fragment contentRating on Product {
+  __typename
+  contentRating {
+    __typename
+    authority
+    description
+    descriptors {
+      __typename
+      description
+      name
+      url
+    }
+    interactiveElements {
+      __typename
+      description
+      name
+    }
+    name
+    url
+  }
+}
+
+query conceptRetrieveForContentRating($conceptId: String!) {
+  conceptRetrieve(conceptId: $conceptId) {
+    __typename
+    contentRating {
+      __typename
+      authority
+      description
+      descriptors {
+        __typename
+        description
+        name
+        url
+      }
+      interactiveElements {
+        __typename
+        description
+        name
+      }
+      name
+      url
+    }
+    defaultProduct {
+      __typename
+      id
+      ...contentRating
+    }
+    id
+  }
+}

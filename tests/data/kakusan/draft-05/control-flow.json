@@ -1,0 +1,232 @@
+{
+  "warning": "PUBLIC TEST SECRETS. Illustrative successful state sequence; source admission, DTLS and media are simulated. H264 setup is generated test content.",
+  "steps": [
+    {
+      "sender": "host",
+      "message": {
+        "type": "HELLO",
+        "transcript": "GcIrx2eD7s0HKmuc1rBC-FjUrPcryzUvoPSYK-qNnmU"
+      },
+      "control_id": 1,
+      "dtls_plaintext_hex": [
+        "5243433101000000000000010001004b7b227472616e736372697074223a224763497278326544377330484b6d7563317242432d466a5572506372797a55766f5053594b2d714e6e6d55222c2274797065223a2248454c4c4f227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "HELLO",
+        "transcript": "GcIrx2eD7s0HKmuc1rBC-FjUrPcryzUvoPSYK-qNnmU"
+      },
+      "control_id": 1,
+      "dtls_plaintext_hex": [
+        "5243433101000000000000010001004b7b227472616e736372697074223a224763497278326544377330484b6d7563317242432d466a5572506372797a55766f5053594b2d714e6e6d55222c2274797065223a2248454c4c4f227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "IDENTITY",
+        "identity_key": "Kay64UG8yvCyLhqU000LxzYeUm0L_hLIl5S8kyKWbdc",
+        "sig": "4vC8ouboE2k45FpaxJ4iChbM7amXixJA1kavig6KZgr6mB5Rr6g3bdhFdI3A4LC78wY7_4e4-15XExXMHRkKBw"
+      },
+      "control_id": 2,
+      "dtls_plaintext_hex": [
+        "524343310100000000000002000100af7b226964656e746974795f6b6579223a224b61793634554738797643794c6871553030304c787a5965556d304c5f684c496c3553386b794b57626463222c22736967223a22347643386f75626f45326b3435467061784a34694368624d37616d5869784a41316b61766967364b5a6772366d423552723667336264684664493341344c4337387759375f3465342d3135584578584d48526b4b4277222c2274797065223a224944454e54495459227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "IDENTITY",
+        "identity_key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg",
+        "sig": "OefmdHKmtJqklSKOL3ppnx9cZrIoL0w39-pRghvi91VxK9Z-xmX-ZBEzq1Dm0XfwTd8T7XWlKeDk66zzqx84AQ",
+        "session_id": "AAECAwQFBgcICQoLDA0ODw",
+        "local_seats": 2,
+        "remote_seats": 0,
+        "reserved_seats": 0
+      },
+      "control_id": 2,
+      "dtls_plaintext_hex": [
+        "524343310100000000000002000101097b226964656e746974795f6b6579223a2241364548765f504f454c3464634e3059353076416d57666b316a436270513166486479475a424a564d6267222c226c6f63616c5f7365617473223a322c2272656d6f74655f7365617473223a302c2272657365727665645f7365617473223a302c2273657373696f6e5f6964223a2241414543417751464267634943516f4c4441304f4477222c22736967223a224f65666d64484b6d744a716b6c534b4f4c3370706e7839635a72496f4c307733392d705267687669393156784b395a2d786d582d5a42457a7131446d30586677546438543758576c4b65446b36367a7a717838344151222c2274797065223a224944454e54495459227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "PAKE_A",
+        "point": "BEKuqJplGrMDft4HDVNOXx-L1sbnnJ7YVAMd5wMVn4tD5w0SGkyliFdxoFu7FpY7sSndX6vJ1_38KH6SrKJ9c0E"
+      },
+      "control_id": 3,
+      "dtls_plaintext_hex": [
+        "524343310100000000000003000100737b22706f696e74223a2242454b75714a706c47724d446674344844564e4f58782d4c3173626e6e4a375956414d6435774d566e34744435773053476b796c694664786f4675374670593773536e645836764a315f33384b483653724b4a39633045222c2274797065223a2250414b455f41227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "PAKE_B",
+        "point": "BBNoqN-YV1tDbjmv6iMh3mNp8ya2OogWBEuikIhXd7b3ikP0K5kahBI3fcwOJGBJd2og80XAu3fPTurbvsWrWgg"
+      },
+      "control_id": 3,
+      "dtls_plaintext_hex": [
+        "524343310100000000000003000100737b22706f696e74223a2242424e6f714e2d5956317444626a6d7636694d68336d4e70387961324f6f6757424575696b49685864376233696b50304b356b61684249336663774f4a47424a64326f6738305841753366505475726276735772576767222c2274797065223a2250414b455f42227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "CONFIRM_A",
+        "mac": "aEZGMzIaMoUPqXJAtslWcVhsfDGfp0tK5rPEzsywnbz-BRBZ_MivKmM2WdJtct6w3X0qC7bGb-lxAiX9GYHa6w"
+      },
+      "control_id": 4,
+      "dtls_plaintext_hex": [
+        "524343310100000000000004000100737b226d6163223a2261455a474d7a49614d6f555071584a4174736c5763566873664447667030744b357250457a7379776e627a2d4252425a5f4d69764b6d4d3257644a74637436773358307143376247622d6c7841695839475948613677222c2274797065223a22434f4e4649524d5f41227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "CONFIRM_B",
+        "mac": "nNModfp9P3gWi8FsBVKLwj1c74xyWbxn9xVSkKCm8Q2yZP52VVr5DtzI52bCRMUfoRThZytgiMG-SsfXK_bAlA"
+      },
+      "control_id": 4,
+      "dtls_plaintext_hex": [
+        "524343310100000000000004000100737b226d6163223a226e4e4d6f64667039503367576938467342564b4c776a3163373478795762786e397856536b4b436d385132795a5035325656723544747a4935326243524d55666f5254685a797467694d472d537366584b5f62416c41222c2274797065223a22434f4e4649524d5f42227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "AUTHENTICATED",
+        "transcript": "GcIrx2eD7s0HKmuc1rBC-FjUrPcryzUvoPSYK-qNnmU"
+      },
+      "control_id": 5,
+      "dtls_plaintext_hex": [
+        "524343310100000000000005000100537b227472616e736372697074223a224763497278326544377330484b6d7563317242432d466a5572506372797a55766f5053594b2d714e6e6d55222c2274797065223a2241555448454e54494341544544227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "AUTHENTICATED",
+        "transcript": "GcIrx2eD7s0HKmuc1rBC-FjUrPcryzUvoPSYK-qNnmU"
+      },
+      "control_id": 5,
+      "dtls_plaintext_hex": [
+        "524343310100000000000005000100537b227472616e736372697074223a224763497278326544377330484b6d7563317242432d466a5572506372797a55766f5053594b2d714e6e6d55222c2274797065223a2241555448454e54494341544544227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "ADMISSION_PENDING",
+        "timeout_ms": 60000
+      },
+      "control_id": 6,
+      "dtls_plaintext_hex": [
+        "5243433101000000000000060001002f7b2274696d656f75745f6d73223a36303030302c2274797065223a2241444d495353494f4e5f50454e44494e47227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "SOURCE_SETUP",
+        "epoch": 1,
+        "source_session_id": "cHFyc3R1dnd4eXp7fH1-fw",
+        "source_protocol": 12,
+        "key_policy": "shared-source-incoming-until-session-end-v1",
+        "receive_key": "AAECAwQFBgcICQoLDA0ODw",
+        "receive_iv": "EBESExQVFhcYGRobHB0eHw",
+        "source_codec": "h264",
+        "video_fps": 60,
+        "video_profiles": [
+          {
+            "width": 1280,
+            "height": 720,
+            "header": "AAAAAWdkACqs2UBQBbsBEAAAAwAQAAAHgPGDGWAAAAABaOvjyyLA"
+          }
+        ],
+        "audio_header": "AhAAALuAAAADwAAAAAE"
+      },
+      "control_id": 7,
+      "dtls_plaintext_hex": [
+        "524343310100000000000007000101a47b22617564696f5f686561646572223a2241684141414c75414141414477414141414145222c2265706f6368223a312c226b65795f706f6c696379223a227368617265642d736f757263652d696e636f6d696e672d756e74696c2d73657373696f6e2d656e642d7631222c22726563656976655f6976223a2245424553457851564668635947526f62484230654877222c22726563656976655f6b6579223a2241414543417751464267634943516f4c4441304f4477222c22736f757263655f636f646563223a2268323634222c22736f757263655f70726f746f636f6c223a31322c22736f757263655f73657373696f6e5f6964223a226348467963335231646e6434655870376648312d6677222c2274797065223a22534f555243455f5345545550222c22766964656f5f667073223a36302c22766964656f5f70726f66696c6573223a5b7b22686561646572223a22414141414157646b414371733255425142627342454141414177415141414148675047444757414141414142614f766a79794c41222c22686569676874223a3732302c227769647468223a313238307d5d7d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "SOURCE_READY",
+        "epoch": 1,
+        "setup_hash": "fZz0aY9MzJiBxx2zWm4JrgP6SmaAEtq1TXa7QbqbEng"
+      },
+      "control_id": 6,
+      "dtls_plaintext_hex": [
+        "5243433101000000000000060001005c7b2265706f6368223a312c2273657475705f68617368223a22665a7a306159394d7a4a69427878327a576d344a72675036536d6141457471315458613751627162456e67222c2274797065223a22534f555243455f5245414459227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "SEAT_GRANTED",
+        "seat": 3,
+        "generation": 7,
+        "capacity": 4,
+        "local_seats": 2,
+        "input_hz": 60,
+        "allowed_buttons": 262143
+      },
+      "control_id": 8,
+      "dtls_plaintext_hex": [
+        "524343310100000000000008000100737b22616c6c6f7765645f627574746f6e73223a3236323134332c226361706163697479223a342c2267656e65726174696f6e223a372c22696e7075745f687a223a36302c226c6f63616c5f7365617473223a322c2273656174223a332c2274797065223a22534541545f4752414e544544227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "READY",
+        "seat": 3,
+        "generation": 7
+      },
+      "control_id": 7,
+      "dtls_plaintext_hex": [
+        "524343310100000000000007000100287b2267656e65726174696f6e223a372c2273656174223a332c2274797065223a225245414459227d"
+      ]
+    },
+    {
+      "sender": "host",
+      "message": {
+        "type": "ACTIVE",
+        "seat": 3,
+        "generation": 7
+      },
+      "control_id": 9,
+      "dtls_plaintext_hex": [
+        "524343310100000000000009000100297b2267656e65726174696f6e223a372c2273656174223a332c2274797065223a22414354495645227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "SOURCE_IDR",
+        "epoch": 1
+      },
+      "control_id": 8,
+      "dtls_plaintext_hex": [
+        "5243433101000000000000080001001f7b2265706f6368223a312c2274797065223a22534f555243455f494452227d"
+      ]
+    },
+    {
+      "sender": "guest",
+      "message": {
+        "type": "LEAVE",
+        "reason": "user"
+      },
+      "control_id": 9,
+      "dtls_plaintext_hex": [
+        "524343310100000000000009000100207b22726561736f6e223a2275736572222c2274797065223a224c45415645227d"
+      ]
+    }
+  ]
+}

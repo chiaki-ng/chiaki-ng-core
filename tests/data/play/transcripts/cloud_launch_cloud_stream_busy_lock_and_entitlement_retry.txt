@@ -1,0 +1,85 @@
+http #1 POST https://ca.account.sony.com/api/authz/v3/oauth/authorizeCheck
+  Content-Type: application/json; charset=UTF-8
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  Cookie: npsso=<value len=15>
+  body: bytes=327 fnv1a64=28c5be94a4cdc1d1
+http #2 GET https://cc.prod.gaikai.com/v1/client_ids?virtType=cronos
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  body: none
+http #3 POST https://config.cc.prod.gaikai.com/v1/config
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  body: bytes=53 fnv1a64=e30d5ed770a8dcf8
+http #4 POST https://cc.prod.gaikai.com/v1/sessions/start?npEnv=np
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-Session: <value len=10>
+  body: bytes=1561 fnv1a64=2622afc498bb4fe1
+http #5 GET https://cc.prod.gaikai.com/v1/client_ids?virtType=cronos
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  body: none
+http #6 POST https://config.cc.prod.gaikai.com/v1/config
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  body: bytes=53 fnv1a64=e30d5ed770a8dcf8
+http #7 POST https://cc.prod.gaikai.com/v1/sessions/start?npEnv=np
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-Session: <value len=10>
+  body: bytes=1561 fnv1a64=2622afc498bb4fe1
+http #8 GET https://ca.account.sony.com/api/authz/v3/oauth/authorize?response_type=code&client_id=gk-id&redirect_uri=gaikai://local&service_entity=urn:service-entity:psn&prompt=none&duid=<device-id len=48>&smcid=qlite&applicationId=qlite&mid=qlite&scope=id_token:psn.basic_claims%20kamaji:s2s.subscriptionsPremium.get%20id_token:duid%20id_token:online_id%20openid%20psn:s2s
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  Cookie: npsso=<value len=15>
+  body: none
+http #9 GET https://ca.account.sony.com/api/authz/v3/oauth/authorize?response_type=code&redirect_uri=gaikai://local&service_entity=urn:service-entity:psn&prompt=none&client_id=server-id&smcid=qlite&applicationId=qlite&mid=qlite&scope=id_token:duid%20id_token:online_id%20openid%20oauth:create_authn_ticket_for_cloud_console_signin&duid=<device-id len=48>
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  Cookie: npsso=<value len=15>
+  body: none
+http #10 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/authorize
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=9>
+  body: bytes=1573 fnv1a64=51ffc7e8ba01d887
+http #11 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/lock?forceLogout=true
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=13>
+  body: bytes=1573 fnv1a64=51ffc7e8ba01d887
+http #12 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/lock?forceLogout=true
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=13>
+  body: bytes=1573 fnv1a64=51ffc7e8ba01d887
+http #13 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/datacenters
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=13>
+  body: bytes=1573 fnv1a64=51ffc7e8ba01d887
+http #14 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/datacenters/select
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=14>
+  body: bytes=1732 fnv1a64=f668d97c659fde1f
+http #15 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/allocate
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: PlayStation Portal/6.0.0-rel.444+6a9cea6f5
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=10>
+  body: bytes=1790 fnv1a64=6edcb9de76a04385

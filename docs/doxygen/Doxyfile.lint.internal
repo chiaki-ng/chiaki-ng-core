@@ -1,0 +1,21 @@
+@INCLUDE               = docs/doxygen/Doxyfile.lint
+
+INPUT                  = docs/doxygen/namespaces.dox \
+                         docs/doxygen/internal_namespaces.dox \
+                         src/core \
+                         src/platform \
+                         include/libchiaking
+FILE_PATTERNS          = *.hpp *.h *.dox
+STRIP_FROM_PATH        =
+STRIP_FROM_INC_PATH    =
+INCLUDE_PATH           = . include
+USE_MDFILE_AS_MAINPAGE =
+XML_OUTPUT             = lint-internal
+EXTRACT_PRIVATE        = YES
+EXTRACT_PRIV_VIRTUAL   = YES
+EXTRACT_PACKAGE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_ANON_NSPACES   = YES
+EXCLUDE_SYMBOLS        =
+EXCLUDE                = src/core/net/protocol/takion/generated

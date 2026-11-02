@@ -1,0 +1,127 @@
+http #1 GET https://mobile-pushcl.np.communication.playstation.net/np/serveraddr?version=2.1&fields=keepAliveStatus&keepAliveStatusType=3
+  Authorization: Bearer <value len=20>
+  body: none
+websocket #1 wss://mobile-pushcl.np.communication.playstation.net/np/pushNotification
+  Authorization: Bearer <value len=20>
+  User-Agent: WebSocket++/0.8.2
+  X-PSN-APP-TYPE: REMOTE_PLAY
+  X-PSN-APP-VER: RemotePlay/1.0
+  X-PSN-KEEP-ALIVE-STATUS-TYPE: 3
+  X-PSN-OS-VER: Windows/10.0
+  X-PSN-PROTOCOL-VERSION: 2.1
+  X-PSN-RECONNECTION: false
+  subprotocol: np-pushpacket
+http #2 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=169 fnv1a64=8375a8d9761d5ab2
+http #3 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions?view=v1.0
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+http #4 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions?view=v1.0
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+udp socket 1 open ipv4
+http #5 GET https://raw.githubusercontent.com/pradt2/always-online-stun/master/valid_hosts.txt
+  body: none
+http #6 GET https://raw.githubusercontent.com/pradt2/always-online-stun/master/valid_ipv6s.txt
+  body: none
+udp socket 1 send to 127.0.0.1:9999 stun type=0001 bytes=20 fnv1a64=407ff5f0974c87af
+http #7 POST https://web.np.playstation.com/api/cloudAssistedNavigation/v2/users/me/commands
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  User-Agent: RpNetHttpUtilImpl
+  body: bytes=396 fnv1a64=9e96cf062eadfdf4
+http #8 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+http #9 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+http #10 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=265 fnv1a64=73c91058837f3088
+http #11 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=800 fnv1a64=b30d1a515df588db
+http #12 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions?view=v1.0
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+udp socket 1 send to 127.0.0.1:9999 holepunch-request bytes=88 fnv1a64=ad2d66c1ecc507b6
+udp socket 1 send to 127.0.0.1:9999 holepunch-response bytes=88 fnv1a64=8835deb3ca685204
+http #13 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=596 fnv1a64=d619653ea02183e9
+http #14 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=265 fnv1a64=73c91058837f3088
+udp socket 1 send to 127.0.0.1:9999 rudp 8030/14 bytes=22 fnv1a64=d34396987bf462c8
+udp socket 1 send to 127.0.0.1:9999 rudp 9030/16 bytes=24 fnv1a64=70b5e71d6fbef616
+udp socket 1 send to 127.0.0.1:9999 rudp 2030/4 0230/748 bytes=768 fnv1a64=88a77cf2ff348a5c
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=6cc5f3aec31055e6
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=6cc5f3aec31055e6
+udp socket 1 send to 127.0.0.1:9999 rudp 8030/14 bytes=22 fnv1a64=4e167035cde5ec60
+udp socket 1 send to 127.0.0.1:9999 rudp 9030/16 bytes=24 fnv1a64=a372983dad905227
+udp socket 1 send to 127.0.0.1:9999 rudp 2030/4 0230/197 bytes=217 fnv1a64=351d377fb2f16d90
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=19ced93b1ac99083
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=19ced93b1ac99083
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=19ced93b1ac99083
+udp socket 1 send to 127.0.0.1:9999 rudp 8030/14 bytes=22 fnv1a64=9a21cbdeaff1e5a1
+udp socket 1 send to 127.0.0.1:9999 rudp 9030/16 bytes=24 fnv1a64=bef3331494e3e37c
+udp socket 1 send to 127.0.0.1:9999 rudp 2030/4 0230/400 bytes=420 fnv1a64=333ec98046fb0ffe
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=47eef07a0ed926c5
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=3f45957a09f15e7a
+udp socket 1 send to 127.0.0.1:9999 rudp 0230/14 bytes=22 fnv1a64=54c23f929c22d22c
+udp socket 1 send to 127.0.0.1:9999 rudp 0230/14 bytes=22 fnv1a64=d50be4f708f2a373
+udp socket 1 send to 127.0.0.1:9999 rudp 0230/14 bytes=22 fnv1a64=8b1b3c25648a366c
+udp socket 2 open ipv4
+udp socket 2 send to 127.0.0.1:9999 stun type=0001 bytes=20 fnv1a64=407ff5f0974c87af
+http #15 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=265 fnv1a64=bc32b1634bc4ea02
+http #16 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=800 fnv1a64=0c4c167c5cf3bc65
+http #17 GET https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions?view=v1.0
+  Authorization: Bearer <value len=20>
+  X-PSN-SESSION-MANAGER-SESSION-IDS: <session-id len=36>
+  body: none
+udp socket 2 send to 127.0.0.1:9999 holepunch-request bytes=88 fnv1a64=ad2d66c1ecc507b6
+udp socket 2 send to 127.0.0.1:9999 holepunch-response bytes=88 fnv1a64=8835deb3ca685204
+http #18 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=596 fnv1a64=18ca2000d63c0210
+http #19 POST https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/sessionMessage
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: bytes=265 fnv1a64=bc32b1634bc4ea02
+udp socket 1 send to 127.0.0.1:9999 rudp 0230/26 bytes=34 fnv1a64=13749bc90b41a2d9
+udp socket 1 send to 127.0.0.1:9999 rudp 2430/6 bytes=14 fnv1a64=0a3c53e839cb2a55
+udp socket 2 send to 127.0.0.1:9999 takion control init bytes=33 fnv1a64=408caa7c82625065
+udp socket 2 send to 127.0.0.1:9999 takion control cookie bytes=49 fnv1a64=08ed68962002a709
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=1 bytes=1404 fnv1a64=157ab8f53ffb094f
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=1 bytes=67 fnv1a64=582928caf82d8969
+udp socket 2 send to 127.0.0.1:9999 takion control data-ack bytes=29 fnv1a64=741282ad7d56053b
+udp socket 2 send to 127.0.0.1:9999 takion control data-ack bytes=29 fnv1a64=abd70ee99aecef82
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=9 bytes=28 fnv1a64=617733fabdb8b4a3
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=1 bytes=35 fnv1a64=a34f538a514347de
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=1 bytes=46 fnv1a64=2a0c4aa19133f40a
+udp socket 2 send to 127.0.0.1:9999 takion control data channel=1 bytes=52 fnv1a64=e7f992b6e43defbd
+udp socket 2 close
+udp socket 1 close
+http #20 DELETE https://web.np.playstation.com/api/sessionManager/v1/remotePlaySessions/<session-id len=36>/members/me
+  Authorization: Bearer <value len=20>
+  Content-Type: application/json; charset=utf-8
+  body: none

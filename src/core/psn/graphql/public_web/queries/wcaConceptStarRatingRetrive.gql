@@ -1,0 +1,55 @@
+fragment ProductStarRating on Product {
+  __typename
+  concept {
+    __typename
+    id
+  }
+  id
+  name
+  starRating {
+    __typename
+    averageRating
+    averageRatingForDisplay
+    ratingsDistribution {
+      __typename
+      percentage
+      percentageRaw
+      rating
+    }
+    totalRatingsCount
+  }
+  storeDisplayClassification
+  topCategory
+  webctas {
+    __typename
+    action {
+      __typename
+      param {
+        __typename
+        name
+        value
+      }
+      type
+    }
+    meta {
+      __typename
+      preOrder
+    }
+    type
+  }
+}
+
+query wcaConceptStarRatingRetrive($conceptId: String!) {
+  conceptRetrieve(conceptId: $conceptId) {
+    __typename
+    defaultProduct {
+      __typename
+      ...ProductStarRating
+    }
+    id
+    releaseDate {
+      __typename
+      type
+    }
+  }
+}

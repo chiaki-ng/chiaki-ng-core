@@ -1,0 +1,439 @@
+fragment CompatibilityNoticeFragment on CompatibilityNotice {
+  __typename
+  targetPlatforms
+  type
+  value
+}
+
+fragment compatibilityNoticesByPlatformFragment on CompatibilityNotices {
+  Common {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  PS4 {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  PS5 {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  __typename
+}
+
+fragment conceptFragment on Concept {
+  __typename
+  accessibilityNoticesByPlatform {
+    Common {
+      __typename
+      group
+      type
+      value
+    }
+    PS4 {
+      __typename
+      group
+      type
+      value
+    }
+    PS5 {
+      __typename
+      group
+      type
+      value
+    }
+    __typename
+  }
+  combinedLocalizedGenres {
+    __typename
+    value
+  }
+  compatibilityNoticesByPlatform {
+    __typename
+    ...compatibilityNoticesByPlatformFragment
+  }
+  contentRating {
+    __typename
+    authority
+    description
+    descriptors {
+      __typename
+      description
+      name
+      url
+    }
+    interactiveElements {
+      __typename
+      description
+      name
+    }
+    name
+    url
+  }
+  descriptions {
+    __typename
+    type
+    value
+  }
+  id
+  invariantName
+  media {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+    role
+    type
+    url
+  }
+  name
+  platforms
+  privacyPolicy
+  publisherName
+  releaseDate {
+    __typename
+    type
+    value
+  }
+}
+
+fragment mobilectasFragment on GameCTA {
+  __typename
+  action {
+    __typename
+    param {
+      __typename
+      name
+      values
+    }
+    type
+  }
+  cloudStreamingMessage
+  cloudStreamingMessageSecondary
+  meta {
+    __typename
+    exclusive
+    ineligibilityReasons {
+      __typename
+      names
+      type
+    }
+    preOrder
+    upSellService
+  }
+  price {
+    __typename
+    ...priceFragment
+  }
+  type
+}
+
+fragment ownedTitlesFragment on Title {
+  __typename
+  conceptId
+  ctas {
+    __typename
+    action {
+      __typename
+      param {
+        __typename
+        name
+        values
+      }
+      type
+    }
+    cloudStreamingMessage
+    cloudStreamingMessageSecondary
+    type
+  }
+  id
+  media {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+    role
+    type
+    url
+  }
+  name
+  platform
+  titleBackwardsCompatibility {
+    __typename
+    category
+    titleId
+  }
+}
+
+fragment personalizedMetaFragment on PersonalizedMeta {
+  __typename
+  media {
+    __typename
+    role
+    type
+    url
+  }
+}
+
+fragment priceFragment on Price {
+  __typename
+  basePrice
+  basePriceValue
+  campaignId
+  currencyCode
+  discountedPrice
+  discountedValue
+  displayDiscountText
+  displayUpsellText
+  endTime
+  history {
+    __typename
+    launchPrice {
+      __typename
+      endDate
+      price
+      startDate
+    }
+    lowestRecentPrice
+  }
+  includesBundleOffer
+  isExclusive
+  isFree
+  isTiedToSubscription
+  qualifications {
+    __typename
+    type
+    value
+  }
+  rewardId
+  savingTag
+  serviceBranding
+  telemetryData
+}
+
+fragment productFragment on Product {
+  __typename
+  accessibilityNoticesByPlatform {
+    Common {
+      __typename
+      group
+      type
+      value
+    }
+    PS4 {
+      __typename
+      group
+      type
+      value
+    }
+    PS5 {
+      __typename
+      group
+      type
+      value
+    }
+    __typename
+  }
+  backwardsCompatibilityCategory
+  combinedLocalizedGenres {
+    __typename
+    value
+  }
+  compatibilityNoticesByPlatform {
+    __typename
+    ...compatibilityNoticesByPlatformFragment
+  }
+  contentRating {
+    __typename
+    authority
+    description
+    descriptors {
+      __typename
+      description
+      name
+      url
+    }
+    interactiveElements {
+      __typename
+      description
+      name
+    }
+    name
+    url
+  }
+  descriptions {
+    __typename
+    type
+    value
+  }
+  edition {
+    __typename
+    features
+    invariantName
+    name
+    ordering
+    type
+  }
+  id
+  invariantName
+  localizedStoreDisplayClassification
+  media {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+    role
+    type
+    url
+  }
+  name
+  npTitleId
+  platforms
+  privacyPolicy
+  publisherName
+  releaseDate
+  screenLanguages
+  screenLanguagesByPlatform {
+    __typename
+    platform
+    screenLanguages
+  }
+  skus {
+    __typename
+    id
+    name
+  }
+  spokenLanguages
+  spokenLanguagesByPlatform {
+    __typename
+    platform
+    spokenLanguages
+  }
+  storeDisplayClassification
+  subType
+  topCategory
+  type
+}
+
+fragment selectableProductsFragment on SelectableProducts {
+  __typename
+  purchasableProducts {
+    __typename
+    isInWishlist
+    isWishlistable
+    mobilectas(ctaContext: $ctaContext) {
+      __typename
+      ...mobilectasFragment
+    }
+    personalizedMeta {
+      __typename
+      ...personalizedMetaFragment
+    }
+    price {
+      __typename
+      ...skuPriceFragment
+    }
+    ...productFragment
+  }
+  purchasedTitles {
+    __typename
+    entitlementId
+    name
+    npTitleId
+    product {
+      __typename
+      isInWishlist
+      isWishlistable
+      mobilectas(ctaContext: $ctaContext) {
+        __typename
+        ...mobilectasFragment
+      }
+      price {
+        __typename
+        ...skuPriceFragment
+      }
+      ...productFragment
+    }
+    targetPlatform
+    titleBackwardsCompatibility {
+      __typename
+      category
+      titleId
+    }
+  }
+}
+
+fragment skuPriceFragment on SkuPrice {
+  __typename
+  basePrice
+  basePriceValue
+  campaignId
+  currencyCode
+  discountedPrice
+  discountedValue
+  displayDiscountText
+  displayUpsellText
+  endTime
+  includesBundleOffer
+  isExclusive
+  isFree
+  isTiedToSubscription
+  qualifications {
+    __typename
+    type
+    value
+  }
+  rewardId
+  serviceBranding
+  skuId
+  telemetryData
+  upsellServiceBranding
+}
+
+query metGetConceptByProductIdQuery($ctaContext: String, $productId: String!) {
+  productRetrieve(productId: $productId) {
+    __typename
+    concept {
+      __typename
+      isInWishlist
+      isWishlistable
+      ownedTitles {
+        __typename
+        ...ownedTitlesFragment
+      }
+      personalizedMeta {
+        __typename
+        ...personalizedMetaFragment
+      }
+      selectableProducts {
+        __typename
+        ...selectableProductsFragment
+      }
+      ...conceptFragment
+    }
+    id
+    isInWishlist
+    isWishlistable
+    mobilectas(ctaContext: $ctaContext) {
+      __typename
+      ...mobilectasFragment
+    }
+    personalizedMeta {
+      __typename
+      ...personalizedMetaFragment
+    }
+    price {
+      __typename
+      ...skuPriceFragment
+    }
+  }
+}

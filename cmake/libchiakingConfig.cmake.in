@@ -1,0 +1,44 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+if(NOT WIN32)
+    find_dependency(Threads)
+endif()
+if(@LIBCHIAKING_CRYPTO_OPENSSL@)
+    find_dependency(OpenSSL)
+endif()
+if(@LIBCHIAKING_CRYPTO_BORINGSSL@)
+    find_dependency(OpenSSL CONFIG)
+endif()
+if(@LIBCHIAKING_CURL@)
+    find_dependency(CURL 7.86)
+endif()
+if(@LIBCHIAKING_SYSTEM_SIMDUTF@)
+    find_dependency(simdutf CONFIG)
+endif()
+if(@LIBCHIAKING_HAS_MEDIA_OPUS@)
+    if(NOT TARGET PkgConfig::LIBCHIAKING_OPUS)
+        find_dependency(PkgConfig)
+        pkg_check_modules(LIBCHIAKING_OPUS REQUIRED IMPORTED_TARGET GLOBAL opus)
+    endif()
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/libchiakingTargets.cmake")
+
+foreach(libchiaking_component IN ITEMS @LIBCHIAKING_EXPORT_NAMES@ curl crypto_openssl crypto_boringssl dtls_openssl
+        default_platform media_opus)
+    if(TARGET libchiaking::${libchiaking_component})
+        set(libchiaking_${libchiaking_component}_FOUND 1)
+    else()
+        set(libchiaking_${libchiaking_component}_FOUND 0)
+    endif()
+endforeach()
+
+if(@LIBCHIAKING_KAKUSAN@)
+    set(libchiaking_kakusan_FOUND 1)
+else()
+    set(libchiaking_kakusan_FOUND 0)
+endif()
+
+check_required_components(libchiaking)

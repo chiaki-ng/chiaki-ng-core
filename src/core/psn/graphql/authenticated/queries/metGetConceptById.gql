@@ -1,0 +1,219 @@
+fragment CompatibilityNoticeFragment on CompatibilityNotice {
+  __typename
+  targetPlatforms
+  type
+  value
+}
+
+fragment compatibilityNoticesByPlatformFragment on CompatibilityNotices {
+  Common {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  PS4 {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  PS5 {
+    __typename
+    ...CompatibilityNoticeFragment
+  }
+  __typename
+}
+
+fragment conceptFragment on Concept {
+  __typename
+  accessibilityNoticesByPlatform {
+    Common {
+      __typename
+      group
+      type
+      value
+    }
+    PS4 {
+      __typename
+      group
+      type
+      value
+    }
+    PS5 {
+      __typename
+      group
+      type
+      value
+    }
+    __typename
+  }
+  combinedLocalizedGenres {
+    __typename
+    value
+  }
+  compatibilityNoticesByPlatform {
+    __typename
+    ...compatibilityNoticesByPlatformFragment
+  }
+  contentRating {
+    __typename
+    authority
+    description
+    descriptors {
+      __typename
+      description
+      name
+      url
+    }
+    interactiveElements {
+      __typename
+      description
+      name
+    }
+    name
+    url
+  }
+  descriptions {
+    __typename
+    type
+    value
+  }
+  id
+  invariantName
+  media {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+    role
+    type
+    url
+  }
+  name
+  platforms
+  privacyPolicy
+  publisherName
+  releaseDate {
+    __typename
+    type
+    value
+  }
+}
+
+fragment productFragment on Product {
+  __typename
+  accessibilityNoticesByPlatform {
+    Common {
+      __typename
+      group
+      type
+      value
+    }
+    PS4 {
+      __typename
+      group
+      type
+      value
+    }
+    PS5 {
+      __typename
+      group
+      type
+      value
+    }
+    __typename
+  }
+  backwardsCompatibilityCategory
+  combinedLocalizedGenres {
+    __typename
+    value
+  }
+  compatibilityNoticesByPlatform {
+    __typename
+    ...compatibilityNoticesByPlatformFragment
+  }
+  contentRating {
+    __typename
+    authority
+    description
+    descriptors {
+      __typename
+      description
+      name
+      url
+    }
+    interactiveElements {
+      __typename
+      description
+      name
+    }
+    name
+    url
+  }
+  descriptions {
+    __typename
+    type
+    value
+  }
+  edition {
+    __typename
+    features
+    invariantName
+    name
+    ordering
+    type
+  }
+  id
+  invariantName
+  localizedStoreDisplayClassification
+  media {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+    role
+    type
+    url
+  }
+  name
+  npTitleId
+  platforms
+  privacyPolicy
+  publisherName
+  releaseDate
+  screenLanguages
+  screenLanguagesByPlatform {
+    __typename
+    platform
+    screenLanguages
+  }
+  skus {
+    __typename
+    id
+    name
+  }
+  spokenLanguages
+  spokenLanguagesByPlatform {
+    __typename
+    platform
+    spokenLanguages
+  }
+  storeDisplayClassification
+  subType
+  topCategory
+  type
+}
+
+query metGetConceptById($conceptId: String!) {
+  conceptRetrieve(conceptId: $conceptId) {
+    __typename
+    defaultProduct {
+      __typename
+      ...productFragment
+    }
+    ...conceptFragment
+  }
+}

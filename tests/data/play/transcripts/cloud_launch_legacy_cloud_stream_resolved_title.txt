@@ -1,0 +1,119 @@
+http #1 POST https://ca.account.sony.com/api/authz/v3/oauth/authorizeCheck
+  Content-Type: application/json; charset=UTF-8
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: bytes=372 fnv1a64=8770218a74111c8a
+http #2 GET https://m.np.playstation.com/api/subscriptions/v2/users/me/premium/features/cloudgame
+  Authorization: Bearer <value len=19>
+  Accept: application/json
+  body: none
+http #3 GET https://web.np.playstation.com/api/graphql/v1/op?operationName=getSubscriptions&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%2236c5aa5049115a8b37008e45815c3cd31414d52660cd94a45fcdb17294800db1%22%7D%7D
+  X-Psn-App-Ver: PlayStationApp/26.9.2
+  apollographql-client-name: PlayStationApp
+  apollographql-client-version: 26.9.2
+  disable_query_whitelist: false
+  Content-Type: application/json
+  Accept: application/json
+  Authorization: Bearer <value len=19>
+  body: none
+http #4 GET https://ca.account.sony.com/api/v1/oauth/authorize?smcid=pc:psnow&applicationId=psnow&response_type=code&scope=kamaji:commerce_native%20kamaji:commerce_container%20kamaji:lists%20kamaji:s2s.subscriptionsPremium.get&client_id=bc6b0777-abb5-40da-92ca-e133cf18e989&redirect_uri=https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html&service_entity=urn:service-entity:psn&prompt=none&renderMode=mobilePortrait&hidePageElements=forgotPasswordLink&displayFooter=none&disableLinks=qriocityLink&mid=PSNOW&duid=<device-id len=48>&layout_type=popup&service_logo=ps&tp_psn=true&noEVBlock=true
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: none
+http #5 POST https://psnow.playstation.com/kamaji/api/pcnow/00_09_000/user/session
+  Content-Type: text/plain;charset=UTF-8
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Alt-Referer: https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html
+  Origin: https://psnow.playstation.com
+  Referer: https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/
+  Accept: */*
+  body: bytes=113 fnv1a64=b1be097a30bc5ffc
+http #6 GET https://psnow.playstation.com/store/api/pcnow/00_09_000/container/GB/en/19/UP0114-CUSA00001_00-FAKE0102TITLE000?useOffers=true&gkb=1&gkb2=1
+  Accept: application/json
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+  body: none
+http #7 GET https://ca.account.sony.com/api/v1/oauth/authorize?smcid=pc:psnow&applicationId=psnow&response_type=token&scope=kamaji:get_internal_entitlements%20user:account.attributes.validate%20kamaji:get_privacy_settings%20user:account.settings.privacy.get%20kamaji:s2s.subscriptionsPremium.get&client_id=dc523cc2-b51b-4190-bff0-3397c06871b3&redirect_uri=https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html&grant_type=authorization_code&service_entity=urn:service-entity:psn&prompt=none&renderMode=mobilePortrait&hidePageElements=forgotPasswordLink&displayFooter=none&disableLinks=qriocityLink&mid=PSNOW&duid=<device-id len=48>&layout_type=popup&service_logo=ps&tp_psn=true&noEVBlock=true
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: none
+http #8 POST https://accounts.api.playstation.com/api/v2/accounts/me/attributes
+  Authorization: Bearer <value len=9>
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Accept: application/json
+  Content-Type: application/json
+  body: bytes=296 fnv1a64=b2843a0093530e62
+http #9 GET https://commerce.api.np.km.playstation.net/commerce/api/v1/users/me/internal_entitlements/RESOLVED?fields=game_meta%2Csku_meta
+  Authorization: Bearer <value len=9>
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Accept: application/json
+  body: none
+http #10 GET https://ca.account.sony.com/api/v1/oauth/authorize?smcid=pc:psnow&applicationId=psnow&response_type=code&scope=kamaji:commerce_native&client_id=bc6b0777-abb5-40da-92ca-e133cf18e989&redirect_uri=https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html&service_entity=urn:service-entity:psn&prompt=none&mid=PSNOW&duid=<device-id len=48>&layout_type=popup&service_logo=ps&tp_psn=true&noEVBlock=true
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: none
+http #11 POST https://psnow.playstation.com/kamaji/api/pcnow/00_09_000/user/session
+  Content-Type: text/plain;charset=UTF-8
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Alt-Referer: https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html
+  Origin: https://psnow.playstation.com
+  Referer: https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/
+  Accept: */*
+  body: bytes=113 fnv1a64=b1be097a30bc5ffc
+http #12 GET https://cc.prod.gaikai.com/v1/client_ids?virtType=konan
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  body: none
+http #13 POST https://config.cc.prod.gaikai.com/v1/config
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  body: bytes=50 fnv1a64=3fecaa585a1cda20
+http #14 POST https://cc.prod.gaikai.com/v1/sessions/start?npEnv=np
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-Session: <value len=10>
+  body: bytes=1349 fnv1a64=701d1d530e59d7c1
+http #15 GET https://ca.account.sony.com/api/v1/oauth/authorize?response_type=code&client_id=gk-id&redirect_uri=https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html&service_entity=urn:service-entity:psn&prompt=none&duid=<device-id len=48>&smcid=pc:psnow&applicationId=psnow&mid=PSNOW&scope=kamaji:commerce_native%20versa:user_update_entitlements_first_play%20kamaji:lists&renderMode=mobilePortrait&hidePageElements=forgotPasswordLink&displayFooter=none&disableLinks=qriocityLink&layout_type=popup&service_logo=ps&tp_psn=true&noEVBlock=true
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: none
+http #16 GET https://ca.account.sony.com/api/v1/oauth/authorize?response_type=code&redirect_uri=https://psnow.playstation.com/app/2.2.0/133/5cdcc037d/grc-response.html&service_entity=urn:service-entity:psn&prompt=none&client_id=ps3-id&smcid=pc:psnow&applicationId=psnow&mid=PSNOW&scope=kamaji:commerce_native&renderMode=mobilePortrait&hidePageElements=forgotPasswordLink&displayFooter=none&disableLinks=qriocityLink&layout_type=popup&service_logo=ps&tp_psn=true&noEVBlock=true
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  Cookie: npsso=<value len=15>
+  body: none
+http #17 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/authorize
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=9>
+  body: bytes=1367 fnv1a64=b8587b398812effa
+http #18 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/lock?forceLogout=true
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=13>
+  body: bytes=1367 fnv1a64=b8587b398812effa
+http #19 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/datacenters
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=13>
+  body: bytes=1367 fnv1a64=b8587b398812effa
+http #20 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/datacenters/select
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=14>
+  body: bytes=1526 fnv1a64=996ca71db6d29964
+http #21 POST https://cc.prod.gaikai.com/v1/sessions/<session-id len=17>/allocate
+  Content-Type: application/json
+  Accept: */*
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) playstation-now/0.0.0 Chrome/83.0.4103.104 Electron/9.0.4 Safari/537.36 gkApollo
+  X-Gaikai-SessionId: <session-id len=17>
+  X-Gaikai-Session: <value len=10>
+  body: bytes=1584 fnv1a64=82c480ca60f9d362

@@ -1,0 +1,3 @@
+* fallback_type:FT_POINTER
+* enum_validate:true
+* enum_intsize:IS_32

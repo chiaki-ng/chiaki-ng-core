@@ -1,0 +1,15 @@
+query getSubscriptions {
+  fetchSubscriptions {
+    __typename
+    subscriptions {
+      __typename
+      active
+      endDate
+      id
+      productName
+      subscriptionId
+      subscriptionType
+      tierLabel
+    }
+  }
+}

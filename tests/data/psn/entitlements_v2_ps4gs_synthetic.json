@@ -1,0 +1,101 @@
+{
+  "revisionId": 1000000000000,
+  "start": 0,
+  "totalResults": 5,
+  "entitlements": [
+    {
+      "id": "EP0109-CUSA37002_00-FAKE0107TITLE000",
+      "activeDate": "2026-08-14T00:00:00Z",
+      "inactiveDate": "2026-12-13T00:00:00Z",
+      "entitlementType": 5,
+      "skuId": "EP0109-CUSA37002_00-FAKE0050TITLE000-EC01",
+      "productId": "EP0109-CUSA37002_00-FAKE0050TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps4",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Ghost of Isles",
+        "type": "PS4GS",
+        "iconUrl": "https://image.api.playstation.com/game/CUSA37002_00/icon0.png",
+        "packageType": "PS4GS"
+      },
+      "titleMeta": {
+        "titleId": "CUSA37002_00",
+        "name": "Ghost of Isles DIRECTOR'S CUT",
+        "imageUrl": "https://image.api.playstation.com/title/CUSA37002_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "900001",
+        "name": "Ghost of Isles",
+        "iconUrl": "https://image.api.playstation.com/concept/900001.png",
+        "minimumAge": 18
+      },
+      "rewardMeta": {
+        "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+        "rewardServiceType": 2,
+        "rewardMembershipType": "PS_PLUS"
+      },
+      "preorderPlaceholderFlag": false,
+      "serviceType": 0
+    },
+    {
+      "id": "EP0103-CUSA07008_00-FAKE0107TITLE000",
+      "activeDate": "2026-08-14T12:00:00Z",
+      "inactiveDate": "2026-12-13T00:00:00Z",
+      "entitlementType": 5,
+      "skuId": "EP0103-CUSA07008_00-FAKE0054TITLE000-EC01",
+      "productId": "EP0103-CUSA07008_00-FAKE0054TITLE000",
+      "activeFlag": true,
+      "revisionId": 1000000000001,
+      "featureType": 3,
+      "preorderFlag": false,
+      "remainingCount": 0,
+      "consumedCount": 0,
+      "isConsumable": false,
+      "isSubscription": false,
+      "entitlementAttributes": [
+        {
+          "entitlementKeyFlag": false,
+          "platformId": "ps4",
+          "placeholderFlag": false
+        }
+      ],
+      "gameMeta": {
+        "name": "Street Chase V",
+        "type": "PS4GS",
+        "iconUrl": "https://image.api.playstation.com/game/CUSA07008_00/icon0.png",
+        "packageType": "PS4GS"
+      },
+      "titleMeta": {
+        "titleId": "CUSA07008_00",
+        "name": "Street Chase V (PS4™)",
+        "imageUrl": "https://image.api.playstation.com/title/CUSA07008_00.png"
+      },
+      "conceptMeta": {
+        "conceptId": "900003",
+        "name": "Street Chase V (PlayStation®5)",
+        "iconUrl": "https://image.api.playstation.com/concept/900003.png",
+        "minimumAge": 18
+      },
+      "rewardMeta": {
+        "rewardId": "SUB001-SUBC00002_00-FIXTUREREWARD001",
+        "rewardServiceType": 2,
+        "rewardMembershipType": "PS_PLUS"
+      },
+      "preorderPlaceholderFlag": false,
+      "serviceType": 0
+    }
+  ]
+}

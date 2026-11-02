@@ -1,0 +1,117 @@
+{
+  "warning": "PUBLIC DETERMINISTIC TEST SECRETS. NOT FOR REAL SESSIONS. IP ADDRESSES AND CERTIFICATE DIGESTS ARE FIXTURES.",
+  "host_seed": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+  "guest_seed": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+  "host_key": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+  "guest_key": "29acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd7",
+  "invitation": {
+    "fields": {
+      "kind": "invite",
+      "seed": "101112131415161718191a1b1c1d1e1f",
+      "invite_expires_at": 1791115800,
+      "source_protocol": 12,
+      "capacity": 4,
+      "dtls_sha256": "bb9f49d8afba90c800372458ce2fbbfb2e814d1ceaf63bae6f6f7164afad0142",
+      "identity_hint": "03a107bff3ce10be",
+      "port_guesses": 0,
+      "candidates": [
+        {
+          "type": "host",
+          "address": "192.0.2.10",
+          "port": 50000
+        }
+      ]
+    },
+    "derived": {
+      "ice_ufrag": "b0f90224b9b09771",
+      "ice_password": "f3882d091d4037ab2fbf8f2037a80290c296653e832214da",
+      "block_sha256": "5e663a13fc815e4876bc2d577ad9acbddfd54d277ea77d0c803139ea51589deb",
+      "priorities": [
+        2130706431
+      ],
+      "invitation_id": "69e8eb331d88a4366092558b29cabe2e",
+      "created_at": 1791115200
+    }
+  },
+  "reply": {
+    "fields": {
+      "kind": "reply",
+      "seed": "505152535455565758595a5b5c5d5e5f",
+      "invite_tag": "5e663a13fc815e48",
+      "dtls_sha256": "97bb019efaefe1c42f643c6412425d3b015dfcfe386c99e596daa4033e9f0caa",
+      "identity_hint": "29acbae141bccaf0",
+      "port_guesses": 0,
+      "candidates": [
+        {
+          "type": "host",
+          "address": "198.51.100.20",
+          "port": 50000
+        }
+      ]
+    },
+    "derived": {
+      "ice_ufrag": "7c20492a0cf83af4",
+      "ice_password": "c67346ec90917dbabba6cb152b3a1ed8d1e4d1fd9a28514e",
+      "block_sha256": "a15dd78631a7fe45a47ea160429d1c7d24f9ec60c1e474e3f17cc5bdd2e50739",
+      "priorities": [
+        2130706431
+      ],
+      "reply_nonce": "31ebb444b48ff1e9720693168fa0ec08"
+    }
+  },
+  "session_id": "000102030405060708090a0b0c0d0e0f",
+  "invite_hash": "5e663a13fc815e4876bc2d577ad9acbddfd54d277ea77d0c803139ea51589deb",
+  "reply_hash": "a15dd78631a7fe45a47ea160429d1c7d24f9ec60c1e474e3f17cc5bdd2e50739",
+  "transcript": "19c22bc76783eecd072a6b9cd6b042f858d4acf72bcb352fa0f4982bea8d9e65",
+  "identity": {
+    "host_input": "5243502f312f6964656e74697479000119c22bc76783eecd072a6b9cd6b042f858d4acf72bcb352fa0f4982bea8d9e65311eae7202d446883072a15c7341cd8921fcd939d890f408d46fb5e0f89584bd7368617265642d736f757263652d696e636f6d696e672d756e74696c2d73657373696f6e2d656e642d7631000102030405060708090a0b0c0d0e0f020000",
+    "guest_input": "5243502f312f6964656e74697479000219c22bc76783eecd072a6b9cd6b042f858d4acf72bcb352fa0f4982bea8d9e65311eae7202d446883072a15c7341cd8921fcd939d890f408d46fb5e0f89584bd7368617265642d736f757263652d696e636f6d696e672d756e74696c2d73657373696f6e2d656e642d7631"
+  },
+  "pairing": {
+    "pA": "0442aea89a651ab3037ede070d534e5f1f8bd6c6e79c9ed854031de703159f8b43e70d121a4ca5885771a05bbb16963bb129dd5fabc9d7fdfc287e92aca27d7341",
+    "pB": "041368a8df98575b436e39afea2321de6369f326b63a8816044ba290885777b6f78a43f42b991a8412377dcc0e246049776a20f345c0bb77cf4eeadbbec5ab5a08",
+    "K": "0452e6b18c86300140bae6e6f2fefe46d4ef81df81bcfacda9a2d9b8b72049299039c46c2a207a73f2eaf9c808ce9232b1e8efdd0dddbb750146d3a30f63a7c912",
+    "TT": "2b000000000000005243502f312f686f73740003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b82c000000000000005243502f312f67756573740029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd741000000000000000442aea89a651ab3037ede070d534e5f1f8bd6c6e79c9ed854031de703159f8b43e70d121a4ca5885771a05bbb16963bb129dd5fabc9d7fdfc287e92aca27d73414100000000000000041368a8df98575b436e39afea2321de6369f326b63a8816044ba290885777b6f78a43f42b991a8412377dcc0e246049776a20f345c0bb77cf4eeadbbec5ab5a0841000000000000000452e6b18c86300140bae6e6f2fefe46d4ef81df81bcfacda9a2d9b8b72049299039c46c2a207a73f2eaf9c808ce9232b1e8efdd0dddbb750146d3a30f63a7c91220000000000000002f35432a572357e9e3651e285cd9f3d48ad6a027a49fe1eb2c5c03ed58b10841",
+    "Ke": "bc3757344b9c0608850c04fed75ff837074aeb4fa0a770784c6078852e1911b5",
+    "Ka": "d6ffb4332ceab430098d6167065bb2326e9f7c2a5002687b1c23bd8f09638bd3",
+    "KcA": "fb9653f2062cfbc33422c6b7126030e6e3f7338da0e4bbb7e66bfa8bc9bcf8e0",
+    "KcB": "ea3ed03e3c150bd6300f9e5d7334191e164a9cd7e163111e0e71edae3992e555",
+    "cA": "68464633321a32850fa97240b6c95671586c7c319fa74b4ae6b3c4ceccb09dbcfe051059fcc8af2a633659d26d72deb0dd7d2a0bb6c66fe9710225fd1981daeb",
+    "cB": "9cd32875fa7d3f78168bc16c05528bc23d5cef8c7259bc67f7155290a0a6f10db264fe76555af90edcc8e766c244c51fa114e1672b6088c1be4ac7d72bf6c094",
+    "host_code": "4821",
+    "guest_code": "7306",
+    "salt": "5243502f312f70617373776f72640069e8eb331d88a4366092558b29cabe2e",
+    "wide": "895ef5a088295f3994a5838e1775a3a4c845001136171625d6a5f89ee8640ef4acc4517842458d68946518e301fe97f161a7f939cb9908eef8f1b023ace0b17a",
+    "w": "2f35432a572357e9e3651e285cd9f3d48ad6a027a49fe1eb2c5c03ed58b10841",
+    "x": "b9e336be12b85d28e828292fdde67d2718d1e54529d4b612b079458c92b81a16",
+    "y": "71ae45e169e2a2de6d7ac5a2ba23c28a3434651d4275ccc6665db44676af0d67",
+    "A": "5243502f312f686f73740003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+    "B": "5243502f312f67756573740029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd7",
+    "AAD": "19c22bc76783eecd072a6b9cd6b042f858d4acf72bcb352fa0f4982bea8d9e65311eae7202d446883072a15c7341cd8921fcd939d890f408d46fb5e0f89584bd",
+    "pairing_exporter": "311eae7202d446883072a15c7341cd8921fcd939d890f408d46fb5e0f89584bd"
+  },
+  "input_packet_hex": "01010300000000070000002a000003e800000001800100007fff00000000ffff01028000ffff0000",
+  "input_fields": {
+    "seat": 3,
+    "generation": 7,
+    "sequence": 42,
+    "elapsed_ms": 1000,
+    "buttons": 1,
+    "sticks": [
+      -32767,
+      0,
+      32767,
+      0
+    ],
+    "triggers": [
+      0,
+      65535
+    ],
+    "touch": [
+      1,
+      2,
+      32768,
+      65535
+    ]
+  }
+}

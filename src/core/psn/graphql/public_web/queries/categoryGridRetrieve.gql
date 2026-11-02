@@ -1,0 +1,116 @@
+fragment personalizedMetaFragment on PersonalizedMeta {
+  __typename
+  hasMediaOverrides
+  media {
+    __typename
+    role
+    type
+    url
+  }
+}
+
+fragment priceFragment on SkuPrice {
+  __typename
+  basePrice
+  discountText
+  discountedPrice
+  includesBundleOffer
+  isExclusive
+  isFree
+  isTiedToSubscription
+  serviceBranding
+  telemetryData
+  upsellServiceBranding
+  upsellText
+}
+
+query categoryGridRetrieve($facetOptions: [String], $filterBy: [String], $id: ID!, $maxResults: Int, $pageArgs: PageArgs, $sortBy: CategorySortingOptionInput) {
+  categoryGridRetrieve(facetOptions: $facetOptions, filterBy: $filterBy, id: $id, maxResults: $maxResults, pageArgs: $pageArgs, sortBy: $sortBy) {
+    __typename
+    concepts {
+      __typename
+      id
+      media {
+        __typename
+        role
+        type
+        url
+      }
+      name
+      personalizedMeta {
+        __typename
+        ...personalizedMetaFragment
+      }
+      price {
+        __typename
+        ...priceFragment
+      }
+      products {
+        __typename
+        id
+      }
+      telemetryData
+    }
+    facetOptions {
+      __typename
+      displayName
+      name
+      values {
+        __typename
+        count
+        displayName
+        key
+      }
+    }
+    id
+    localizedName
+    pageInfo {
+      __typename
+      isLast
+      offset
+      size
+      totalCount
+    }
+    products {
+      __typename
+      id
+      localizedStoreDisplayClassification
+      media {
+        __typename
+        role
+        type
+        url
+      }
+      name
+      npTitleId
+      personalizedMeta {
+        __typename
+        ...personalizedMetaFragment
+      }
+      platforms
+      price {
+        __typename
+        ...priceFragment
+      }
+      skus {
+        __typename
+        type
+      }
+      storeDisplayClassification
+      telemetryData
+    }
+    reportingName
+    sortedBy {
+      __typename
+      displayName
+      isAscending
+      name
+    }
+    sortingOptions {
+      __typename
+      displayName
+      isAscending
+      name
+    }
+  }
+}

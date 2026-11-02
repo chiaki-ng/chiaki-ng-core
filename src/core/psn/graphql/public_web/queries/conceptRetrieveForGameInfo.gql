@@ -1,0 +1,58 @@
+fragment ProductInfo on Product {
+  __typename
+  descriptions {
+    __typename
+    subType
+    type
+    value
+  }
+  id
+  localizedGenres {
+    __typename
+    value
+  }
+  platforms
+  publisherName
+  releaseDate
+  screenLanguages
+  screenLanguagesByPlatform {
+    __typename
+    platform
+    screenLanguages
+  }
+  spokenLanguages
+  spokenLanguagesByPlatform {
+    __typename
+    platform
+    spokenLanguages
+  }
+  type
+}
+
+query conceptRetrieveForGameInfo($conceptId: String!) {
+  conceptRetrieve(conceptId: $conceptId) {
+    __typename
+    defaultProduct {
+      __typename
+      ...ProductInfo
+    }
+    descriptions {
+      __typename
+      subType
+      type
+      value
+    }
+    id
+    invariantName
+    localizedGenres {
+      __typename
+      value
+    }
+    publisherName
+    releaseDate {
+      __typename
+      type
+      value
+    }
+  }
+}

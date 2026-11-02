@@ -1,0 +1,20 @@
+@INCLUDE               = docs/doxygen/Doxyfile
+
+INPUT                  = docs/doxygen/api.dox \
+                         docs/doxygen/namespaces.dox \
+                         docs/BUILDING.md \
+                         docs/CPP_STYLE.md \
+                         include/libchiaking
+FILE_PATTERNS          = *.hpp *.md *.dox
+EXCLUDE                =
+STRIP_FROM_PATH        = include docs/doxygen docs
+INCLUDE_PATH           = include
+USE_MDFILE_AS_MAINPAGE =
+
+GENERATE_HTML          = NO
+GENERATE_XML           = YES
+XML_PROGRAMLISTING     = NO
+XML_OUTPUT             = lint
+HAVE_DOT               = NO
+SEARCHENGINE           = NO
+WARN_IF_UNDOC_ENUM_VAL = YES

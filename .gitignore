@@ -1,0 +1,17 @@
+/build*/
+/.codex/
+/AGENTS.md
+/GLM_WORKERS.md
+/tools/setup-glm-key-macos.sh
+
+# Assistant and editor files kept out of the repository
+.claude/
+.agents/
+.codex/
+.cursor/
+.windsurf/
+.aider*
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+GLM_WORKERS.md

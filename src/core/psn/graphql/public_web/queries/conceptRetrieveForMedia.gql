@@ -1,0 +1,52 @@
+fragment ConceptMedia on Concept {
+  __typename
+  id
+  media {
+    __typename
+    role
+    type
+    url
+  }
+  name
+  personalizedMeta {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+  }
+}
+
+fragment ProductMedia on Product {
+  __typename
+  id
+  media {
+    __typename
+    role
+    type
+    url
+  }
+  name
+  personalizedMeta {
+    __typename
+    media {
+      __typename
+      role
+      type
+      url
+    }
+  }
+}
+
+query conceptRetrieveForMedia($conceptId: String!) {
+  conceptRetrieve(conceptId: $conceptId) {
+    __typename
+    defaultProduct {
+      __typename
+      ...ProductMedia
+    }
+    ...ConceptMedia
+  }
+}

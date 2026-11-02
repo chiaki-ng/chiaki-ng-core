@@ -1,0 +1,145 @@
+{
+  "invitation": {
+    "fields": {
+      "kind": "invite",
+      "seed": "57a981dbb295826b1255f07ba2a31c29",
+      "invite_expires_at": 1791917072,
+      "source_protocol": 12,
+      "capacity": 4,
+      "dtls_sha256": "5ae178f86dc225e8bd087e90d7891676063bbaddfe5b138d76c6b83603883e24",
+      "identity_hint": "efaff1a7fc50a8ce",
+      "port_guesses": 0,
+      "candidates": [
+        {
+          "type": "host",
+          "address": "192.168.1.20",
+          "port": 50000
+        },
+        {
+          "type": "srflx",
+          "address": "203.0.113.10",
+          "port": 50000,
+          "base": 0
+        }
+      ]
+    },
+    "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUNqT2ns",
+    "derived": {
+      "ice_ufrag": "f4ae865df4e2b235",
+      "ice_password": "31c28f3ec7a2e76dc3ccc6ecebeb0e9eb260d81e708bae43",
+      "block_sha256": "bef94c381eebe102ace75b3472413bb617b357e3eb4b72999d4b15c4a527c374",
+      "priorities": [
+        2130706431,
+        1694498815
+      ],
+      "invitation_id": "88bd22ba2c6f3fe24e3fdbc3ff4cbdb8",
+      "created_at": 1791916472
+    }
+  },
+  "reply": {
+    "fields": {
+      "kind": "reply",
+      "seed": "67b77c4c3d91320ce88480bfc089f2ab",
+      "invite_tag": "bef94c381eebe102",
+      "dtls_sha256": "b19bf7766c5105c284189b166b8e209f897f6ebff296522b42670c0e6bb21e8b",
+      "identity_hint": "419a189cd5f63f9d",
+      "port_guesses": 32,
+      "candidates": [
+        {
+          "type": "host",
+          "address": "10.0.0.20",
+          "port": 51000
+        },
+        {
+          "type": "host",
+          "address": "2001:db8::20",
+          "port": 51000
+        },
+        {
+          "type": "srflx",
+          "address": "198.51.100.20",
+          "port": 40122,
+          "base": 0
+        },
+        {
+          "type": "srflx",
+          "address": "198.51.100.20",
+          "port": 40127,
+          "base": 0
+        }
+      ]
+    },
+    "block": "RCP1:Ume3fEw9kTIM6ISAv8CJ8qu--Uw4HuvhArGb93ZsUQXChBibFmuOIJ-Jf26_8pZSK0JnDA5rsh6LQZoYnNX2P50gBAAKAAAUxzhAIAENuAAAAAAAAAAAAAAAIMc4gMYzZBScuoDGM2QUnL_wVB4W",
+    "derived": {
+      "ice_ufrag": "700c79a548790900",
+      "ice_password": "66c7555d8fe8046b2ee057668b5b8e8a4c928c6ab5b9dfa7",
+      "block_sha256": "68f446f0d2f04567b25ab1b63d8fafa32347fc95fd8dbf31513b495af047fbec",
+      "priorities": [
+        2130706431,
+        2130706175,
+        1694498815,
+        1694498815
+      ],
+      "reply_nonce": "ba494c9794bae2313839291965a77933"
+    }
+  },
+  "transcript": "d8fa3310e61e1322bde42d99ef16f1d7b607b47aa762a14ab6f5805c3ce8eca9",
+  "rejected": [
+    {
+      "name": "wrong check value",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUNqT2no"
+    },
+    {
+      "name": "draft 4 in the first byte",
+      "block": "RCP1:QVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUL4iuu0"
+    },
+    {
+      "name": "unknown kind",
+      "block": "RCP1:U1epgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUE1hNNk"
+    },
+    {
+      "name": "source protocol below 9",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQCARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUCr-4nY"
+    },
+    {
+      "name": "capacity zero",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDABa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDULg4k-s"
+    },
+    {
+      "name": "port guesses above 32",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOIQIAwKgBFMNQgMsAcQrDUGPEMJc"
+    },
+    {
+      "name": "candidate count zero",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAAAwKgBFMNQgMsAcQrDUHIVa-o"
+    },
+    {
+      "name": "candidate count beyond the data",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAMAwKgBFMNQgMsAcQrDUGNoAZM"
+    },
+    {
+      "name": "reserved candidate flag",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIgwKgBFMNQgMsAcQrDUBf3oqM"
+    },
+    {
+      "name": "host candidate with a base index",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIBwKgBFMNQgMsAcQrDUEecOw0"
+    },
+    {
+      "name": "srflx base index with no host",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgcsAcQrDUHzk0c8"
+    },
+    {
+      "name": "port zero",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFAAAgMsAcQrDUA7_FjA"
+    },
+    {
+      "name": "trailing byte",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcQrDUAAVD9Tj"
+    },
+    {
+      "name": "truncated",
+      "block": "RCP1:UVepgduylYJrElXwe6KjHClqznwQDARa4Xj4bcIl6L0IfpDXiRZ2Bju63f5bE412xrg2A4g-JO-v8af8UKjOAAIAwKgBFMNQgMsAcT1r3l4"
+    }
+  ]
+}

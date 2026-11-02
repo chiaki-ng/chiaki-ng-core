@@ -1,0 +1,102 @@
+/// @namespace libchiaking
+/// @brief The whole library; ChiakiNg is the entry point.
+
+/// @namespace libchiaking::users
+/// @brief Signing in to PSN and holding each player's credentials.
+
+/// @namespace libchiaking::psn
+/// @brief PSN identities shared by every context, such as AccountId.
+
+/// @namespace libchiaking::psn::auth
+/// @brief The secret credentials a PSN sign-in produces and spends.
+
+/// @namespace libchiaking::psn::account
+/// @brief A signed-in account's authorised calls and membership.
+
+/// @namespace libchiaking::consoles
+/// @brief Finding, registering, waking and remembering PS4 and PS5 consoles.
+
+/// @namespace libchiaking::catalog
+/// @brief The player's games, what they own and what can be streamed.
+
+/// @namespace libchiaking::messages
+/// @brief A player's PSN message conversations: listing them, reading one and
+/// sending text in it.
+///
+/// @namespace libchiaking::trophies
+/// @brief A player's trophy level, trophy list and each title's trophies.
+
+/// @namespace libchiaking::play
+/// @brief Starting a session and everything a frontend does with a live one.
+
+/// @namespace libchiaking::play::testing
+/// @brief Scripted doubles that stand in for a console or the cloud.
+
+/// @namespace libchiaking::kakusan
+/// @brief Letting invited players join a live session from elsewhere.
+
+/// @namespace libchiaking::kakusan::testing
+/// @brief Scripted doubles for the other end of a shared session.
+
+/// @namespace libchiaking::platform
+/// @brief The ports a host provides, and the stock implementations of them.
+
+/// @namespace libchiaking::platform::openssl
+/// @brief Stock providers backed by OpenSSL.
+
+/// @namespace libchiaking::platform::boringssl
+/// @brief Stock providers backed by BoringSSL.
+
+/// @namespace libchiaking::platform::libnx
+/// @brief Providers for Nintendo Switch homebrew, backed by libnx.
+
+/// @namespace libchiaking::platform::conformance
+/// @brief Checks a host runs against its own providers.
+
+/// @namespace libchiaking::platform::crypto_conformance
+/// @brief Checks a host runs against its own crypto provider.
+
+/// @namespace libchiaking::platform::net_conformance
+/// @brief Checks a host runs against its own network provider.
+
+/// @namespace libchiaking::diagnostics
+/// @brief Logs, journals and captures that record what a session did.
+
+/// @namespace libchiaking::controllers
+/// @brief Controller state a frontend sends for each seat, motion fusion, and the
+/// feedback a console sends back.
+
+/// @namespace libchiaking::media
+/// @brief What a stream delivers to a MediaSink: the stream description, video
+/// frames and units, audio units, and the codecs that decode sound and encode the
+/// microphone.
+
+/// @namespace libchiaking::memory
+/// @brief Memory that is wiped before it is released.
+
+/// @namespace libchiaking::progress
+/// @brief Reporting how far a long-running call has got and why it waits.
+
+/// @namespace libchiaking::testing
+/// @brief Fakes for exercising the API without a console, PSN or a network.
+
+/// @namespace libchiaking::net
+/// @brief Protocol vocabulary that the public API has to name.
+
+/// @namespace libchiaking::net::http
+/// @brief Typed secret credentials and where a request carries them.
+
+/// @namespace libchiaking::net::kakusan
+/// @brief Errors of the Kakusan protocol.
+
+/// @namespace libchiaking::net::kakusan::control
+/// @brief Control messages of the Kakusan protocol.
+
+/// @namespace libchiaking::net::protocol
+/// @brief Console protocols that the public API has to name.
+
+/// @namespace libchiaking::net::protocol::remote_play
+/// @brief Remote play registration states, targets and failures.
+
+/// @namespace libchiaking::platform::horizon
+/// @brief Providers for the Horizon operating system.

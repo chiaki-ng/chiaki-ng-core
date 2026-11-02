@@ -66,7 +66,7 @@ This library uses C++23. It is a re-write of chiaki-ng's library with a goal to 
 
 This library generally aims to follow [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) to model the business domain accordingly and reduce the interface that is required for any frontend to implement a series of steps. You may find more READMEs in each folder explaining that particular folder layout internally if you wish to understand the business logic that is being abstracted away.
 
-We welcome all to contribute. Before your first pull request is merged, CLA Assistant will ask you to sign the [chiaki-ng Contributor License Agreement](https://gist.github.com/streetpea/7ff632ca45180761deb851e7d738e6da). It lets the project keep chiaki-ng under the AGPL with the same OpenSSL and application store permissions, and nothing else.
+We welcome all to contribute. Before your first pull request is merged, CLA Assistant will ask you to sign the [chiaki-ng Contributor License Agreement](https://gist.github.com/streetpea/d97e8adea343ab183cb31ab78139fcd8). It lets the project keep chiaki-ng under the AGPL with the same OpenSSL and application store permissions, and nothing else.
 
 ---
 

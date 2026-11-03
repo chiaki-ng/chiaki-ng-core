@@ -12,7 +12,7 @@ namespace {
 
 namespace play = libchiaking::play;
 using Cause = play::OldServiceLaunch::Error::Cause;
-using Stage = play::OldServiceLaunch::Error::Stage;
+using LaunchStage = play::OldServiceLaunch::Error::Stage;
 using Method = OldServiceRig::Method;
 using Rig = OldServiceRig;
 
@@ -196,7 +196,7 @@ TEST_F(OldServiceSession, KeepsNoFailedToken) {
   const auto result = resolve(peer);
   ASSERT_FALSE(result);
   EXPECT_EQ(result.error().cause(), Cause::invalid_response);
-  EXPECT_EQ(result.error().stage(), Stage::commerce_oauth);
+  EXPECT_EQ(result.error().stage(), LaunchStage::commerce_oauth);
   ScriptedPeer again;
   again.steps = Rig::full_steps(false);
   EXPECT_TRUE(resolve(again));

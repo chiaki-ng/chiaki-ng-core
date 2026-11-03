@@ -25,7 +25,7 @@ using libchiaking::consoles::Generation;
 using libchiaking::consoles::HomePairing;
 using libchiaking::consoles::PairingFailure;
 using libchiaking::platform::StopToken;
-using Reason = PairingFailure::Reason;
+using PairingReason = PairingFailure::Reason;
 
 static_assert(libchiaking::consoles::Host::limit == 255);
 static_assert(HomePairing::host_limit == 255);
@@ -52,7 +52,7 @@ TEST_F(PairAtHome, NeverStartsWhenAlreadyStopped) {
       home.known.pair_at_home(*user, Home<>::host("127.0.0.1"), Generation::ps5,
                               Home<>::pin(), StopToken{stop});
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::cancelled);
+  EXPECT_EQ(result.error().reason, PairingReason::cancelled);
   EXPECT_FALSE(result.error().http_status);
   EXPECT_FALSE(result.error().ps_reason);
   EXPECT_TRUE(home.network.sent().empty());
@@ -77,7 +77,7 @@ TEST_F(PairAtHome, RefusesAnAddressThatIsNotForTheGeneration) {
                               Home<>::pin(), home.never);
   ASSERT_FALSE(wrong_generation);
   EXPECT_EQ(wrong_generation.error().reason,
-            Reason::address_not_for_generation);
+            PairingReason::address_not_for_generation);
   EXPECT_TRUE(home.network.sent().empty());
 }
 
@@ -92,7 +92,7 @@ TEST_F(PairAtHome, AnExpiredRunIsMalformedAndSendsNothing) {
       pairing.run(std::move(request.value()), "127.0.0.1", home.never,
                   libchiaking::rp_session_port, std::chrono::milliseconds{0});
   ASSERT_FALSE(expired);
-  EXPECT_EQ(expired.error().reason, Reason::malformed);
+  EXPECT_EQ(expired.error().reason, PairingReason::malformed);
   EXPECT_TRUE(home.network.sent().empty());
 }
 
@@ -106,7 +106,7 @@ TEST_F(PairAtHome, ReportsTheConsolesRefusal) {
   console.stop_serving();
   ASSERT_FALSE(result);
   const auto& failure = result.error();
-  EXPECT_EQ(failure.reason, Reason::refused);
+  EXPECT_EQ(failure.reason, PairingReason::refused);
   EXPECT_EQ(failure.http_status, std::uint16_t{403});
   EXPECT_EQ(failure.ps_reason, std::uint32_t{0x80108b12});
   EXPECT_FALSE(failure.internet_stage);
@@ -129,7 +129,7 @@ TEST_F(PairAtHome, AsksAPs4AtATypedAddressAsTheNewestFamily) {
                               Generation::ps4, Home<>::pin(), home.never);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::refused);
+  EXPECT_EQ(result.error().reason, PairingReason::refused);
   EXPECT_EQ(console.knock.substr(0, 4), "SRC2");
   const auto request = console.request_text();
   EXPECT_TRUE(request.starts_with("POST /sie/ps4/rp/sess/rgst HTTP/1.1\r\n"))
@@ -152,7 +152,7 @@ TEST_F(PairAtHome, PairsAPs4BelowSevenByOnlineId) {
   const auto unnamed =
       home.known.pair_at_home(*sofa.value(), *found, Home<>::pin(), home.never);
   ASSERT_FALSE(unnamed);
-  EXPECT_EQ(unnamed.error().reason, Reason::needs_online_id);
+  EXPECT_EQ(unnamed.error().reason, PairingReason::needs_online_id);
   EXPECT_TRUE(home.network.sent().empty());
 
   const auto player = home.signed_in.as("npsso", 7);
@@ -160,7 +160,7 @@ TEST_F(PairAtHome, PairsAPs4BelowSevenByOnlineId) {
       home.known.pair_at_home(*player, *found, Home<>::pin(), home.never);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::refused);
+  EXPECT_EQ(result.error().reason, PairingReason::refused);
   EXPECT_EQ(result.error().http_status, std::uint16_t{403});
   EXPECT_EQ(console.knock.substr(0, 4), "SRC2");
   const auto request = console.request_text();
@@ -270,7 +270,7 @@ TEST_F(PairAtHome, CannotReachAConsoleWithNoAddress) {
   const auto result = home.known.pair_at_home(*other, *console.value(),
                                               Home<>::pin(), home.never);
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::unreachable);
+  EXPECT_EQ(result.error().reason, PairingReason::unreachable);
   EXPECT_TRUE(home.network.sent().empty());
 }
 
@@ -291,7 +291,7 @@ TEST_P(PairAtHomeFailedSave, LeavesNothingLive) {
                               Home<>::pin(), home.never);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::not_saved);
+  EXPECT_EQ(result.error().reason, PairingReason::not_saved);
   EXPECT_FALSE(result.error().http_status);
   EXPECT_FALSE(result.error().ps_reason);
   EXPECT_TRUE(console.request_complete());
@@ -312,7 +312,7 @@ TEST_F(PairAtHome, LeavesAFoundConsoleUnpairedWhenTheSaveFails) {
       home.known.pair_at_home(*user, *found, Home<>::pin(), home.never);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::not_saved);
+  EXPECT_EQ(result.error().reason, PairingReason::not_saved);
   EXPECT_FALSE(found->is_paired());
   EXPECT_FALSE(found->is_saved());
   EXPECT_EQ(home.store.console_count(), 0U);
@@ -330,7 +330,7 @@ TEST_F(PairAtHome, AReplyThatCannotBeReadIsNotAPairing) {
                               Home<>::pin(), home.never);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::malformed);
+  EXPECT_EQ(result.error().reason, PairingReason::malformed);
   EXPECT_TRUE(home.nothing_is_live());
 }
 
@@ -340,12 +340,12 @@ TEST_F(PairAtHome, NobodyAtTheAddressIsUnreachable) {
       home.known.pair_at_home(*user, Home<>::host("127.0.0.1"), Generation::ps5,
                               Home<>::pin(), home.never);
   ASSERT_FALSE(absent);
-  EXPECT_EQ(absent.error().reason, Reason::unreachable);
+  EXPECT_EQ(absent.error().reason, PairingReason::unreachable);
   const auto unresolved =
       home.known.pair_at_home(*user, Home<>::host("unresolvable.invalid"),
                               Generation::ps5, Home<>::pin(), home.never);
   ASSERT_FALSE(unresolved);
-  EXPECT_EQ(unresolved.error().reason, Reason::unreachable);
+  EXPECT_EQ(unresolved.error().reason, PairingReason::unreachable);
   EXPECT_TRUE(home.nothing_is_live());
 }
 

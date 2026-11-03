@@ -10,7 +10,7 @@
 namespace cloud_test {
 namespace {
 
-using Reason = ConnectRig::Reason;
+using ConnectReason = ConnectRig::Reason;
 using Stage = ConnectRig::Stage;
 
 static_assert(!std::is_copy_constructible_v<play::HandshakeKey>);
@@ -26,7 +26,7 @@ class HandshakeKeyDecode : public PinnedTakionVersions {
     return ConnectRig::counts_up(decoded.value().bytes(), 16);
   }
 
-  static auto refuses(std::string_view text, Reason reason)
+  static auto refuses(std::string_view text, ConnectReason reason)
       -> testing::AssertionResult {
     return ConnectRig::fails_with(play::HandshakeKey::decode(text),
                                   Stage::active, reason);
@@ -36,7 +36,7 @@ class HandshakeKeyDecode : public PinnedTakionVersions {
       -> testing::AssertionResult {
     std::string altered{golden};
     altered[index] = character;
-    return refuses(altered, Reason::handshake_key_encoding);
+    return refuses(altered, ConnectReason::handshake_key_encoding);
   }
 };
 
@@ -45,15 +45,16 @@ TEST_F(HandshakeKeyDecode, DecodesSixteenBytesOfBase64) {
 }
 
 TEST_F(HandshakeKeyDecode, RefusesAKeyOfAnotherLength) {
-  EXPECT_TRUE(refuses("", Reason::handshake_key_length));
-  EXPECT_TRUE(refuses(golden.substr(0, 20), Reason::handshake_key_length));
+  EXPECT_TRUE(refuses("", ConnectReason::handshake_key_length));
   EXPECT_TRUE(
-      refuses("AAECAwQFBgcICQoLDA0ODxAR", Reason::handshake_key_length));
+      refuses(golden.substr(0, 20), ConnectReason::handshake_key_length));
+  EXPECT_TRUE(
+      refuses("AAECAwQFBgcICQoLDA0ODxAR", ConnectReason::handshake_key_length));
 }
 
 TEST_F(HandshakeKeyDecode, RefusesExtraPadding) {
-  EXPECT_TRUE(
-      refuses("AAECAwQFBgcICQoLDA0ODw===", Reason::handshake_key_encoding));
+  EXPECT_TRUE(refuses("AAECAwQFBgcICQoLDA0ODw===",
+                      ConnectReason::handshake_key_encoding));
 }
 
 TEST_F(HandshakeKeyDecode, AcceptsMissingPaddingLineBreaksAndSpareBits) {
@@ -145,15 +146,16 @@ TEST_P(HandshakePreparation, KeepsAt79CharactersOfTheSessionId) {
 TEST_P(HandshakePreparation, RefusesAnEmptyLaunchSpecification) {
   auto input = ConnectRig::allocation();
   input.launch_specification.clear();
-  EXPECT_TRUE(ConnectRig::fails_with(prepare(input), Stage::active,
-                                     Reason::invalid_launch_specification));
+  EXPECT_TRUE(
+      ConnectRig::fails_with(prepare(input), Stage::active,
+                             ConnectReason::invalid_launch_specification));
 }
 
 TEST_P(HandshakePreparation, RefusesAnUndecodableKey) {
   auto input = ConnectRig::allocation();
   input.handshake_key.assign("invalid");
   EXPECT_TRUE(ConnectRig::fails_with(prepare(input), Stage::active,
-                                     Reason::handshake_key_length));
+                                     ConnectReason::handshake_key_length));
 }
 
 TEST_P(HandshakePreparation, RefusesAProfileWithoutACloudHandshake) {
@@ -163,13 +165,14 @@ TEST_P(HandshakePreparation, RefusesAProfileWithoutACloudHandshake) {
       7, {}, 1454, 1254, *v7};
   EXPECT_TRUE(ConnectRig::fails_with(
       play::Handshake::prepare(crypto, ConnectRig::allocation(), wrong_version),
-      Stage::active, Reason::invalid_profile));
+      Stage::active, ConnectReason::invalid_profile));
 }
 
 TEST_P(HandshakePreparation, ReportsAnEcdhFailure) {
   crypto.fail = true;
   EXPECT_TRUE(ConnectRig::fails_with(prepare(ConnectRig::allocation()),
-                                     Stage::active, Reason::ecdh_failure));
+                                     Stage::active,
+                                     ConnectReason::ecdh_failure));
 }
 
 INSTANTIATE_TEST_SUITE_P(

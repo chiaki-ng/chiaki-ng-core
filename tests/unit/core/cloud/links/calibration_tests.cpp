@@ -8,7 +8,7 @@
 namespace cloud_test {
 namespace {
 
-using Reason = ConnectRig::Reason;
+using ConnectReason = ConnectRig::Reason;
 using Stage = ConnectRig::Stage;
 
 class CloudCalibration : public PinnedTakionVersions {
@@ -82,8 +82,8 @@ TEST_F(CloudCalibration, AssumesTheDefaultRoundTripWithoutOne) {
 
 TEST_F(CloudCalibration, RefusesAnUnmeasuredRow) {
   row.measured = false;
-  EXPECT_TRUE(
-      ConnectRig::fails_with(legacy(), Stage::route, Reason::not_measured));
+  EXPECT_TRUE(ConnectRig::fails_with(legacy(), Stage::route,
+                                     ConnectReason::not_measured));
 }
 
 TEST_F(CloudCalibration, ReplacesImpossibleMeasurements) {

@@ -14,9 +14,9 @@ namespace catalog_test {
 namespace {
 
 using libchiaking::catalog::GameDetails;
+using libchiaking::catalog::ProductDetailsReason;
 using libchiaking::catalog::StoreLocale;
-using Reason = libchiaking::catalog::ProductDetailsReason;
-using Reply = DetailsRig::Reply;
+using DetailsReply = DetailsRig::Reply;
 using Json = DetailsRig::Json;
 using Fixtures = DetailsRig::Fixtures;
 
@@ -318,37 +318,38 @@ TEST_F(ProductDetails, AreNotListedForAGameTheStoreDoesNotShow) {
   const auto user = rig.user();
   const auto missing = rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(missing);
-  EXPECT_EQ(missing.error().reason(), Reason::not_listed);
+  EXPECT_EQ(missing.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_FALSE(rig.has_record(DetailsRig::details_record));
 
   rig.the_store_answers(DetailsRig::sold_as(DetailsRig::complete_edition));
   const auto another = rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(another);
-  EXPECT_EQ(another.error().reason(), Reason::not_listed);
+  EXPECT_EQ(another.error().reason(), ProductDetailsReason::not_listed);
   rig.the_store_sells_nothing();
   const auto nothing = rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(nothing);
-  EXPECT_EQ(nothing.error().reason(), Reason::not_listed);
+  EXPECT_EQ(nothing.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_EQ(rig.http.count(DetailsRig::graphql), 0);
 }
 
 TEST_F(ProductDetails, ReportWhyTheStoreGaveNoAnswer) {
   const auto user = rig.user();
-  rig.http.on("GET", std::string{DetailsRig::details_query}, {Reply{400, ""}});
+  rig.http.on("GET", std::string{DetailsRig::details_query},
+              {DetailsReply{400, ""}});
   const auto refused = rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(refused);
-  EXPECT_EQ(refused.error().reason(), Reason::rejected);
+  EXPECT_EQ(refused.error().reason(), ProductDetailsReason::rejected);
   rig.the_store_answers("{}");
   const auto unreadable =
       rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(unreadable);
-  EXPECT_EQ(unreadable.error().reason(), Reason::malformed);
+  EXPECT_EQ(unreadable.error().reason(), ProductDetailsReason::malformed);
   rig.http.on("GET", std::string{DetailsRig::details_query},
-              {Reply{200, "", {}, true}});
+              {DetailsReply{200, "", {}, true}});
   const auto unreachable =
       rig.catalog.details_of(*user, rig.product(rig.remaster));
   ASSERT_FALSE(unreachable);
-  EXPECT_EQ(unreachable.error().reason(), Reason::unavailable);
+  EXPECT_EQ(unreachable.error().reason(), ProductDetailsReason::unavailable);
   EXPECT_FALSE(rig.has_record(DetailsRig::details_record));
   EXPECT_EQ(rig.http.count(DetailsRig::graphql), 0);
 }
@@ -368,7 +369,7 @@ TEST_F(ProductDetails, AreNotAskedForAnAccountOfUnknownAge) {
   const auto shown =
       rig.catalog.details_of(*unknown, rig.product(rig.remaster));
   ASSERT_FALSE(shown);
-  EXPECT_EQ(shown.error().reason(), Reason::not_listed);
+  EXPECT_EQ(shown.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_EQ(rig.http.requests(), asked);
   EXPECT_FALSE(rig.has_record(DetailsRig::details_record));
 }
@@ -377,10 +378,10 @@ TEST_F(ProductDetails, AreGatedByTheAgeOfAChild) {
   rig.account_claims =
       R"({"age":12,"legal_country":"GB","locale":"en-GB","is_child":true})";
   rig.http.on("GET", "age=12&includeConcept=true",
-              {Reply{200, DetailsRig::not_sold(DetailsRig::remaster)}});
+              {DetailsReply{200, DetailsRig::not_sold(DetailsRig::remaster)}});
   const auto gated = details_of();
   ASSERT_FALSE(gated);
-  EXPECT_EQ(gated.error().reason(), Reason::not_listed);
+  EXPECT_EQ(gated.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_EQ(rig.http.count("&age=12&"), 1);
   EXPECT_FALSE(rig.has_record(DetailsRig::details_record));
 }

@@ -19,14 +19,14 @@ namespace {
 using namespace std::chrono_literals;
 namespace controllers = libchiaking::controllers;
 using controllers::FeedbackIntensity;
-using controllers::HapticBlock;
+using Block = controllers::HapticBlock;
 
 class FeedbackInboxHaptics : public FeedbackRig {};
 
 TEST_F(FeedbackInboxHaptics, ReblocksAudioInto256ByteBlocks) {
   Inbox inbox{LiveProviders::threading(), LiveProviders::steady()};
-  EXPECT_EQ(HapticBlock::size, 256);
-  EXPECT_EQ(HapticBlock::frames, 64);
+  EXPECT_EQ(Block::size, 256);
+  EXPECT_EQ(Block::frames, 64);
   EXPECT_EQ(haptics(inbox, 120, 0x12), Admission::held);
   EXPECT_EQ(haptics(inbox, 120, 0x12), Admission::held);
   EXPECT_FALSE(inbox.take_haptic_block(seat(0), start));
@@ -206,7 +206,7 @@ TEST_F(FeedbackInboxHaptics, HandsBlocksAcrossThreadsWithoutLossOrReordering) {
                                    .buffered_blocks = buffered}};
   const auto deadline = LiveProviders::steady_us() + 30'000'000U;
   auto producer = LiveProviders::spawn("haptics", [&] {
-    std::vector<std::byte> pcm(HapticBlock::size);
+    std::vector<std::byte> pcm(Block::size);
     for (std::uint16_t index = 0; index < total; ++index) {
       while (inbox.pending(seat(0)).haptic_blocks >= buffered &&
              LiveProviders::steady_us() < deadline)

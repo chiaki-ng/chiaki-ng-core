@@ -11,13 +11,13 @@
 namespace json_test {
 namespace {
 
-namespace json = libchiaking::json::strict;
+namespace strict = libchiaking::json::strict;
 
 class StrictJson : public ::testing::Test {
  protected:
   static auto accepts(std::string_view text, std::string_view canonical)
       -> ::testing::AssertionResult {
-    const auto parsed = json::Value::parse(text);
+    const auto parsed = strict::Value::parse(text);
     if (!parsed) return ::testing::AssertionFailure() << "rejected " << text;
     if (parsed.value().canonical().value() != canonical)
       return ::testing::AssertionFailure()
@@ -27,7 +27,7 @@ class StrictJson : public ::testing::Test {
   }
 
   static auto rejects(std::string_view text) -> ::testing::AssertionResult {
-    if (json::Value::parse(text))
+    if (strict::Value::parse(text))
       return ::testing::AssertionFailure() << "accepted " << text;
     return ::testing::AssertionSuccess();
   }
@@ -84,7 +84,7 @@ TEST_F(StrictJson, LimitsNestingToEightLevels) {
   std::string nested;
   for (int level = 0; level < 8; ++level) nested.push_back('[');
   for (int level = 0; level < 8; ++level) nested.push_back(']');
-  EXPECT_TRUE(json::Value::parse(nested));
+  EXPECT_TRUE(strict::Value::parse(nested));
   EXPECT_TRUE(rejects("[" + nested + "]"));
 
   std::string objects;
@@ -96,27 +96,28 @@ TEST_F(StrictJson, LimitsNestingToEightLevels) {
 
 TEST_F(StrictJson, LimitsTheMembersOfAnArray) {
   std::string array{"["};
-  for (std::size_t index = 0; index < json::max_members; ++index) {
+  for (std::size_t index = 0; index < strict::max_members; ++index) {
     if (index != 0) array.push_back(',');
     array.push_back('1');
   }
-  EXPECT_TRUE(json::Value::parse(array + "]"));
+  EXPECT_TRUE(strict::Value::parse(array + "]"));
   EXPECT_TRUE(rejects(array + ",1]"));
 }
 
 TEST_F(StrictJson, WritesASecretOnlyIntoWipingText) {
-  json::Value::Object members;
-  members.push_back({"key", json::Value{libchiaking::SecretString{"hidden"}}});
-  members.push_back({"n", json::Value{std::uint64_t{1}}});
-  const json::Value document{std::move(members)};
+  strict::Value::Object members;
+  members.push_back(
+      {"key", strict::Value{libchiaking::SecretString{"hidden"}}});
+  members.push_back({"n", strict::Value{std::uint64_t{1}}});
+  const strict::Value document{std::move(members)};
   EXPECT_FALSE(document.canonical());
   EXPECT_EQ(document.canonical_secret().view(), R"({"key":"hidden","n":1})");
 }
 
 TEST_F(StrictJson, ClonesEverySecretOfAValue) {
-  json::Value::Array items;
-  items.push_back(json::Value{libchiaking::SecretString{"hidden"}});
-  const json::Value original{std::move(items)};
+  strict::Value::Array items;
+  items.push_back(strict::Value{libchiaking::SecretString{"hidden"}});
+  const strict::Value original{std::move(items)};
   const auto copy = original.clone();
   ASSERT_NE(copy.array(), nullptr);
   const auto* secret = copy.array()->front().secret();

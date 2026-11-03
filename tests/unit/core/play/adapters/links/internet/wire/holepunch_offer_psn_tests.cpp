@@ -15,7 +15,7 @@ namespace {
 namespace nat = libchiaking::net::nat::holepunch;
 namespace internet = libchiaking::play::internet;
 using holepunch::PsnRig;
-using PsnErrorKind = internet::holepunch::OfferPsnErrorKind;
+using internet::holepunch::OfferPsnErrorKind;
 
 class HolepunchOfferPsn : public ::testing::Test {
  protected:
@@ -84,7 +84,7 @@ TEST_F(HolepunchOfferPsn, TimesOutWhenTheSessionCheckOutlivesTheDeadline) {
   EXPECT_EQ(psn_.http.checks(), 1U);
   EXPECT_EQ(psn_.http.bodies().size(), 2U);
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::timed_out);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::timed_out);
 }
 
 TEST_F(HolepunchOfferPsn, AcknowledgesEveryRepeatedOfferAndSendsOursOnce) {
@@ -133,7 +133,7 @@ TEST_F(HolepunchOfferPsn, TimesOutAtItsDeadlineWithoutListening) {
   psn_.clock.now_us = PsnRig::deadline;
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::timed_out);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::timed_out);
   EXPECT_EQ(psn_.connection.calls(), 0U);
   EXPECT_TRUE(psn_.http.bodies().empty());
 }
@@ -143,7 +143,7 @@ TEST_F(HolepunchOfferPsn, RejectsAMalformedSessionMessage) {
       R"({"dataType":"psn:sessionManager:sys:rps:sessionMessage:created","body":{"data":{"sessionMessage":{"payload":"body=not-json"}}}})");
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::invalid_message);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::invalid_message);
   EXPECT_EQ(psn_.connection.calls(), 1U);
   EXPECT_TRUE(psn_.http.bodies().empty());
 }
@@ -153,7 +153,7 @@ TEST_F(HolepunchOfferPsn, ReportsAnAcknowledgementThatCannotBeSent) {
   psn_.connection.push(offer_json);
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::send_failure);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::send_failure);
   EXPECT_EQ(psn_.http.bodies().size(), 1U);
   EXPECT_EQ(psn_.connection.calls(), 1U);
 }
@@ -187,7 +187,7 @@ TEST_F(HolepunchOfferPsn, FailsWhenPsnRejectsOurOffer) {
   psn_.connection.push(result_json);
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::send_failure);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::send_failure);
   EXPECT_EQ(result.error().send()->session()->status, 400);
   EXPECT_EQ(psn_.http.bodies().size(), 2U);
   EXPECT_EQ(psn_.connection.calls(), 1U);
@@ -197,7 +197,7 @@ TEST_F(HolepunchOfferPsn, StopsOnATerminate) {
   psn_.connection.push(terminate_json);
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::terminated);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::terminated);
   EXPECT_TRUE(psn_.http.bodies().empty());
 }
 
@@ -205,7 +205,7 @@ TEST_F(HolepunchOfferPsn, ReportsAPushFailure) {
   psn_.connection.fail();
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::push_failure);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::push_failure);
   EXPECT_EQ(psn_.connection.calls(), 1U);
   EXPECT_TRUE(psn_.http.bodies().empty());
 }
@@ -215,17 +215,17 @@ TEST_F(HolepunchOfferPsn, TimesOutWhenTheDeadlinePassesDuringTheSend) {
   psn_.connection.push(offer_json);
   auto result = run();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::timed_out);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::timed_out);
   EXPECT_EQ(psn_.http.bodies().size(), 1U);
 }
 
 TEST_F(HolepunchOfferPsn, RefusesInvalidArgumentsWithoutListening) {
   auto result = run(0, 1);
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::invalid_attempt);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::invalid_attempt);
   result = run(7, 0);
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().kind(), PsnErrorKind::invalid_own_req_id);
+  EXPECT_EQ(result.error().kind(), OfferPsnErrorKind::invalid_own_req_id);
   EXPECT_EQ(psn_.connection.calls(), 0U);
   EXPECT_TRUE(psn_.http.bodies().empty());
 }

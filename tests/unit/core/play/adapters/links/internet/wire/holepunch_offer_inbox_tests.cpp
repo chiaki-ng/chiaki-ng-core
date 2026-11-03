@@ -16,7 +16,7 @@ namespace {
 namespace nat = libchiaking::net::nat::holepunch;
 namespace internet = libchiaking::play::internet;
 using internet::holepunch::Offer;
-using State = internet::holepunch::OfferWaitState;
+using internet::holepunch::OfferWaitState;
 
 class HolepunchOfferInbox : public ::testing::Test {
  protected:
@@ -42,7 +42,7 @@ class HolepunchOfferInbox : public ::testing::Test {
   void offered() {
     ASSERT_TRUE(inbox_.begin(7, 0x2222));
     inbox_.on_message(7, offer(0x1111, 11));
-    ASSERT_EQ(inbox_.state(), State::waiting_result);
+    ASSERT_EQ(inbox_.state(), OfferWaitState::waiting_result);
   }
 
   internet::holepunch::OfferInbox inbox_;
@@ -51,12 +51,12 @@ class HolepunchOfferInbox : public ::testing::Test {
 TEST_F(HolepunchOfferInbox, WaitsForAnOfferOfItsOwnAttemptWithAConnRequest) {
   ASSERT_TRUE(inbox_.begin(7, 0x2222));
   inbox_.on_message(8, offer(0x1111, 8));
-  EXPECT_EQ(inbox_.state(), State::waiting_offer);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_offer);
   nat::SessionMessage bare{};
   bare.action = nat::Action::offer;
   bare.req_id = 0x1111;
   inbox_.on_message(7, std::move(bare));
-  EXPECT_EQ(inbox_.state(), State::waiting_offer);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_offer);
   EXPECT_FALSE(inbox_.take_peer_request().has_value());
 }
 
@@ -75,9 +75,9 @@ TEST_F(HolepunchOfferInbox, HandsOverTheFirstPeerRequestOnItsResult) {
   inbox_.on_message(7, offer(0x1112, 12));
   inbox_.on_message(8, offer(0x1113, 13));
   inbox_.on_message(7, result(0x9999));
-  EXPECT_EQ(inbox_.state(), State::waiting_result);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_result);
   inbox_.on_message(7, result(0x2222, 0xffff));
-  EXPECT_EQ(inbox_.state(), State::ready_to_probe);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::ready_to_probe);
   auto request = inbox_.take_peer_request();
   ASSERT_TRUE(request.has_value());
   EXPECT_EQ(request->sid, 11U);
@@ -89,7 +89,7 @@ TEST_F(HolepunchOfferInbox, DropsThePeerRequestWhenCancelled) {
   inbox_.on_message(3, offer(10, 21));
   EXPECT_FALSE(inbox_.cancel(4));
   EXPECT_TRUE(inbox_.cancel(3));
-  EXPECT_EQ(inbox_.state(), State::failed);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::failed);
   EXPECT_FALSE(inbox_.take_peer_request().has_value());
   EXPECT_TRUE(inbox_.take_effects().empty());
 }
@@ -100,7 +100,7 @@ TEST_F(HolepunchOfferInbox, DropsThePeerRequestWhenTerminated) {
   nat::SessionMessage terminate{};
   terminate.action = nat::Action::terminate;
   inbox_.on_message(5, std::move(terminate));
-  EXPECT_EQ(inbox_.state(), State::failed);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::failed);
   EXPECT_FALSE(inbox_.take_peer_request().has_value());
   EXPECT_TRUE(inbox_.take_effects().empty());
 }
@@ -142,21 +142,21 @@ class HolepunchOfferFeed : public ::testing::Test {
 TEST_F(HolepunchOfferFeed, IgnoresAnotherAttemptsOffer) {
   ASSERT_TRUE(inbox_.begin(7, 1));
   EXPECT_TRUE(feed(8, offer_json));
-  EXPECT_EQ(inbox_.state(), State::waiting_offer);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_offer);
   EXPECT_TRUE(inbox_.take_effects().empty());
 }
 
 TEST_F(HolepunchOfferFeed, AnswersItsOwnAttemptsOffer) {
   ASSERT_TRUE(inbox_.begin(7, 1));
   EXPECT_TRUE(feed(7, offer_json));
-  EXPECT_EQ(inbox_.state(), State::waiting_result);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_result);
   EXPECT_EQ(inbox_.take_effects().size(), 2U);
 }
 
 TEST_F(HolepunchOfferFeed, OnlyAcknowledgesARepeatedOffer) {
   ASSERT_NO_FATAL_FAILURE(offered());
   EXPECT_TRUE(feed(7, offer_json));
-  EXPECT_EQ(inbox_.state(), State::waiting_result);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_result);
   auto effects = inbox_.take_effects();
   ASSERT_EQ(effects.size(), 1U);
   const auto* ack = std::get_if<internet::holepunch::AckPeerOffer>(&effects[0]);
@@ -170,13 +170,13 @@ TEST_F(HolepunchOfferFeed, RejectsAMalformedMessageAndKeepsWaiting) {
   auto malformed = feed(7, malformed_json);
   ASSERT_FALSE(malformed.has_value());
   EXPECT_TRUE(std::holds_alternative<nat::MessageError>(malformed.error()));
-  EXPECT_EQ(inbox_.state(), State::waiting_result);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::waiting_result);
 }
 
 TEST_F(HolepunchOfferFeed, HandsOverThePeerRequestOnTheResult) {
   ASSERT_NO_FATAL_FAILURE(offered());
   EXPECT_TRUE(feed(7, result_json));
-  EXPECT_EQ(inbox_.state(), State::ready_to_probe);
+  EXPECT_EQ(inbox_.state(), OfferWaitState::ready_to_probe);
   auto peer = inbox_.take_peer_request();
   ASSERT_TRUE(peer.has_value());
   EXPECT_EQ(peer->sid, 3U);

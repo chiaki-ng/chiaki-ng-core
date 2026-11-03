@@ -25,7 +25,7 @@ namespace platform = libchiaking::platform;
 namespace transport_switch = remote_play::transport_switch_detail;
 using rudp_ctrl::CounterCrypto;
 using rudp_ctrl::SwitchChannel;
-using StepError = remote_play::RudpCtrlSwitchStepError;
+using RudpStepError = remote_play::RudpCtrlSwitchStepError;
 
 class RudpCtrlReceiver : public ::testing::Test {
  protected:
@@ -111,7 +111,7 @@ TEST_F(RudpCtrlReceiver, RefusesAnExhaustedCounter) {
   const auto exhausted =
       step_counting(std::numeric_limits<std::uint64_t>::max());
   ASSERT_FALSE(exhausted);
-  EXPECT_EQ(exhausted.error(), StepError::counter_exhausted);
+  EXPECT_EQ(exhausted.error(), RudpStepError::counter_exhausted);
 }
 
 TEST_F(RudpCtrlReceiver, DecryptsNothingOnceStoppedDuringTheAcknowledgement) {
@@ -122,7 +122,7 @@ TEST_F(RudpCtrlReceiver, DecryptsNothingOnceStoppedDuringTheAcknowledgement) {
   const auto previous_sends = channel_.sent_packets().size();
   const auto cancelled = step_counting(42, platform::StopToken{stop});
   ASSERT_FALSE(cancelled);
-  EXPECT_EQ(cancelled.error(), StepError::stopped);
+  EXPECT_EQ(cancelled.error(), RudpStepError::stopped);
   EXPECT_EQ(counting_.cipher_counters().size(), previous_calls);
   EXPECT_EQ(channel_.sent_packets().size(), previous_sends + 1);
 }
@@ -147,7 +147,7 @@ TEST_F(RudpCtrlReceiver, RefusesATruncatedSessionRequest) {
                                           std::byte{}, std::byte{}});
   const auto truncated = step();
   ASSERT_FALSE(truncated);
-  EXPECT_EQ(truncated.error(), StepError::malformed);
+  EXPECT_EQ(truncated.error(), RudpStepError::malformed);
 }
 
 TEST_F(RudpCtrlReceiver, TimesOutWithoutTouchingAWaitingSwitch) {
@@ -155,7 +155,7 @@ TEST_F(RudpCtrlReceiver, TimesOutWithoutTouchingAWaitingSwitch) {
   ASSERT_TRUE(state.begin(7));
   const auto result = step();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error(), StepError::timeout);
+  EXPECT_EQ(result.error(), RudpStepError::timeout);
   EXPECT_EQ(state.state(), transport_switch::State::waiting);
   EXPECT_TRUE(channel_.sent().empty());
 }

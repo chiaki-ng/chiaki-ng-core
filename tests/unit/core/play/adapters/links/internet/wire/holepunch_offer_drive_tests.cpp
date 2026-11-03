@@ -19,14 +19,14 @@ namespace {
 
 namespace nat = libchiaking::net::nat::holepunch;
 namespace internet = libchiaking::play::internet;
-using DriveError = internet::holepunch::OfferPsnErrorKind;
-using PsnError = internet::holepunch::OfferPsnError;
+using OfferDriveError = internet::holepunch::OfferPsnErrorKind;
+using internet::holepunch::OfferPsnError;
 
 class HolepunchOfferDrive : public ::testing::Test {
  protected:
   struct Step {
     nat::SessionMessage message{};
-    DriveError error{};
+    OfferDriveError error{};
     bool failed{};
   };
 
@@ -52,24 +52,29 @@ class HolepunchOfferDrive : public ::testing::Test {
     steps_.push_back({std::move(message)});
   }
 
-  void fail_receive(DriveError error) { steps_.push_back({{}, error, true}); }
+  void fail_receive(OfferDriveError error) {
+    steps_.push_back({{}, error, true});
+  }
 
   auto driver(const libchiaking::diagnostics::Trace* trace = nullptr)
       -> internet::holepunch::OfferDrive {
     return internet::holepunch::OfferDrive{
-        [this]() -> libchiaking::Expected<nat::SessionMessage, PsnError> {
+        [this]() -> libchiaking::Expected<nat::SessionMessage, OfferPsnError> {
           EXPECT_LT(receives_, steps_.size());
           if (receives_ >= steps_.size())
-            return libchiaking::unexpected(PsnError{DriveError::timed_out});
+            return libchiaking::unexpected(
+                OfferPsnError{OfferDriveError::timed_out});
           auto& step = steps_[receives_++];
-          if (step.failed) return libchiaking::unexpected(PsnError{step.error});
+          if (step.failed)
+            return libchiaking::unexpected(OfferPsnError{step.error});
           return std::move(step.message);
         },
         [this](const internet::holepunch::OfferEffect& effect)
-            -> libchiaking::Expected<void, PsnError> {
+            -> libchiaking::Expected<void, OfferPsnError> {
           sent_.push_back(effect);
           if (sends_++ == fail_send_at_)
-            return libchiaking::unexpected(PsnError{DriveError::send_failure});
+            return libchiaking::unexpected(
+                OfferPsnError{OfferDriveError::send_failure});
           return {};
         },
         trace};
@@ -135,7 +140,7 @@ TEST_F(HolepunchOfferDrive, FailsWhenARepeatedAcknowledgementCannotBeSent) {
   result(3);
   auto outcome = driver().run(4, 3);
   ASSERT_FALSE(outcome);
-  EXPECT_EQ(outcome.error().kind(), DriveError::send_failure);
+  EXPECT_EQ(outcome.error().kind(), OfferDriveError::send_failure);
   EXPECT_EQ(sends_, 3U);
   EXPECT_EQ(receives_, 2U);
 }
@@ -145,12 +150,13 @@ TEST_F(HolepunchOfferDrive, StopsOnATerminate) {
   terminate();
   auto outcome = driver().run(4, 3);
   ASSERT_FALSE(outcome);
-  EXPECT_EQ(outcome.error().kind(), DriveError::terminated);
+  EXPECT_EQ(outcome.error().kind(), OfferDriveError::terminated);
   EXPECT_EQ(sent_.size(), 2U);
 }
 
 TEST_F(HolepunchOfferDrive, PassesOnAReceiveFailure) {
-  for (const auto error : {DriveError::cancelled, DriveError::timed_out}) {
+  for (const auto error :
+       {OfferDriveError::cancelled, OfferDriveError::timed_out}) {
     SCOPED_TRACE(static_cast<int>(error));
     steps_.clear();
     sent_.clear();
@@ -175,16 +181,19 @@ TEST_F(HolepunchOfferDrive, FailsWhenEitherInitialSendFails) {
     offer(1, 12);
     auto outcome = driver().run(4, 3);
     ASSERT_FALSE(outcome);
-    EXPECT_EQ(outcome.error().kind(), DriveError::send_failure);
+    EXPECT_EQ(outcome.error().kind(), OfferDriveError::send_failure);
     EXPECT_EQ(sends_, fail_at + 1);
     EXPECT_EQ(receives_, 1U);
   }
 }
 
 TEST_F(HolepunchOfferDrive, RefusesInvalidArgumentsWithoutTalking) {
-  EXPECT_EQ(driver().run(0, 3).error().kind(), DriveError::invalid_attempt);
-  EXPECT_EQ(driver().run(4, 0).error().kind(), DriveError::invalid_own_req_id);
-  EXPECT_EQ(driver().run(4, 65536).error().kind(), DriveError::invalid_own_req_id);
+  EXPECT_EQ(driver().run(0, 3).error().kind(),
+            OfferDriveError::invalid_attempt);
+  EXPECT_EQ(driver().run(4, 0).error().kind(),
+            OfferDriveError::invalid_own_req_id);
+  EXPECT_EQ(driver().run(4, 65536).error().kind(),
+            OfferDriveError::invalid_own_req_id);
   EXPECT_EQ(receives_, 0U);
   EXPECT_EQ(sends_, 0U);
 }

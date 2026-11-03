@@ -30,8 +30,8 @@ namespace {
 
 using libchiaking::catalog::Platform;
 using libchiaking::catalog::PlayedGame;
-using test_support::psn::Reply;
-using Reason = libchiaking::catalog::PlayedGamesReason;
+using PsnReply = test_support::psn::Reply;
+using libchiaking::catalog::PlayedGamesReason;
 using UserReason = libchiaking::users::Unanswered::Reason;
 
 class PlayedGamesRig {
@@ -150,18 +150,19 @@ class PlayedGames : public ::testing::Test {
   }
 
   void answers_two_pages() {
-    rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 50, 50)}});
+    rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 50, 50)}});
     rig.http.on(
         "GET", page_url(50),
-        {Reply{200,
-               R"({"titles":[)" + PlayedGamesRig::played_json(51) +
-                   R"(,{"titleId":"PPSA00051_00","name":"Again"},)"
-                   R"({"titleId":"not an id","name":"Odd"},)"
-                   R"({"titleId":"CUSA01234_00","localizedName":"Old Puzzler",)"
-                   R"("name":"Puzzler","category":"ps4_game",)"
-                   R"("playDuration":"forever","playCount":"x"},)"
-                   R"({"titleId":"PPSA00099_00","name":"Unknown",)"
-                   R"("category":"unknown"}],"totalItemCount":54})"}});
+        {PsnReply{
+            200,
+            R"({"titles":[)" + PlayedGamesRig::played_json(51) +
+                R"(,{"titleId":"PPSA00051_00","name":"Again"},)"
+                R"({"titleId":"not an id","name":"Odd"},)"
+                R"({"titleId":"CUSA01234_00","localizedName":"Old Puzzler",)"
+                R"("name":"Puzzler","category":"ps4_game",)"
+                R"("playDuration":"forever","playCount":"x"},)"
+                R"({"titleId":"PPSA00099_00","name":"Unknown",)"
+                R"("category":"unknown"}],"totalItemCount":54})"}});
   }
 
   PlayedGamesRig rig;
@@ -210,8 +211,9 @@ TEST_F(PlayedGames, KeepWhatTheyCanReadOfAnUnusualRow) {
 }
 
 TEST_F(PlayedGames, AskForTheNextPageAfterAFullPageWithoutANextOffset) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 50, std::nullopt)}});
-  rig.http.on("GET", page_url(50), {Reply{200, R"({"titles":[]})"}});
+  rig.http.on("GET", page_url(0),
+              {PsnReply{200, page_of(1, 50, std::nullopt)}});
+  rig.http.on("GET", page_url(50), {PsnReply{200, R"({"titles":[]})"}});
   const auto games = rig.games();
   ASSERT_TRUE(games);
   EXPECT_EQ(games->size(), 50U);
@@ -219,7 +221,7 @@ TEST_F(PlayedGames, AskForTheNextPageAfterAFullPageWithoutANextOffset) {
 }
 
 TEST_F(PlayedGames, EndAtAShortPageWithoutANextOffset) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 3, std::nullopt)}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 3, std::nullopt)}});
   const auto games = rig.games();
   ASSERT_TRUE(games);
   EXPECT_EQ(games->size(), 3U);
@@ -229,10 +231,10 @@ TEST_F(PlayedGames, EndAtAShortPageWithoutANextOffset) {
 TEST_F(PlayedGames, StopPagingAtThePageCap) {
   for (std::size_t page = 0; page < 60; ++page)
     rig.http.on("GET", page_url(page * 50),
-                {Reply{200, page_of(page * 50 + 1, 50, (page + 1) * 50)}});
+                {PsnReply{200, page_of(page * 50 + 1, 50, (page + 1) * 50)}});
   const auto games = rig.games();
   ASSERT_FALSE(games);
-  EXPECT_EQ(games.error().reason(), Reason::malformed);
+  EXPECT_EQ(games.error().reason(), PlayedGamesReason::malformed);
   EXPECT_EQ(rig.requests(), 50);
   EXPECT_FALSE(rig.kept());
   EXPECT_EQ(rig.waiter.waits.size(), 45U);
@@ -241,8 +243,8 @@ TEST_F(PlayedGames, StopPagingAtThePageCap) {
 TEST_F(PlayedGames, WaitTheirTurnOnTheRequestBudget) {
   for (std::size_t page = 0; page < 7; ++page)
     rig.http.on("GET", page_url(page * 50),
-                {Reply{200, page_of(page * 50 + 1, 50, (page + 1) * 50)}});
-  rig.http.on("GET", page_url(350), {Reply{200, R"({"titles":[]})"}});
+                {PsnReply{200, page_of(page * 50 + 1, 50, (page + 1) * 50)}});
+  rig.http.on("GET", page_url(350), {PsnReply{200, R"({"titles":[]})"}});
   const auto games = rig.games();
   ASSERT_TRUE(games);
   EXPECT_EQ(games->size(), 350U);
@@ -251,11 +253,12 @@ TEST_F(PlayedGames, WaitTheirTurnOnTheRequestBudget) {
 }
 
 TEST_F(PlayedGames, CoolTheAccountDownAfterA429) {
-  rig.http.on("GET", page_url(0),
-              {Reply{429, "{}"}, Reply{200, page_of(1, 1, std::nullopt)}});
+  rig.http.on(
+      "GET", page_url(0),
+      {PsnReply{429, "{}"}, PsnReply{200, page_of(1, 1, std::nullopt)}});
   const auto throttled = rig.games();
   ASSERT_FALSE(throttled);
-  EXPECT_EQ(throttled.error().reason(), Reason::user);
+  EXPECT_EQ(throttled.error().reason(), PlayedGamesReason::user);
   ASSERT_TRUE(throttled.error().cause());
   EXPECT_EQ(throttled.error().cause()->reason, UserReason::rate_limited);
   const auto cooling = rig.games();
@@ -270,11 +273,11 @@ TEST_F(PlayedGames, CoolTheAccountDownAfterA429) {
 }
 
 TEST_F(PlayedGames, CallANextOffsetThatDoesNotAdvanceMalformed) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 50, 50)}});
-  rig.http.on("GET", page_url(50), {Reply{200, page_of(51, 50, 20)}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 50, 50)}});
+  rig.http.on("GET", page_url(50), {PsnReply{200, page_of(51, 50, 20)}});
   const auto games = rig.games();
   ASSERT_FALSE(games);
-  EXPECT_EQ(games.error().reason(), Reason::malformed);
+  EXPECT_EQ(games.error().reason(), PlayedGamesReason::malformed);
   EXPECT_EQ(rig.requests(), 2);
   EXPECT_FALSE(rig.kept());
 }
@@ -286,7 +289,7 @@ TEST(PlayedGamesAcrossRestarts, AreKeptForSixHours) {
   {
     PlayedGamesRig rig{records};
     rig.http.on("GET", PlayedGamesRig::page_url(0),
-                {Reply{200, PlayedGamesRig::page_of(1, 4, std::nullopt)}});
+                {PsnReply{200, PlayedGamesRig::page_of(1, 4, std::nullopt)}});
     const auto games = rig.games();
     ASSERT_TRUE(games);
     EXPECT_EQ(games->size(), 4U);
@@ -298,8 +301,9 @@ TEST(PlayedGamesAcrossRestarts, AreKeptForSixHours) {
     EXPECT_TRUE(rig.kept());
   }
   PlayedGamesRig restarted{records};
-  restarted.http.on("GET", PlayedGamesRig::page_url(0),
-                    {Reply{200, PlayedGamesRig::page_of(10, 2, std::nullopt)}});
+  restarted.http.on(
+      "GET", PlayedGamesRig::page_url(0),
+      {PsnReply{200, PlayedGamesRig::page_of(10, 2, std::nullopt)}});
   const auto kept = restarted.games();
   ASSERT_TRUE(kept);
   EXPECT_EQ(*kept, first_read);
@@ -316,7 +320,7 @@ TEST(PlayedGamesAcrossRestarts, AreKeptForSixHours) {
 }
 
 TEST_F(PlayedGames, AreDroppedOnStartingOverAndForgetting) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 2, std::nullopt)}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 2, std::nullopt)}});
   EXPECT_TRUE(rig.games());
   EXPECT_TRUE(rig.kept());
   rig.library().start_over(*rig.user);
@@ -329,7 +333,7 @@ TEST_F(PlayedGames, AreDroppedOnStartingOverAndForgetting) {
 }
 
 TEST_F(PlayedGames, AreListedAndClearedAsTheirOwnCache) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 2, std::nullopt)}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 2, std::nullopt)}});
   EXPECT_TRUE(rig.games());
   const auto held =
       rig.library().cache_entries(libchiaking::catalog::CacheId::played_games);
@@ -349,11 +353,12 @@ TEST_F(PlayedGames, AreListedAndClearedAsTheirOwnCache) {
 }
 
 TEST_F(PlayedGames, ReportAFailureWithoutKeepingIt) {
-  rig.http.on("GET", page_url(0),
-              {Reply{500, "{}"}, Reply{200, page_of(1, 1, std::nullopt)}});
+  rig.http.on(
+      "GET", page_url(0),
+      {PsnReply{500, "{}"}, PsnReply{200, page_of(1, 1, std::nullopt)}});
   const auto failed = rig.games();
   ASSERT_FALSE(failed);
-  EXPECT_EQ(failed.error().reason(), Reason::user);
+  EXPECT_EQ(failed.error().reason(), PlayedGamesReason::user);
   ASSERT_TRUE(failed.error().cause());
   EXPECT_EQ(failed.error().cause()->reason, UserReason::unavailable);
   EXPECT_FALSE(rig.kept());
@@ -363,28 +368,28 @@ TEST_F(PlayedGames, ReportAFailureWithoutKeepingIt) {
 }
 
 TEST_F(PlayedGames, ReportAGarbledReplyAsMalformed) {
-  rig.http.on("GET", page_url(0), {Reply{200, R"({"total":0})"}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, R"({"total":0})"}});
   const auto malformed = rig.games();
   ASSERT_FALSE(malformed);
-  EXPECT_EQ(malformed.error().reason(), Reason::user);
+  EXPECT_EQ(malformed.error().reason(), PlayedGamesReason::user);
   ASSERT_TRUE(malformed.error().cause());
   EXPECT_EQ(malformed.error().cause()->reason, UserReason::malformed);
 }
 
 TEST_F(PlayedGames, AreNotAskedForByAHomeUserOrAStoppedCaller) {
-  rig.http.on("GET", page_url(0), {Reply{200, page_of(1, 1, std::nullopt)}});
+  rig.http.on("GET", page_url(0), {PsnReply{200, page_of(1, 1, std::nullopt)}});
   auto added = rig.signed_in.users.add_home_user(libchiaking::AccountId{9},
                                                  "Living Room");
   ASSERT_TRUE(added);
   const auto home = rig.library().played_games(*added.value());
   ASSERT_FALSE(home);
-  EXPECT_EQ(home.error().reason(), Reason::user);
+  EXPECT_EQ(home.error().reason(), PlayedGamesReason::user);
   auto stopped = std::make_shared<test_support::StopState>();
   stopped->stopped = true;
   const auto cancelled = rig.library().played_games(
       *rig.user, libchiaking::platform::StopToken{stopped});
   ASSERT_FALSE(cancelled);
-  EXPECT_EQ(cancelled.error().reason(), Reason::cancelled);
+  EXPECT_EQ(cancelled.error().reason(), PlayedGamesReason::cancelled);
   EXPECT_LE(rig.requests(), 1);
   EXPECT_FALSE(rig.kept());
 }

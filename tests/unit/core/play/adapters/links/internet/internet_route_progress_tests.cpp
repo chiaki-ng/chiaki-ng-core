@@ -52,27 +52,34 @@ class InternetRouteProgress : public ::testing::Test {
 };
 
 TEST_F(InternetRouteProgress, ReportsEveryRouteSubStepInOrder) {
-  using Stage = remote_play::FailureStage;
+  using FailureStage = remote_play::FailureStage;
   using Step = Route::Step;
   using Purpose = Route::Purpose;
   PlayedStart start;
   ASSERT_NO_FATAL_FAILURE(start.play());
   const auto routes = start.routes();
-  const std::vector<std::pair<Stage, std::pair<Step, Purpose>>> expected{
-      {Stage::psn_open, {Step::opening_account_session, Purpose::control}},
-      {Stage::control_holepunch,
+  const std::vector<std::pair<FailureStage, std::pair<Step, Purpose>>> expected{
+      {FailureStage::psn_open,
+       {Step::opening_account_session, Purpose::control}},
+      {FailureStage::control_holepunch,
        {Step::gathering_candidates, Purpose::control}},
-      {Stage::psn_start, {Step::waiting_for_console, Purpose::control}},
-      {Stage::control_holepunch, {Step::exchanging_offers, Purpose::control}},
-      {Stage::control_holepunch, {Step::testing_candidates, Purpose::control}},
-      {Stage::control_holepunch, {Step::route_chosen, Purpose::control}},
-      {Stage::control_holepunch, {Step::confirming_route, Purpose::control}},
-      {Stage::data_holepunch, {Step::gathering_candidates, Purpose::stream}},
-      {Stage::data_holepunch, {Step::exchanging_offers, Purpose::stream}},
-      {Stage::data_holepunch, {Step::testing_candidates, Purpose::stream}},
-      {Stage::data_holepunch, {Step::route_chosen, Purpose::stream}},
-      {Stage::data_holepunch, {Step::confirming_route, Purpose::stream}},
-      {Stage::route_switch, {Step::switching_control, Purpose::stream}}};
+      {FailureStage::psn_start, {Step::waiting_for_console, Purpose::control}},
+      {FailureStage::control_holepunch,
+       {Step::exchanging_offers, Purpose::control}},
+      {FailureStage::control_holepunch,
+       {Step::testing_candidates, Purpose::control}},
+      {FailureStage::control_holepunch, {Step::route_chosen, Purpose::control}},
+      {FailureStage::control_holepunch,
+       {Step::confirming_route, Purpose::control}},
+      {FailureStage::data_holepunch,
+       {Step::gathering_candidates, Purpose::stream}},
+      {FailureStage::data_holepunch,
+       {Step::exchanging_offers, Purpose::stream}},
+      {FailureStage::data_holepunch,
+       {Step::testing_candidates, Purpose::stream}},
+      {FailureStage::data_holepunch, {Step::route_chosen, Purpose::stream}},
+      {FailureStage::data_holepunch, {Step::confirming_route, Purpose::stream}},
+      {FailureStage::route_switch, {Step::switching_control, Purpose::stream}}};
   ASSERT_EQ(routes.size(), expected.size());
   for (std::size_t index = 0; index < expected.size(); ++index) {
     SCOPED_TRACE(index);

@@ -17,9 +17,9 @@ namespace {
 using libchiaking::catalog::CacheEntry;
 using libchiaking::catalog::CacheId;
 using libchiaking::catalog::GameDetails;
+using libchiaking::catalog::ProductDetailsReason;
 using libchiaking::catalog::ServiceGeneration;
-using Reason = libchiaking::catalog::ProductDetailsReason;
-using Reply = DetailsRig::Reply;
+using DetailsReply = DetailsRig::Reply;
 
 class ListedGameDetails : public ::testing::Test {
  protected:
@@ -29,10 +29,10 @@ class ListedGameDetails : public ::testing::Test {
   void SetUp() override {
     rig.http.on(
         "GET", DetailsRig::details_query_of(DetailsRig::complete_edition, "GB"),
-        {Reply{200, DetailsRig::sold_as(DetailsRig::complete_edition)}});
-    rig.http.on("GET",
-                DetailsRig::details_query_of(DetailsRig::other_edition, "GB"),
-                {Reply{200, DetailsRig::sold_as(DetailsRig::other_edition)}});
+        {DetailsReply{200, DetailsRig::sold_as(DetailsRig::complete_edition)}});
+    rig.http.on(
+        "GET", DetailsRig::details_query_of(DetailsRig::other_edition, "GB"),
+        {DetailsReply{200, DetailsRig::sold_as(DetailsRig::other_edition)}});
     rig.script_whole_store();
     rig.script_concept_store();
     user = rig.user(1, DetailsRig::gb());
@@ -129,7 +129,7 @@ TEST_F(ListedGameDetails, AskAnUnlistedProductByItself) {
 
   const auto ungrouped = details_of(DetailsRig::ghost_ship);
   ASSERT_FALSE(ungrouped);
-  EXPECT_EQ(ungrouped.error().reason(), Reason::not_listed);
+  EXPECT_EQ(ungrouped.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_EQ(rig.http.requests(), asked + 2);
   EXPECT_EQ(rig.http.count(DetailsRig::graphql), 0);
 
@@ -148,7 +148,8 @@ TEST_F(ListedGameDetails, AskAnUnlistedProductByItself) {
 
 TEST_F(ListedGameDetails, DropTheirPicturesWhenCleared) {
   ASSERT_TRUE(details_of(DetailsRig::complete_edition));
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
   EXPECT_TRUE(
       rig.catalog.image_of(DetailsRig::image(DetailsRig::concept_logo)));
   EXPECT_TRUE(rig.catalog.clear_cache(CacheId::game_details));
@@ -208,9 +209,9 @@ class MatchedOldServiceGame : public ::testing::Test {
 
   void SetUp() override {
     rig.http.on("GET", DetailsRig::details_query_of(owned_ps4, "GB"),
-                {Reply{200, DetailsRig::not_sold(owned_ps4)}});
+                {DetailsReply{200, DetailsRig::not_sold(owned_ps4)}});
     rig.http.on("GET", DetailsRig::details_query_of(reserved, "GB"),
-                {Reply{200, DetailsRig::not_sold(reserved)}});
+                {DetailsReply{200, DetailsRig::not_sold(reserved)}});
     rig.script_whole_store();
     rig.script_concept_store();
     ASSERT_NO_FATAL_FAILURE(rig.hold_matched_games(
@@ -329,7 +330,7 @@ TEST(UnmatchedOwnedGame, IsStillAskedByProduct) {
   const auto shown = rig.catalog.details_of(
       *user, DetailsRig::product(DetailsRig::ghost_ship));
   ASSERT_FALSE(shown);
-  EXPECT_EQ(shown.error().reason(), Reason::not_listed);
+  EXPECT_EQ(shown.error().reason(), ProductDetailsReason::not_listed);
   EXPECT_EQ(rig.http.requests(), asked + 1);
   EXPECT_EQ(rig.http.count(DetailsRig::details_query), 1);
   EXPECT_EQ(rig.http.count(DetailsRig::graphql), 0);
@@ -350,7 +351,7 @@ class StreamedPs4Copy : public ::testing::Test {
     ASSERT_NO_FATAL_FAILURE(
         rig.ps_holds_the_library(DetailsRig::owned_ghost_row));
     rig.http.on("GET", std::string{DetailsRig::app_library},
-                {Reply{200, DetailsRig::streamed_copies()}});
+                {DetailsReply{200, DetailsRig::streamed_copies()}});
     user = rig.user(1, DetailsRig::gb());
   }
 
@@ -454,14 +455,15 @@ TEST(StreamedPs4CopyConcepts, LeaveTheLibraryAsBeforeWhenTheyCannotBeRead) {
   ASSERT_NO_FATAL_FAILURE(
       learned.ps_holds_the_library(DetailsRig::owned_ghost_row));
   learned.http.on("GET", std::string{DetailsRig::app_library},
-                  {Reply{200, DetailsRig::streamed_copies()}});
+                  {DetailsReply{200, DetailsRig::streamed_copies()}});
   const auto first = learned.user(1, DetailsRig::gb());
   const auto expected = learned.catalog.library_of(*first);
   ASSERT_TRUE(expected);
   EXPECT_EQ(expected.value()->copy_concepts().size(), 1U);
 
-  for (const auto& reply : {Reply{500, ""}, Reply{401, "{}"}, Reply{403, "{}"},
-                            Reply{200, "not json"}, Reply{200, "", {}, true}}) {
+  for (const auto& reply :
+       {DetailsReply{500, ""}, DetailsReply{401, "{}"}, DetailsReply{403, "{}"},
+        DetailsReply{200, "not json"}, DetailsReply{200, "", {}, true}}) {
     SCOPED_TRACE(testing::Message()
                  << reply.status << " " << reply.body
                  << (reply.transport_error ? " unreachable" : ""));

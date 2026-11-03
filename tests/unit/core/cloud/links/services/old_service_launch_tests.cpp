@@ -14,7 +14,7 @@ namespace {
 namespace play = libchiaking::play;
 namespace remote_play = libchiaking::net::protocol::remote_play;
 using Cause = play::OldServiceLaunch::Error::Cause;
-using Stage = play::OldServiceLaunch::Error::Stage;
+using LaunchStage = play::OldServiceLaunch::Error::Stage;
 using Method = OldServiceRig::Method;
 using Rig = OldServiceRig;
 
@@ -113,7 +113,7 @@ TEST_F(OldServiceLaunchFlow, RefusesACopyNoPlanCoversBeforeTheCheckout) {
   const auto result = resolve();
   ASSERT_FALSE(result);
   EXPECT_EQ(result.error().cause(), Cause::outside_streaming_plan);
-  EXPECT_EQ(result.error().stage(), Stage::title);
+  EXPECT_EQ(result.error().stage(), LaunchStage::title);
   EXPECT_EQ(peer.calls, std::size_t{6});
   EXPECT_EQ(play::LaunchFailure::title(result.error()).refused().kind(),
             play::LaunchRefused::Kind::outside_streaming_plan);
@@ -284,7 +284,7 @@ TEST_F(OldServiceLaunchFlow, RefusesACartThatIsNotFreeOrReadable) {
     const auto result = Rig::resolve(Rig::config(refused), refused, false);
     ASSERT_FALSE(result);
     EXPECT_EQ(refused.calls, std::size_t{7});
-    EXPECT_EQ(result.error().stage(), Stage::checkout_preview);
+    EXPECT_EQ(result.error().stage(), LaunchStage::checkout_preview);
   }
 }
 
@@ -301,7 +301,7 @@ TEST_F(OldServiceLaunchFlow, TellsAnotherStoreRegionFromAMissingPlan) {
         std::string{R"({"header":{"status_code":")"} + code + R"("}})";
     const auto result = Rig::resolve(Rig::config(refused), refused, false);
     ASSERT_FALSE(result);
-    EXPECT_EQ(result.error().stage(), Stage::checkout_preview);
+    EXPECT_EQ(result.error().stage(), LaunchStage::checkout_preview);
     EXPECT_EQ(result.error().cause(), cause);
     EXPECT_EQ(play::LaunchFailure::title(result.error()).refused().kind(),
               kind);

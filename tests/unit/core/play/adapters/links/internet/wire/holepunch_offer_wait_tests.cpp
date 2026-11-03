@@ -16,7 +16,7 @@ using internet::holepunch::AckPeerOffer;
 using internet::holepunch::Offer;
 using internet::holepunch::SendOwnOffer;
 using EffectError = internet::holepunch::OfferEffectError;
-using State = internet::holepunch::OfferWaitState;
+using internet::holepunch::OfferWaitState;
 
 TEST(HolepunchOfferEffects, AcknowledgeThePeerThenSendOurOwnOffer) {
   const auto result = Offer::make_initial_effects(7, 0x1111, 0x2222);
@@ -79,7 +79,7 @@ class HolepunchOfferWait : public ::testing::Test {
   void offered() {
     ASSERT_TRUE(wait_.begin(7, 0x2222));
     wait_.on_console_offer(7, 0x1111);
-    ASSERT_EQ(wait_.state(), State::waiting_result);
+    ASSERT_EQ(wait_.state(), OfferWaitState::waiting_result);
     ASSERT_EQ(wait_.take_effects().size(), 2U);
   }
 
@@ -89,7 +89,7 @@ class HolepunchOfferWait : public ::testing::Test {
 TEST_F(HolepunchOfferWait, AcknowledgesAnOfferWithoutARequestId) {
   ASSERT_TRUE(wait_.begin(7, 0x2222));
   wait_.on_console_offer(7, 0);
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   auto effects = wait_.take_effects();
   ASSERT_EQ(effects.size(), 2U);
   const auto* ack = std::get_if<AckPeerOffer>(&effects[0]);
@@ -107,15 +107,15 @@ TEST_F(HolepunchOfferWait, BeginsOneValidAttemptAtATime) {
 TEST_F(HolepunchOfferWait, IgnoresAnotherAttemptOrAnOversizedRequestId) {
   ASSERT_TRUE(wait_.begin(7, 0x2222));
   wait_.on_console_offer(8, 0x1111);
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   wait_.on_console_offer(7, 0x10000);
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
 }
 
 TEST_F(HolepunchOfferWait, AnswersTheConsolesOfferWithOurOwn) {
   ASSERT_TRUE(wait_.begin(7, 0x2222));
   wait_.on_console_offer(7, 0x1111);
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   auto effects = wait_.take_effects();
   ASSERT_EQ(effects.size(), 2U);
   const auto* ack = std::get_if<AckPeerOffer>(&effects[0]);
@@ -147,37 +147,37 @@ TEST_F(HolepunchOfferWait, IsReadyToProbeOnTheResultForItsOwnOffer) {
   ASSERT_NO_FATAL_FAILURE(offered());
   wait_.on_result(8, 0x2222, 0);
   wait_.on_result(7, 0x9999, 0);
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   wait_.on_result(7, 0x2222, 0x80010016);
-  EXPECT_EQ(wait_.state(), State::ready_to_probe);
+  EXPECT_EQ(wait_.state(), OfferWaitState::ready_to_probe);
 }
 
 TEST_F(HolepunchOfferWait, IgnoresEverythingOnceReadyToProbe) {
   ASSERT_NO_FATAL_FAILURE(offered());
   wait_.on_result(7, 0x2222, 0x80010016);
-  ASSERT_EQ(wait_.state(), State::ready_to_probe);
+  ASSERT_EQ(wait_.state(), OfferWaitState::ready_to_probe);
   wait_.on_console_offer(7, 0x1111);
   EXPECT_TRUE(wait_.take_effects().empty());
   wait_.on_result(7, 0x2222, 0);
   EXPECT_FALSE(wait_.timeout(7));
-  EXPECT_EQ(wait_.state(), State::ready_to_probe);
+  EXPECT_EQ(wait_.state(), OfferWaitState::ready_to_probe);
 }
 
 TEST_F(HolepunchOfferWait, FailsOnACancelOfItsOwnAttempt) {
   ASSERT_TRUE(wait_.begin(3, 9));
   EXPECT_FALSE(wait_.timeout(2));
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   wait_.on_console_offer(3, 10);
   EXPECT_FALSE(wait_.cancel(4));
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   EXPECT_EQ(wait_.take_effects().size(), 2U);
   EXPECT_TRUE(wait_.cancel(3));
-  EXPECT_EQ(wait_.state(), State::failed);
+  EXPECT_EQ(wait_.state(), OfferWaitState::failed);
   EXPECT_TRUE(wait_.take_effects().empty());
   EXPECT_FALSE(wait_.timeout(3));
   EXPECT_FALSE(wait_.begin(4, 11));
   wait_.on_result(3, 9, 0);
-  EXPECT_EQ(wait_.state(), State::failed);
+  EXPECT_EQ(wait_.state(), OfferWaitState::failed);
 }
 
 TEST_F(HolepunchOfferWait, DropsPendingEffectsOnATimeout) {
@@ -190,11 +190,11 @@ TEST_F(HolepunchOfferWait, DropsPendingEffectsOnATimeout) {
 TEST_F(HolepunchOfferWait, TakesOnlyAnOfferThatCarriesAConnRequest) {
   ASSERT_TRUE(wait_.begin(7, 0x2222));
   wait_.on_message(8, offer(0x1111));
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   wait_.on_message(7, message(nat::Action::offer, 0x1111));
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   wait_.on_message(7, offer(0x1111));
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   EXPECT_EQ(wait_.take_effects().size(), 2U);
 }
 
@@ -203,24 +203,24 @@ TEST_F(HolepunchOfferWait, TakesTheResultMessageForItsOwnOffer) {
   wait_.on_message(7, offer(0x1111));
   ASSERT_EQ(wait_.take_effects().size(), 2U);
   wait_.on_message(7, message(nat::Action::result, 0x9999));
-  EXPECT_EQ(wait_.state(), State::waiting_result);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_result);
   wait_.on_message(7, message(nat::Action::result, 0x2222, 0xffff));
-  EXPECT_EQ(wait_.state(), State::ready_to_probe);
+  EXPECT_EQ(wait_.state(), OfferWaitState::ready_to_probe);
 }
 
 TEST_F(HolepunchOfferWait, FailsOnATerminateForItsOwnAttempt) {
   ASSERT_TRUE(wait_.begin(3, 9));
   const auto terminate = message(nat::Action::terminate);
   wait_.on_message(4, terminate);
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   wait_.on_message(3, terminate);
-  EXPECT_EQ(wait_.state(), State::failed);
+  EXPECT_EQ(wait_.state(), OfferWaitState::failed);
 }
 
 TEST_F(HolepunchOfferWait, IgnoresAnAcceptMessage) {
   ASSERT_TRUE(wait_.begin(1, 2));
   wait_.on_message(1, message(nat::Action::accept));
-  EXPECT_EQ(wait_.state(), State::waiting_offer);
+  EXPECT_EQ(wait_.state(), OfferWaitState::waiting_offer);
   EXPECT_TRUE(wait_.take_effects().empty());
 }
 

@@ -290,9 +290,9 @@ TEST_F(LaunchVerdictOfHidden, NamesWhyAHiddenGameIsHidden) {
 }
 
 TEST(LaunchRefusalOwnershipCheck, IsAskedForOnlyWhenOwnershipIsUnknown) {
-  using Kind = LaunchRefusal::Kind;
+  using RefusalKind = LaunchRefusal::Kind;
   const auto unchecked = LaunchRefusal::ownership_unknown();
-  EXPECT_EQ(unchecked.kind(), Kind::check_unavailable);
+  EXPECT_EQ(unchecked.kind(), RefusalKind::check_unavailable);
   EXPECT_TRUE(unchecked.asks_for_ownership_check());
   ASSERT_TRUE(unchecked.cause());
   EXPECT_EQ(unchecked.cause()->reason(),

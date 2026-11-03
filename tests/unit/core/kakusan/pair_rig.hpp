@@ -249,13 +249,13 @@ class PairStage {
   template <class T>
   static auto refused(
       const libchiaking::Expected<T, libchiaking::kakusan::Refusal>& result,
-      libchiaking::kakusan::Refusal::Kind kind) -> testing::AssertionResult {
-    if (result) return testing::AssertionFailure() << "it was not refused";
+      libchiaking::kakusan::Refusal::Kind kind) -> ::testing::AssertionResult {
+    if (result) return ::testing::AssertionFailure() << "it was not refused";
     if (result.error().kind() != kind)
-      return testing::AssertionFailure()
+      return ::testing::AssertionFailure()
              << "it was refused as "
-             << testing::PrintToString(result.error().kind());
-    return testing::AssertionSuccess();
+             << ::testing::PrintToString(result.error().kind());
+    return ::testing::AssertionSuccess();
   }
 
   void begin() {
@@ -417,7 +417,7 @@ class PairStage {
   InMemoryDeviceStore& guest_store_;
 };
 
-class PairTest : public testing::Test {
+class PairTest : public ::testing::Test {
  protected:
   using SharedSession = libchiaking::kakusan::SharedSession;
   using GuestVisit = libchiaking::kakusan::GuestVisit;

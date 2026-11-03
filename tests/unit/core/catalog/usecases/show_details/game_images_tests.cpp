@@ -24,9 +24,9 @@ namespace {
 using libchiaking::catalog::CacheId;
 using libchiaking::catalog::Catalog;
 using libchiaking::catalog::ImageHost;
+using libchiaking::catalog::ImageReason;
 using libchiaking::catalog::usecases::ShowDetails;
-using Reason = libchiaking::catalog::ImageReason;
-using Reply = DetailsRig::Reply;
+using DetailsReply = DetailsRig::Reply;
 using Answer =
     std::optional<libchiaking::Expected<DetailsRig::Bytes,
                                         libchiaking::catalog::ImageFailure>>;
@@ -134,7 +134,8 @@ class GameImages : public ::testing::Test {
 };
 
 TEST_F(GameImages, AreFetchedOnceForTwoAskersAtOnce) {
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
   rig.http.hold(std::string{DetailsRig::logo_file});
   Answer left;
   Answer right;
@@ -159,10 +160,12 @@ TEST_F(GameImages, AreFetchedOnceForTwoAskersAtOnce) {
 }
 
 TEST_F(GameImages, AreFetchedAtTheSameTimeAndKept) {
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
-  rig.http.on("GET", std::string{DetailsRig::hero_file}, {Reply{200, "hero!"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::hero_file},
+              {DetailsReply{200, "hero!"}});
   rig.http.on("GET", std::string{DetailsRig::background_file},
-              {Reply{200, "back.."}});
+              {DetailsReply{200, "back.."}});
   const std::array wanted{
       std::pair{image(DetailsRig::concept_logo), std::string{"logo"}},
       std::pair{image(DetailsRig::concept_hero), std::string{"hero!"}},
@@ -200,7 +203,8 @@ TEST_F(GameImages, AreFetchedAtTheSameTimeAndKept) {
 
 TEST_F(GameImages, AreDownloadedOnceAndThenServedFromTheCore) {
   const std::string pixels{"\x89PNG\0\x01\x02pixels", 13};
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, pixels}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, pixels}});
   const auto asked = rig.http.requests();
   const auto first = rig.catalog.image_of(image(DetailsRig::concept_logo));
   ASSERT_TRUE(first);
@@ -224,21 +228,23 @@ TEST_F(GameImages, AreDownloadedOnceAndThenServedFromTheCore) {
 }
 
 TEST_F(GameImages, ReportWhyTheyCouldNotBeFetchedAndKeepNothing) {
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
   ASSERT_TRUE(rig.catalog.image_of(image(DetailsRig::concept_logo)));
-  rig.http.on("GET", std::string{DetailsRig::hero_file}, {Reply{404, "gone"}});
+  rig.http.on("GET", std::string{DetailsRig::hero_file},
+              {DetailsReply{404, "gone"}});
   const auto missing = rig.catalog.image_of(image(DetailsRig::concept_hero));
   ASSERT_FALSE(missing);
-  EXPECT_EQ(missing.error().reason(), Reason::not_listed);
+  EXPECT_EQ(missing.error().reason(), ImageReason::not_listed);
   rig.http.on("GET", std::string{DetailsRig::background_file},
-              {Reply{200, ""}});
+              {DetailsReply{200, ""}});
   const auto empty =
       rig.catalog.image_of(image(DetailsRig::concept_background));
   ASSERT_FALSE(empty);
-  EXPECT_EQ(empty.error().reason(), Reason::malformed);
+  EXPECT_EQ(empty.error().reason(), ImageReason::malformed);
   const auto unscripted = rig.catalog.image_of(image(DetailsRig::rating_icon));
   ASSERT_FALSE(unscripted);
-  EXPECT_EQ(unscripted.error().reason(), Reason::unavailable);
+  EXPECT_EQ(unscripted.error().reason(), ImageReason::unavailable);
   const auto held = rig.catalog.cache_entries(CacheId::images);
   ASSERT_TRUE(held);
   ASSERT_EQ(held.value().size(), 1U);
@@ -247,8 +253,10 @@ TEST_F(GameImages, ReportWhyTheyCouldNotBeFetchedAndKeepNothing) {
 
 TEST_F(GameImages, AreDroppedWhenRefreshedDetailsNoLongerShowThem) {
   rig.script_whole_store();
-  rig.http.on("GET", std::string{DetailsRig::hero_file}, {Reply{200, "hero"}});
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::hero_file},
+              {DetailsReply{200, "hero"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
   const auto user = rig.user();
   EXPECT_TRUE(
       rig.catalog.details_of(*user, DetailsRig::product(DetailsRig::remaster)));
@@ -281,7 +289,7 @@ TEST(GameImagesOverTheSizeCap, AreRefusedWithoutACredential) {
   const auto refused =
       catalog.image_of(DetailsRig::image(DetailsRig::concept_hero));
   ASSERT_FALSE(refused);
-  EXPECT_EQ(refused.error().reason(), Reason::rejected);
+  EXPECT_EQ(refused.error().reason(), ImageReason::rejected);
   EXPECT_EQ(store.requests, 1);
   EXPECT_EQ(store.limit, ImageHost::largest_bytes);
   EXPECT_FALSE(store.authorised);

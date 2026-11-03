@@ -19,7 +19,7 @@ using libchiaking::consoles::Generation;
 using libchiaking::consoles::HomePairing;
 using libchiaking::consoles::PairingFailure;
 using libchiaking::platform::StopToken;
-using Reason = PairingFailure::Reason;
+using PairingReason = PairingFailure::Reason;
 
 static_assert(HomePairing::deadline == std::chrono::milliseconds{30'000});
 static_assert(HomePairing::wait_step == std::chrono::milliseconds{100});
@@ -72,7 +72,7 @@ TEST(PairAtHomeDeadline, IsMetByASilentConsole) {
       pairing.run(std::move(request.value()), "127.0.0.1", home.never,
                   libchiaking::rp_session_port, std::chrono::milliseconds{2});
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::timed_out);
+  EXPECT_EQ(result.error().reason, PairingReason::timed_out);
   EXPECT_TRUE(silent.hear_knock());
 }
 
@@ -104,7 +104,7 @@ TEST_F(PairAtHomeLeap, StillPairsTwentyEightSecondsIn) {
 TEST_F(PairAtHomeLeap, GivesUpThirtySecondsAfterItBegan) {
   const auto result = paired_after_a_leap_of(30'000'000);
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::timed_out);
+  EXPECT_EQ(result.error().reason, PairingReason::timed_out);
   EXPECT_TRUE(home.nothing_is_live());
 }
 
@@ -120,7 +120,7 @@ TEST(PairAtHomeStop, StopsARunningPairing) {
       home.known.pair_at_home(*user, Home<>::host("127.0.0.1"), Generation::ps5,
                               Home<>::pin(), StopToken{stop});
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::cancelled);
+  EXPECT_EQ(result.error().reason, PairingReason::cancelled);
   EXPECT_TRUE(home.nothing_is_live());
 }
 

@@ -77,15 +77,16 @@ TEST(TitleStartPause, EndsEarlyWhenStopped) {
 }
 
 TEST(TitleStartNotStarted, KeepsTheReasonTheTitlesWereUnavailable) {
-  using Titles = TitlesUnavailable::Reason;
-  EXPECT_EQ(TitleStart::not_started({Titles::ps5_only}).reason, Why::ps5_only);
-  EXPECT_EQ(TitleStart::not_started({Titles::not_paired}).reason,
+  using UnavailableReason = TitlesUnavailable::Reason;
+  EXPECT_EQ(TitleStart::not_started({UnavailableReason::ps5_only}).reason,
+            Why::ps5_only);
+  EXPECT_EQ(TitleStart::not_started({UnavailableReason::not_paired}).reason,
             Why::not_paired);
-  EXPECT_EQ(TitleStart::not_started({Titles::not_on_account}).reason,
+  EXPECT_EQ(TitleStart::not_started({UnavailableReason::not_on_account}).reason,
             Why::not_on_account);
-  EXPECT_EQ(TitleStart::not_started({Titles::forgotten}).reason,
+  EXPECT_EQ(TitleStart::not_started({UnavailableReason::forgotten}).reason,
             Why::forgotten);
-  EXPECT_EQ(TitleStart::not_started({Titles::not_available}).reason,
+  EXPECT_EQ(TitleStart::not_started({UnavailableReason::not_available}).reason,
             Why::not_available);
 }
 

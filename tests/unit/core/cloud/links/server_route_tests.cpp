@@ -16,8 +16,8 @@ namespace cloud_test {
 namespace {
 
 namespace remote_play = libchiaking::net::protocol::remote_play;
-using Reason = ConnectRig::Reason;
-using Stage = ConnectRig::Stage;
+using ConnectReason = ConnectRig::Reason;
+using ConnectStage = ConnectRig::Stage;
 using Route =
     libchiaking::Expected<remote_play::EstablishedRoute, play::ConnectError>;
 
@@ -170,14 +170,14 @@ TEST_F(ServerRoute, ConnectsOverIpv6WhereAvailable) {
 
 TEST_F(ServerRoute, RefusesAnUnmeasuredDatacenter) {
   selected.measured = false;
-  EXPECT_TRUE(ConnectRig::fails_with(connect_route(), Stage::route,
-                                     Reason::not_measured));
+  EXPECT_TRUE(ConnectRig::fails_with(connect_route(), ConnectStage::route,
+                                     ConnectReason::not_measured));
 }
 
 TEST_F(ServerRoute, RefusesAnAllocationWithoutAHost) {
   allocation.server_ip.clear();
-  EXPECT_TRUE(ConnectRig::fails_with(connect_route(), Stage::route,
-                                     Reason::invalid_host));
+  EXPECT_TRUE(ConnectRig::fails_with(connect_route(), ConnectStage::route,
+                                     ConnectReason::invalid_host));
 }
 
 }  // namespace

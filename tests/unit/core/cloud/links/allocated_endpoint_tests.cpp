@@ -10,7 +10,7 @@
 namespace cloud_test {
 namespace {
 
-using Reason = ConnectRig::Reason;
+using ConnectReason = ConnectRig::Reason;
 using Stage = ConnectRig::Stage;
 
 class FakeDns final : public platform::DnsProvider {
@@ -67,22 +67,22 @@ TEST_F(AllocatedEndpoint, ResolvesAnIpv6HostToItsIpv6Address) {
 TEST_F(AllocatedEndpoint, HasNoAddressWithoutOneOfTheHostsFamily) {
   dns.addresses = {ipv6};
   EXPECT_TRUE(ConnectRig::fails_with(resolve("203.0.113.5", 9295), Stage::route,
-                                     Reason::no_address));
+                                     ConnectReason::no_address));
   dns.addresses.clear();
   EXPECT_TRUE(ConnectRig::fails_with(resolve("203.0.113.5", 9295), Stage::route,
-                                     Reason::no_address));
+                                     ConnectReason::no_address));
 }
 
 TEST_F(AllocatedEndpoint, ReportsADnsFailure) {
   dns.fail = true;
   EXPECT_TRUE(ConnectRig::fails_with(resolve("203.0.113.5", 9295), Stage::route,
-                                     Reason::dns_failure));
+                                     ConnectReason::dns_failure));
 }
 
 TEST_F(AllocatedEndpoint, RefusesAnEmptyHostWithoutResolving) {
   dns.fail = true;
   EXPECT_TRUE(ConnectRig::fails_with(resolve("", 9295), Stage::route,
-                                     Reason::invalid_host));
+                                     ConnectReason::invalid_host));
   EXPECT_EQ(dns.calls, 0);
 }
 

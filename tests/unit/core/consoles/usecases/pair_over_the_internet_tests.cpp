@@ -27,7 +27,7 @@ using libchiaking::consoles::Generation;
 using libchiaking::consoles::InternetPairingStage;
 using libchiaking::consoles::PairingFailure;
 using libchiaking::consoles::PairingStep;
-using Reason = PairingFailure::Reason;
+using PairingReason = PairingFailure::Reason;
 using Stages = std::vector<InternetPairingStage>;
 using Steps = std::vector<PairingStep>;
 
@@ -130,7 +130,7 @@ TEST(PairOverTheInternetWithoutAPort, IsAnsweredWithoutARequest) {
   const auto answered = known.consoles.pair_over_the_internet(
       *user, AccountConsole::main_ps4(), nullptr, stop);
   ASSERT_FALSE(answered);
-  EXPECT_EQ(answered.error().reason, Reason::internet_pairing_missing);
+  EXPECT_EQ(answered.error().reason, PairingReason::internet_pairing_missing);
   EXPECT_EQ(known.signed_in.offline.requests, 0);
   EXPECT_TRUE(known.consoles.everything().empty());
 }
@@ -138,11 +138,11 @@ TEST(PairOverTheInternetWithoutAPort, IsAnsweredWithoutARequest) {
 TEST_F(PairOverTheInternet, NeverReportsSavingWhenThePairingFails) {
   const auto user = signed_in.as("npsso", 7);
   StagesHeard heard;
-  pairing.failure = PairingFailure{Reason::timed_out};
+  pairing.failure = PairingFailure{PairingReason::timed_out};
   const auto failed = consoles.pair_over_the_internet(
       *user, listed(0x11, "Living Room"), &heard, stop);
   ASSERT_FALSE(failed);
-  EXPECT_EQ(failed.error().reason, Reason::timed_out);
+  EXPECT_EQ(failed.error().reason, PairingReason::timed_out);
   EXPECT_EQ(heard.steps, (Steps{PairingStep::opening_account_session,
                                 PairingStep::sending_request}));
 }
@@ -231,7 +231,7 @@ TEST_F(PairOverTheInternet, AnswersRemotePlaySwitchedOffBeforePairing) {
   const auto answered = consoles.pair_over_the_internet(
       *user, listed(0x13, "Den", false), nullptr, stop);
   ASSERT_FALSE(answered);
-  EXPECT_EQ(answered.error().reason, Reason::remote_play_disabled);
+  EXPECT_EQ(answered.error().reason, PairingReason::remote_play_disabled);
   EXPECT_EQ(pairing.calls, 0);
   EXPECT_TRUE(consoles.everything().empty());
 }
@@ -242,7 +242,7 @@ TEST_F(PairOverTheInternet, AnswersAHomeUserSignedOutWithoutARequest) {
   const auto answered = consoles.pair_over_the_internet(
       *home.value(), listed(0x14, "Den"), nullptr, stop);
   ASSERT_FALSE(answered);
-  EXPECT_EQ(answered.error().reason, Reason::unanswered);
+  EXPECT_EQ(answered.error().reason, PairingReason::unanswered);
   ASSERT_TRUE(answered.error().unanswered);
   EXPECT_EQ(answered.error().unanswered->reason,
             libchiaking::users::Unanswered::Reason::signed_out);
@@ -254,14 +254,14 @@ TEST_F(PairOverTheInternet, AnswersAHomeUserSignedOutWithoutARequest) {
 TEST_F(PairOverTheInternet, KeepsTheStageOfAFailureAndSavesNothing) {
   const auto user = signed_in.as("npsso", 7);
   pairing.failure =
-      PairingFailure{.reason = Reason::refused,
+      PairingFailure{.reason = PairingReason::refused,
                      .http_status = 403,
                      .ps_reason = 0x80108b12,
                      .internet_stage = InternetPairingStage::pairing};
   const auto answered = consoles.pair_over_the_internet(
       *user, listed(0x15, "Den"), nullptr, stop);
   ASSERT_FALSE(answered);
-  EXPECT_EQ(answered.error().reason, Reason::refused);
+  EXPECT_EQ(answered.error().reason, PairingReason::refused);
   EXPECT_EQ(answered.error().http_status, 403);
   EXPECT_EQ(answered.error().ps_reason, 0x80108b12U);
   EXPECT_EQ(answered.error().internet_stage, InternetPairingStage::pairing);
@@ -276,7 +276,7 @@ TEST_F(PairOverTheInternet, LeavesNothingLiveWhenThePairingCannotBeSaved) {
   const auto answered = consoles.pair_over_the_internet(
       *user, listed(0x16, "Den"), nullptr, stop);
   ASSERT_FALSE(answered);
-  EXPECT_EQ(answered.error().reason, Reason::not_saved);
+  EXPECT_EQ(answered.error().reason, PairingReason::not_saved);
   EXPECT_EQ(pairing.calls, 1);
   EXPECT_TRUE(consoles.everything().empty());
   EXPECT_EQ(store.pairing_count(), 0U);

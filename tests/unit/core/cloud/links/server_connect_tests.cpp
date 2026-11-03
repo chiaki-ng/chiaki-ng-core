@@ -16,8 +16,8 @@ namespace cloud_test {
 namespace {
 
 namespace remote_play = libchiaking::net::protocol::remote_play;
-using Reason = ConnectRig::Reason;
-using Stage = ConnectRig::Stage;
+using ConnectReason = ConnectRig::Reason;
+using ConnectStage = ConnectRig::Stage;
 
 TEST(ServerConnectTakionConfig, WrapsWhenAsked) {
   const auto wrapped = play::ServerConnect::takion_config(1);
@@ -182,8 +182,8 @@ TEST_P(ServerConnectStart, SendsAPlainHandshakeWithoutAWrapper) {
 TEST_P(ServerConnectStart, ClosesTheRouteForAnUndecodableKey) {
   credentials.psn_wrapper_type = 0;
   credentials.handshake_key.assign("invalid");
-  EXPECT_TRUE(ConnectRig::fails_with(start(), Stage::active,
-                                     Reason::handshake_key_length));
+  EXPECT_TRUE(ConnectRig::fails_with(start(), ConnectStage::active,
+                                     ConnectReason::handshake_key_length));
   EXPECT_TRUE(state->sent.empty());
   EXPECT_EQ(state->closes, 1U);
 }
@@ -194,7 +194,7 @@ TEST_P(ServerConnectStart, ClosesALocalRoute) {
   EXPECT_TRUE(ConnectRig::fails_with(
       connector.start(route(remote_play::RouteKind::local_direct), credentials,
                       GetParam()),
-      Stage::active, Reason::invalid_route));
+      ConnectStage::active, ConnectReason::invalid_route));
   EXPECT_TRUE(state->sent.empty());
   EXPECT_EQ(state->closes, 1U);
 }
@@ -279,9 +279,9 @@ TEST_F(ServerConnectConnection, RefusesAnAllocationWithoutAHost) {
   provisioned.server_ip.clear();
   const auto active = connector.connect(provisioned, measured.value());
   ASSERT_FALSE(active);
-  EXPECT_EQ(active.error().stage(), Stage::route);
-  EXPECT_TRUE(ConnectRig::failed_with(active.error(), Stage::route,
-                                      Reason::invalid_host));
+  EXPECT_EQ(active.error().stage(), ConnectStage::route);
+  EXPECT_TRUE(ConnectRig::failed_with(active.error(), ConnectStage::route,
+                                      ConnectReason::invalid_host));
 }
 
 TEST_F(ServerConnectConnection, RefusesAnUndecodableKey) {
@@ -290,15 +290,15 @@ TEST_F(ServerConnectConnection, RefusesAnUndecodableKey) {
   provisioned.handshake_key.assign("invalid");
   const auto active = connector.connect(provisioned, measured.value());
   ASSERT_FALSE(active);
-  EXPECT_EQ(active.error().stage(), Stage::active);
-  EXPECT_TRUE(ConnectRig::failed_with(active.error(), Stage::active,
-                                      Reason::handshake_key_length));
+  EXPECT_EQ(active.error().stage(), ConnectStage::active);
+  EXPECT_TRUE(ConnectRig::failed_with(active.error(), ConnectStage::active,
+                                      ConnectReason::handshake_key_length));
 }
 
 TEST_F(ServerConnectConnection, CalibratesNothingUnmeasured) {
   selected.measured = false;
-  EXPECT_TRUE(ConnectRig::fails_with(calibration(), Stage::route,
-                                     Reason::not_measured));
+  EXPECT_TRUE(ConnectRig::fails_with(calibration(), ConnectStage::route,
+                                     ConnectReason::not_measured));
 }
 
 }  // namespace

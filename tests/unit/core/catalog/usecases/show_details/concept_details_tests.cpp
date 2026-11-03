@@ -14,11 +14,11 @@ namespace catalog_test {
 namespace {
 
 using libchiaking::catalog::CacheId;
+using libchiaking::catalog::ConceptDetailsReason;
 using libchiaking::catalog::GameDetails;
 using libchiaking::catalog::StoreLocale;
-using Reason = libchiaking::catalog::ConceptDetailsReason;
 using ProductReason = libchiaking::catalog::ProductDetailsReason;
-using Reply = DetailsRig::Reply;
+using DetailsReply = DetailsRig::Reply;
 using Json = DetailsRig::Json;
 using Fixtures = DetailsRig::Fixtures;
 
@@ -131,7 +131,8 @@ TEST_F(ConceptDetails, DropTheirPicturesWhenCleared) {
   ASSERT_TRUE(shown);
   const auto layers = DetailsRig::layers_of(shown.value());
   ASSERT_TRUE(layers);
-  rig.http.on("GET", std::string{DetailsRig::logo_file}, {Reply{200, "logo"}});
+  rig.http.on("GET", std::string{DetailsRig::logo_file},
+              {DetailsReply{200, "logo"}});
   EXPECT_TRUE(rig.catalog.image_of(layers->logo));
   EXPECT_TRUE(rig.catalog.clear_cache(CacheId::game_details));
   const auto pictures = rig.catalog.cache_entries(CacheId::images);
@@ -185,7 +186,7 @@ TEST(ConceptDetailsKeyArt, FallsBackToGameHubArtWithoutABackgroundOrHero) {
         << role;
     media = std::move(kept);
     rig.http.on("GET", std::string{DetailsRig::concept_media_query},
-                {Reply{200, Json::dump(root)}});
+                {DetailsReply{200, Json::dump(root)}});
     const auto user = rig.user();
     const auto shown = rig.catalog.details_of(*user, grouped);
     ASSERT_TRUE(shown) << role;
@@ -212,7 +213,7 @@ TEST_F(ConceptDetailsRefusals, AnswerAnUnknownConceptLikeAnUnsoldProduct) {
   unknown.script_whole_store();
   unknown.script_concept_store();
   unknown.http.on("GET", std::string{DetailsRig::concept_media_query},
-                  {Reply{200, R"({"data":{"conceptRetrieve":null}})"}});
+                  {DetailsReply{200, R"({"data":{"conceptRetrieve":null}})"}});
   unknown.the_store_answers(DetailsRig::not_sold(DetailsRig::remaster));
   const auto user = unknown.user();
   const auto by_concept = unknown.catalog.details_of(*user, grouped);
@@ -220,23 +221,23 @@ TEST_F(ConceptDetailsRefusals, AnswerAnUnknownConceptLikeAnUnsoldProduct) {
       *user, DetailsRig::product(DetailsRig::remaster));
   ASSERT_FALSE(by_concept);
   ASSERT_FALSE(by_product);
-  EXPECT_EQ(by_concept.error().reason(), Reason::not_listed);
+  EXPECT_EQ(by_concept.error().reason(), ConceptDetailsReason::not_listed);
   EXPECT_EQ(by_product.error().reason(), ProductReason::not_listed);
   EXPECT_EQ(by_concept.error().http_status(), by_product.error().http_status());
   EXPECT_TRUE(unknown.records.names().empty());
 
   unknown.http.on("GET", std::string{DetailsRig::concept_media_query},
-                  {Reply{400, ""}});
+                  {DetailsReply{400, ""}});
   const auto refused = unknown.catalog.details_of(*user, grouped);
   ASSERT_FALSE(refused);
-  EXPECT_EQ(refused.error().reason(), Reason::rejected);
+  EXPECT_EQ(refused.error().reason(), ConceptDetailsReason::rejected);
 }
 
 TEST_F(ConceptDetailsRefusals, ShowTheConceptButKeepNothingWithoutStars) {
   DetailsRig partial;
   partial.script_concept_store();
   partial.http.on("GET", std::string{DetailsRig::concept_stars_query},
-                  {Reply{400, ""}});
+                  {DetailsReply{400, ""}});
   const auto user = partial.user();
   const auto shown = partial.catalog.details_of(*user, grouped);
   ASSERT_TRUE(shown);
@@ -302,8 +303,8 @@ TEST_F(ConceptDetailsWithoutALibrary, AreShownToAUserWithoutStoreAccess) {
 }
 
 TEST_F(ConceptDetailsWithoutALibrary, AreShownWhenTheLibraryIsRefused) {
-  for (const auto& refusal :
-       {Reply{500, "{}"}, Reply{403, ""}, Reply{200, "", {}, true}}) {
+  for (const auto& refusal : {DetailsReply{500, "{}"}, DetailsReply{403, ""},
+                              DetailsReply{200, "", {}, true}}) {
     SCOPED_TRACE(testing::Message()
                  << refusal.status
                  << (refusal.transport_error ? " unreachable" : ""));
@@ -361,7 +362,7 @@ TEST_F(ConceptRequests, AreInFlightTogether) {
 TEST_F(ConceptRequests, KeepNothingWhenTheRatingBesideThemFails) {
   rig.script_concept_store();
   rig.http.on("GET", std::string{DetailsRig::concept_stars_query},
-              {Reply{400, ""}});
+              {DetailsReply{400, ""}});
   const auto user = rig.user();
   GatedStore gate{rig.http, 4};
   auto catalog = over(gate);
@@ -379,7 +380,7 @@ TEST_F(ConceptRequests, KeepNothingWhenTheRatingBesideThemFails) {
 TEST_F(ConceptRequests, AreRejectedWhenTheMediaIsRefused) {
   rig.script_concept_store();
   rig.http.on("GET", std::string{DetailsRig::concept_media_query},
-              {Reply{400, ""}});
+              {DetailsReply{400, ""}});
   const auto user = rig.user();
   GatedStore closed{rig.http, 4};
   auto without_media = over(closed);
@@ -387,7 +388,7 @@ TEST_F(ConceptRequests, AreRejectedWhenTheMediaIsRefused) {
   EXPECT_FALSE(closed.waited_alone());
   EXPECT_EQ(closed.arrived(), 4);
   ASSERT_FALSE(nothing);
-  EXPECT_EQ(nothing.error().reason(), Reason::rejected);
+  EXPECT_EQ(nothing.error().reason(), ConceptDetailsReason::rejected);
   EXPECT_FALSE(rig.has_record(DetailsRig::us_concept_record));
 }
 

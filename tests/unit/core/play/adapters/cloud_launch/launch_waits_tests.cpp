@@ -16,7 +16,7 @@ namespace catalog = libchiaking::catalog;
 namespace play = libchiaking::play;
 namespace shared = libchiaking::progress;
 using cloud_launches::Launching;
-using Reason = shared::WaitReason;
+using shared::WaitReason;
 
 class CloudLaunchWaits : public cloud_launches::LaunchTest {
  protected:
@@ -32,7 +32,7 @@ class CloudLaunchWaits : public cloud_launches::LaunchTest {
     });
   }
 
-  const shared::Wait again{Reason::title_not_ready,
+  const shared::Wait again{WaitReason::title_not_ready,
                            std::chrono::milliseconds{0}};
 };
 
@@ -95,7 +95,7 @@ TEST_F(CloudLaunchWaits, ReportsAHeldSessionLockAsThreeTypedReportsInOrder) {
   EXPECT_EQ(second.activity(), Activity::reserving_server);
   EXPECT_EQ(first.phase(), play::LaunchPhase::preparing);
   EXPECT_EQ(second.phase(), play::LaunchPhase::preparing);
-  EXPECT_EQ(first.wait(), (shared::Wait{Reason::previous_session_closing,
+  EXPECT_EQ(first.wait(), (shared::Wait{WaitReason::previous_session_closing,
                                         std::chrono::seconds{10}}));
   EXPECT_EQ(second.wait(), first.wait());
   EXPECT_EQ(first.attempt(), 1U);
@@ -136,17 +136,17 @@ TEST_F(CloudLaunchWaits, NamesTheReasonAndDelayOfEveryAllocationWait) {
   EXPECT_EQ(waits[0].activity(), Activity::allocating_server);
   EXPECT_EQ(waits[0].queue_position(), 7U);
   EXPECT_EQ(waits[0].wait(),
-            (shared::Wait{Reason::server_queue, std::chrono::seconds{4}}));
+            (shared::Wait{WaitReason::server_queue, std::chrono::seconds{4}}));
   EXPECT_EQ(waits[0].attempt(), 1U);
   EXPECT_EQ(waits[1].activity(), Activity::allocating_server);
   EXPECT_FALSE(waits[1].queue_position());
   EXPECT_EQ(waits[1].wait(),
-            (shared::Wait{Reason::server_queue, std::chrono::seconds{3}}));
+            (shared::Wait{WaitReason::server_queue, std::chrono::seconds{3}}));
   EXPECT_EQ(waits[1].attempt(), 2U);
   EXPECT_EQ(waits[2].activity(), Activity::migrating_data);
   EXPECT_EQ(waits[2].migration_percent(), 40U);
-  EXPECT_EQ(waits[2].wait(),
-            (shared::Wait{Reason::data_migration, std::chrono::seconds{2}}));
+  EXPECT_EQ(waits[2].wait(), (shared::Wait{WaitReason::data_migration,
+                                           std::chrono::seconds{2}}));
   EXPECT_EQ(waits[2].attempt(), 3U);
   EXPECT_EQ(waits[2].status().attempt, 3);
   for (const auto& progress : waits) {
@@ -230,7 +230,7 @@ TEST_F(CloudLaunchWaits, StartsAFreshSessionWhenTheLockIsRefused) {
   ASSERT_EQ(waits.size(), 2U);
   for (const auto& progress : waits) {
     EXPECT_EQ(progress.activity(), Activity::reserving_server);
-    EXPECT_EQ(progress.wait(), (shared::Wait{Reason::connection_retry,
+    EXPECT_EQ(progress.wait(), (shared::Wait{WaitReason::connection_retry,
                                              std::chrono::seconds{5}}));
   }
   EXPECT_EQ(waits[0].attempt(), 1U);

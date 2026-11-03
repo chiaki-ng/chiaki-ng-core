@@ -20,7 +20,7 @@ using libchiaking::consoles::PairingFailure;
 using libchiaking::consoles::PairingProgress;
 using libchiaking::consoles::PairingStep;
 using libchiaking::platform::StopToken;
-using Reason = PairingFailure::Reason;
+using PairingReason = PairingFailure::Reason;
 using Steps = std::vector<PairingStep>;
 
 class StepsHeard final : public libchiaking::consoles::PairingWatcher {
@@ -126,7 +126,7 @@ TEST_F(PairAtHomeProgress, AFailedPairingNeverReportsSaving) {
                               Home<>::pin(), home.never, &watcher);
   console.stop_serving();
   ASSERT_FALSE(result);
-  EXPECT_EQ(result.error().reason, Reason::refused);
+  EXPECT_EQ(result.error().reason, PairingReason::refused);
   const auto steps = watcher.steps();
   ASSERT_FALSE(steps.empty());
   EXPECT_EQ(steps.front(), PairingStep::reaching_console);

@@ -23,7 +23,7 @@ using libchiaking::consoles::InstalledTitle;
 using libchiaking::consoles::StartFailure;
 using libchiaking::consoles::StartState;
 using libchiaking::consoles::TitlesUnavailable;
-using Known = InstalledTitle::LastUse::Known;
+using LastUseKnown = InstalledTitle::LastUse::Known;
 using Names = LibraryRig::Names;
 
 class RecentlyPlayedAcrossConsoles : public ::testing::Test {
@@ -277,33 +277,33 @@ TEST_F(ConsoleTitlesLastUse, OrdersEachConsoleByItsOwnLastUse) {
 TEST_F(ConsoleTitlesLastUse, KeepsTheUseOnThisConsole) {
   EXPECT_EQ(here[0].last_used(),
             (InstalledTitle::LastUse{at("2026-03-05T20:00:00Z"),
-                                     Known::on_this_console}));
+                                     LastUseKnown::on_this_console}));
   EXPECT_EQ(there[1].last_used(),
             (InstalledTitle::LastUse{at("2026-02-01T07:00:00Z"),
-                                     Known::on_this_console}));
+                                     LastUseKnown::on_this_console}));
   EXPECT_EQ(here[2].last_used(),
             (InstalledTitle::LastUse{at("2026-03-01T09:30:00.250Z"),
-                                     Known::on_this_console}));
+                                     LastUseKnown::on_this_console}));
   EXPECT_EQ(there[0].last_used(),
             (InstalledTitle::LastUse{at("2026-03-04T23:59:59Z"),
-                                     Known::on_this_console}));
+                                     LastUseKnown::on_this_console}));
   EXPECT_NE(here[0].last_used(), there[1].last_used());
   EXPECT_NE(here[2].last_used(), there[0].last_used());
   EXPECT_EQ(here[3].last_used(),
             (InstalledTitle::LastUse{at("2026-02-20T00:00:00Z"),
-                                     Known::on_this_console}));
+                                     LastUseKnown::on_this_console}));
 }
 
 TEST_F(ConsoleTitlesLastUse, FallsBackToTheUseOnTheAccount) {
   EXPECT_EQ(here[1].last_used(),
             (InstalledTitle::LastUse{at("2026-03-03T00:00:00Z"),
-                                     Known::on_the_account}));
+                                     LastUseKnown::on_the_account}));
   EXPECT_EQ(here[4].last_used(),
             (InstalledTitle::LastUse{at("2026-01-10T00:00:00Z"),
-                                     Known::on_the_account}));
+                                     LastUseKnown::on_the_account}));
   EXPECT_EQ(here[5].last_used(),
             (InstalledTitle::LastUse{at("2026-01-09T00:00:00Z"),
-                                     Known::on_the_account}));
+                                     LastUseKnown::on_the_account}));
 }
 
 TEST_F(ConsoleTitlesLastUse, KeepsOnlyValidConcepts) {

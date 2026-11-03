@@ -24,7 +24,7 @@
 #include "src/core/utils/json/json.hpp"
 #include "src/core/utils/timing/wall_milliseconds.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <chrono>
 #include <cstdint>

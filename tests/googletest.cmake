@@ -23,13 +23,40 @@ endif()
 
 include(GoogleTest)
 
+option(LIBCHIAKING_TEST_PRECOMPILED_HEADERS "Share one precompiled header across the test binaries on Clang" ON)
+
+function(libchiaking_share_test_headers target)
+    if(NOT LIBCHIAKING_TEST_PRECOMPILED_HEADERS
+            OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang"
+            OR CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
+        return()
+    endif()
+    get_property(owner GLOBAL PROPERTY libchiaking_test_headers_owner)
+    if(owner)
+        target_precompile_headers(${target} REUSE_FROM ${owner})
+    else()
+        target_precompile_headers(${target} PRIVATE
+            <gtest/gtest.h> <algorithm> <array> <chrono> <cstddef> <cstdint> <expected> <format>
+            <functional> <map> <memory> <optional> <span> <string> <string_view> <utility>
+            <variant> <vector>)
+        set_property(GLOBAL PROPERTY libchiaking_test_headers_owner ${target})
+    endif()
+endfunction()
+
 function(libchiaking_gtest_domain folder)
-    cmake_parse_arguments(PARSE_ARGV 1 arg "" "" "LIBS;DEFINES;SOURCES;IF;OPTIONAL_SOURCES;OPTIONAL_LIBS")
+    cmake_parse_arguments(PARSE_ARGV 1 arg "" "" "LIBS;DEFINES;SOURCES;IF;OPTIONAL_SOURCES;OPTIONAL_LIBS;FOLDERS")
     if(arg_IF AND NOT (${arg_IF}))
         return()
     endif()
-    file(GLOB_RECURSE sources CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/${folder}/*_tests.cpp")
+    if(NOT arg_FOLDERS)
+        set(arg_FOLDERS "${folder}")
+    endif()
+    set(sources)
+    foreach(source_folder IN LISTS arg_FOLDERS)
+        file(GLOB_RECURSE folder_sources CONFIGURE_DEPENDS
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/unit/${source_folder}/*_tests.cpp")
+        list(APPEND sources ${folder_sources})
+    endforeach()
     set(optional_found TRUE)
     foreach(optional_lib IN LISTS arg_OPTIONAL_LIBS)
         if(NOT TARGET ${optional_lib})
@@ -58,6 +85,7 @@ function(libchiaking_gtest_domain folder)
     target_include_directories(${name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_compile_definitions(${name} PRIVATE ${libchiaking_test_fixtures} ${arg_DEFINES})
     target_link_libraries(${name} PRIVATE ${arg_LIBS} libchiaking_test_support GTest::gtest GTest::gtest_main)
+    libchiaking_share_test_headers(${name})
     if(LIBCHIAKING_TESTS_PER_BINARY)
         add_test(NAME ${folder}
             COMMAND ${name} --gtest_brief=1

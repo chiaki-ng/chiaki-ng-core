@@ -10,7 +10,7 @@
 #include "src/core/utils/text/integer.hpp"
 #include "src/core/utils/timing/instant.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <algorithm>
 #include <chrono>

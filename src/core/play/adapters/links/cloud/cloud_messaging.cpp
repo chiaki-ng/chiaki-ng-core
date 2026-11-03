@@ -4,6 +4,8 @@
 #include "src/core/utils/json/json.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
+#include <glaze/util/key_transformers.hpp>
+
 #include <algorithm>
 #include <array>
 #include <concepts>

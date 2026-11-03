@@ -2,8 +2,7 @@
 /// @brief Declares Response, an HTTP response received through Client.
 #pragma once
 
-#include "src/core/utils/json/json.hpp"
-#include "src/core/utils/text/ascii.hpp"
+#include "src/core/utils/json/parse_error.hpp"
 
 #include <libchiaking/detail/expected.hpp>
 #include <libchiaking/platform/http/provider.hpp>
@@ -13,6 +12,7 @@
 #include <optional>
 #include <span>
 #include <string_view>
+#include <utility>
 
 namespace libchiaking::net::http {
 
@@ -81,13 +81,13 @@ class Response {
   }
   /// @brief Parses the body, up to its first NUL, as a JSON document.
   ///
+  /// Defined in response_document.hpp, which a caller includes to use it.
+  ///
   /// @tparam Document A type json::read can fill.
   /// @return The document.
   /// @retval json::ParseError The body is too large or not a valid document.
   template <class Document>
-  [[nodiscard]] auto document() const -> Expected<Document, json::ParseError> {
-    return json::read<Document>(text::c_string(body()), maximum_json_bytes_);
-  }
+  [[nodiscard]] auto document() const -> Expected<Document, json::ParseError>;
   /// @brief Hands over the platform response.
   ///
   /// @return The response.

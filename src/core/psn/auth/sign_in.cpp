@@ -9,6 +9,7 @@
 #include "src/core/psn/auth/duid.hpp"
 #include "src/core/psn/legacy_cloud_stream_endpoints.hpp"
 #include "src/core/psn/online_id.hpp"
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/text/base64.hpp"

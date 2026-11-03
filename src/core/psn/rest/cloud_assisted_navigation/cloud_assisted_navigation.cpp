@@ -1,6 +1,7 @@
 #include "src/core/psn/rest/cloud_assisted_navigation/cloud_assisted_navigation.hpp"
 
 #include "src/core/net/transport/http/url.hpp"
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/text/base64.hpp"

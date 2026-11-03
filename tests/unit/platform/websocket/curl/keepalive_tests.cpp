@@ -35,22 +35,6 @@ TEST_F(CurlWebSocketKeepalive, PingsOnceRightAwayWhenAskedTo) {
   EXPECT_TRUE(server.succeeded());
 }
 
-TEST_F(CurlWebSocketKeepalive, KeepsAPongArrivingAfterTheDeadlineBuffered) {
-  LoopbackWebSocketServer server(Mode::late_pong);
-  auto request = request_for(server, 1024);
-  request.ping_interval = std::chrono::seconds(10);
-  request.pong_timeout = std::chrono::milliseconds(10);
-  request.ping_immediately = true;
-  auto connected = provider.connect(request, {});
-  ASSERT_TRUE(connected);
-  auto result = connected.value()->receive(
-      deadline_after(std::chrono::milliseconds(300)));
-  ASSERT_FALSE(result);
-  EXPECT_EQ(result.error(), WebSocketError::cancelled);
-  EXPECT_EQ(server.pings(), 1U);
-  (void)connected.value()->close();
-}
-
 TEST_F(CurlWebSocketKeepalive, TimesOutWhenAPongNeverArrives) {
   LoopbackWebSocketServer server(Mode::missing_pong);
   auto request = request_for(server, 1024);

@@ -9,7 +9,7 @@
 #include "src/core/psn/graphql/stats.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include "src/core/psn/session.hpp"
 

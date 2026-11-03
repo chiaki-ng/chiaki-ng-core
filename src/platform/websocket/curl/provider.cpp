@@ -396,7 +396,7 @@ class ActiveWebSocketConnection final : public WebSocketConnection {
                            &received, &metadata);
           if (result == CURLE_AGAIN) {
             if (awaiting_pong_ && pong_timeout_.count() > 0 &&
-                now_of(clock_) >= pong_deadline_)
+                now >= pong_deadline_)
               return unexpected(WebSocketError::timed_out);
             const auto waited =
                 wait_for_socket(CURL_WAIT_POLLIN, socket_wait_quantum_ms);

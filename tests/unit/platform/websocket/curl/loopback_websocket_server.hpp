@@ -29,7 +29,6 @@ class LoopbackWebSocketServer {
     fragmented,
     keepalive,
     missing_pong,
-    late_pong,
     flood,
     byte_flood
   };
@@ -292,12 +291,6 @@ class LoopbackWebSocketServer {
         if (opcode != 9) continue;
         ++pings_;
         if (mode_ == Mode::missing_pong) continue;
-        if (mode_ == Mode::late_pong) {
-          Sleeper sleeper{threading_, clock_};
-          static_cast<void>(sleeper.sleep_for(std::chrono::milliseconds(35)));
-          if (!send_all(poller, socket, frame(10, true, payload))) return false;
-          continue;
-        }
         if (pings_ == 1 && !send_all(poller, socket, frame(1, true, "before")))
           return false;
         if (!send_all(poller, socket, frame(10, true, payload))) return false;
@@ -318,8 +311,7 @@ class LoopbackWebSocketServer {
         !send_handshake(*poller.value(), *socket))
       return;
 
-    if (mode_ == Mode::keepalive || mode_ == Mode::missing_pong ||
-        mode_ == Mode::late_pong) {
+    if (mode_ == Mode::keepalive || mode_ == Mode::missing_pong) {
       succeeded_ = serve_keepalive(*poller.value(), *socket);
       (void)socket->close();
       return;

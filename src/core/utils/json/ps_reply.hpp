@@ -14,7 +14,8 @@
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/text/utf8.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
+#include <glaze/util/key_transformers.hpp>
 
 #include <charconv>
 #include <cmath>

@@ -4,7 +4,7 @@
 #include "tests/support/enum_printing.hpp"
 
 #include <gtest/gtest.h>
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <optional>
 #include <string>

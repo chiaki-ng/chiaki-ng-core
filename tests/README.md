@@ -140,10 +140,13 @@ and `--gtest_break_on_failure`.
 
 `make test` and `make <platform>-test` configure with
 `-DLIBCHIAKING_TESTS_PER_BINARY=ON`, so ctest runs each executable once and
-lists it as `core/trophies` rather than each case. To run one case in such a
+lists it as `core/domains` rather than each case. To run one case in such a
 build, use the executable's `--gtest_filter`. They also build as a unity build;
 a source that cannot share a unity file is listed in
-`libchiaking_unity_excluded_sources` in `tests/tests.cmake`.
+`libchiaking_unity_excluded_sources` in `tests/tests.cmake`. A domain may take
+`FOLDERS` to build several folders as one executable, and on Clang the test
+executables share one precompiled header unless the build is configured with
+`-DLIBCHIAKING_TEST_PRECOMPILED_HEADERS=OFF`.
 
 `net_kakusan_real_socket_smoke` opens real UDP sockets, so ctest labels it
 `network` and disables it unless the build is configured with

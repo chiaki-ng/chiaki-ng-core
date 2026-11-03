@@ -9,6 +9,8 @@
 #include "src/core/utils/json/ps_reply.hpp"
 #include "src/core/utils/text/base64.hpp"
 
+#include <glaze/util/key_transformers.hpp>
+
 #include <algorithm>
 #include <array>
 #include <cstddef>

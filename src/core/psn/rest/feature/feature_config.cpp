@@ -1,8 +1,9 @@
 #include "src/core/psn/rest/feature/feature_config.hpp"
 
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <optional>
 #include <utility>

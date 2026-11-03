@@ -11,6 +11,7 @@
 #pragma once
 
 #include "src/core/net/transport/http/client.hpp"
+#include "src/core/net/transport/http/response_document.hpp"
 #include "src/core/net/transport/http/status.hpp"
 #include "src/core/psn/auth/credentials.hpp"
 #include "src/core/psn/legacy_cloud_stream_endpoints.hpp"

@@ -124,16 +124,10 @@ jobs:
             CTEST_ARGS="--parallel $(sysctl -n hw.ncpu)" \
             CMAKE_ARGS="-DLIBCHIAKING_VERSION_PRERELEASE=${{ needs.version.outputs.prerelease }} -DLIBCHIAKING_COMMIT=${{ needs.version.outputs.commit }}"
 
-      - name: Build
-        run: |
-          make darwin \
-            DEPS_PREFIX="${{ steps.deps.outputs.prefix }}" \
-            CMAKE_ARGS="-DLIBCHIAKING_VERSION_PRERELEASE=${{ needs.version.outputs.prerelease }} -DLIBCHIAKING_COMMIT=${{ needs.version.outputs.commit }}"
-
       - name: Package
         run: |
           NAME="libchiaking-${{ needs.version.outputs.version }}-macos-arm64"
-          cmake --install build/darwin --prefix "stage/${NAME}"
+          cmake --install build/darwin-tests --prefix "stage/${NAME}"
           cp LICENSE "stage/${NAME}/"
           cp "$RUNNER_TEMP/native-deps/TAG" "stage/${NAME}/NATIVE_DEPS"
           tar -C stage -czf "${NAME}.tar.gz" "${NAME}"

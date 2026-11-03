@@ -3,16 +3,9 @@
 /// that names its zone.
 #pragma once
 
-#include "src/core/utils/text/ascii.hpp"
-
-#include <glaze/glaze.hpp>
-
-#include <algorithm>
 #include <chrono>
 #include <cstddef>
-#include <iterator>
 #include <optional>
-#include <string>
 #include <string_view>
 
 namespace libchiaking::timing {
@@ -39,17 +32,7 @@ class Instant {
   ///     `-hh:mm` offset.
   /// @return The instant, or nothing when the zone is missing or glaze
   ///     cannot read the timestamp.
-  static auto from_text(std::string_view text) -> std::optional<Instant> {
-    if (!names_its_zone(text)) return std::nullopt;
-    std::string quoted;
-    quoted.reserve(text.size() + 2);
-    quoted.push_back('"');
-    std::ranges::transform(text, std::back_inserter(quoted), text::ascii_upper);
-    quoted.push_back('"');
-    Time time{};
-    if (glz::read_json(time, quoted)) return std::nullopt;
-    return Instant{time};
-  }
+  static auto from_text(std::string_view text) -> std::optional<Instant>;
 
   /// @brief Returns the time.
   ///

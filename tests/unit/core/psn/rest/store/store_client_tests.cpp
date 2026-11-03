@@ -3,7 +3,7 @@
 #include "tests/unit/core/psn/rest/rig.hpp"
 
 #include <gtest/gtest.h>
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <chrono>
 #include <string>

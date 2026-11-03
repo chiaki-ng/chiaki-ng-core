@@ -9,6 +9,8 @@
 #include "src/core/utils/text/integer.hpp"
 #include "src/core/utils/text/utf8.hpp"
 
+#include <glaze/util/key_transformers.hpp>
+
 #include <algorithm>
 #include <cstddef>
 #include <cstdlib>

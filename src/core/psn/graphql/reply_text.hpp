@@ -6,7 +6,7 @@
 #include "src/core/utils/json/ps_reply.hpp"
 #include "src/core/utils/text/ascii.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <string>
 #include <string_view>

@@ -1,7 +1,7 @@
 #include "tests/unit/core/psn/rest/kamaji/kamaji_rig.hpp"
 
 #include <gtest/gtest.h>
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <string>
 

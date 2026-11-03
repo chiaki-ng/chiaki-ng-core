@@ -14,8 +14,7 @@
 #include "src/core/net/transport/http/failure.hpp"
 #include "src/core/net/transport/http/response.hpp"
 #include "src/core/net/transport/http/status.hpp"
-#include "src/core/utils/json/json.hpp"
-#include "src/core/utils/json/ps_reply.hpp"
+#include "src/core/utils/json/parse_error.hpp"
 
 #include <libchiaking/detail/expected.hpp>
 
@@ -385,6 +384,8 @@ class Error {
   }
   /// @brief Reads a reply body as PS JSON into a type, whatever its status.
   ///
+  /// Defined in error_reply.hpp, which a caller includes to use it.
+  ///
   /// @tparam Reply A glaze-readable type.
   /// @param response The reply.
   /// @return The decoded reply.
@@ -395,16 +396,11 @@ class Error {
   [[nodiscard]] static auto reply_of(const net::http::Response& response)
       -> Expected<Reply, Error>
     requires OneOf<bad_reply::InvalidJson, Reasons...> &&
-             OneOf<bad_reply::InvalidSchema, Reasons...>
-  {
-    auto reply = json::ps::read_reply<Reply>(response.body());
-    if (reply) return std::move(reply.value());
-    if (json::well_formed(response.body()))
-      return unexpected(Error{bad_reply::InvalidSchema{}});
-    return unexpected(Error{bad_reply::InvalidJson{}});
-  }
+             OneOf<bad_reply::InvalidSchema, Reasons...>;
   /// @brief Accepts a reply as checked() does, then reads it as reply_of()
   /// does.
+  ///
+  /// Defined in error_reply.hpp, which a caller includes to use it.
   ///
   /// @tparam Reply A glaze-readable type.
   /// @param response The reply.
@@ -414,13 +410,11 @@ class Error {
   template <class Reply>
   [[nodiscard]] static auto checked_reply(const net::http::Response& response,
                                           std::string_view redact)
-      -> Expected<Reply, Error> {
-    if (auto refused = refusal(response, redact))
-      return unexpected(std::move(*refused));
-    return reply_of<Reply>(response);
-  }
+      -> Expected<Reply, Error>;
   /// @brief Accepts the outcome of sending as checked() does, then reads the
   /// reply as reply_of() does.
+  ///
+  /// Defined in error_reply.hpp, which a caller includes to use it.
   ///
   /// @tparam Reply A glaze-readable type.
   /// @param sent The outcome of sending.
@@ -430,10 +424,7 @@ class Error {
   template <class Reply>
   [[nodiscard]] static auto checked_reply(
       Expected<net::http::Response, net::http::Failure> sent,
-      std::string_view redact) -> Expected<Reply, Error> {
-    if (!sent) return unexpected(Error{sent.error()});
-    return checked_reply<Reply>(sent.value(), redact);
-  }
+      std::string_view redact) -> Expected<Reply, Error>;
 
   /// @brief Tells which place the call failed in.
   ///

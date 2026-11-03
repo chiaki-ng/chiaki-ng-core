@@ -23,7 +23,7 @@
 
 #include <libchiaking/detail/expected.hpp>
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <cstdint>
 #include <optional>

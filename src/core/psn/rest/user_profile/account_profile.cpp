@@ -1,6 +1,7 @@
 #include "src/core/psn/rest/user_profile/account_profile.hpp"
 
 #include "src/core/net/transport/http/strict_url.hpp"
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/text/hex.hpp"
 

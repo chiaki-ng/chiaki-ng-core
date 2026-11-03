@@ -6,7 +6,7 @@
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/text/hex.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <algorithm>
 #include <format>

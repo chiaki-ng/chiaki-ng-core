@@ -1,5 +1,6 @@
 #include "tests/unit/core/net/transport/http/client_rig.hpp"
 
+#include "src/core/net/transport/http/response_document.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
 #include <gtest/gtest.h>

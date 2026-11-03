@@ -8,6 +8,7 @@
 #pragma once
 
 #include "src/core/net/transport/http/client.hpp"
+#include "src/core/net/transport/http/response_document.hpp"
 #include "src/core/net/transport/http/status.hpp"
 #include "src/core/psn/rest/store/store_error.hpp"
 

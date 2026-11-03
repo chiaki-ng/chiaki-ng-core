@@ -15,7 +15,7 @@
 
 #include <libchiaking/detail/catalog/title.hpp>
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <cstddef>
 #include <cstdint>

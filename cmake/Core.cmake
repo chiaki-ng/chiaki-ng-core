@@ -42,3 +42,23 @@ target_link_libraries(libchiaking
     PUBLIC ${LIBCHIAKING_PLATFORM_LIBRARIES} libchiaking_vendored_headers libchiaking_simdutf
     PRIVATE libchiaking_nanopb libchiaking_picohttpparser libchiaking_jerasure)
 libchiaking_enable_strict_warnings(libchiaking)
+target_compile_options(libchiaking PRIVATE
+    $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:RelWithDebInfo>>:-g1>)
+
+option(LIBCHIAKING_UNITY_BUILD "Compile the core library's sources in unity batches" ON)
+if(LIBCHIAKING_UNITY_BUILD)
+    set_target_properties(libchiaking PROPERTIES UNITY_BUILD ON UNITY_BUILD_BATCH_SIZE 16)
+    target_compile_options(libchiaking PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-subobject-linkage>)
+    set_source_files_properties(
+        src/core/play/adapters/links/internet/internet_link.cpp
+        src/core/play/adapters/links/internet/internet_pairer.cpp
+        src/core/play/adapters/links/internet/internet_start.cpp
+        "${LIBCHIAKING_PLATFORM_SECURE_ZERO_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_UTC_OFFSET_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_THREADING_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_RANDOM_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_NETWORK_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_DIAGNOSTICS_SOURCE}"
+        "${LIBCHIAKING_PLATFORM_STORAGE_SOURCE}"
+        PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON)
+endif()

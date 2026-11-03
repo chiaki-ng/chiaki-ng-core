@@ -4,7 +4,7 @@
 #include "src/core/utils/text/ascii.hpp"
 #include "src/core/utils/timing/wall_milliseconds.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <algorithm>
 #include <chrono>

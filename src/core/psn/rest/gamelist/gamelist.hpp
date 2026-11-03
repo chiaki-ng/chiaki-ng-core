@@ -7,6 +7,7 @@
 #include "src/core/net/transport/http/client.hpp"
 #include "src/core/psn/auth/credentials.hpp"
 #include "src/core/psn/rest/error.hpp"
+#include "src/core/utils/json/ps_reply.hpp"
 
 #include <libchiaking/detail/expected.hpp>
 

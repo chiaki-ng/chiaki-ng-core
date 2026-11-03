@@ -2,6 +2,7 @@
 
 #include "src/core/net/transport/http/percent_encoding.hpp"
 #include "src/core/net/transport/http/url.hpp"
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
 #include <optional>

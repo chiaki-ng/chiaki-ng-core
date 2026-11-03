@@ -1,6 +1,7 @@
 #include "src/core/psn/rest/gamelist/gamelist.hpp"
 
 #include "src/core/net/transport/http/url.hpp"
+#include "src/core/psn/rest/error_reply.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 #include "src/core/utils/text/ascii.hpp"
 

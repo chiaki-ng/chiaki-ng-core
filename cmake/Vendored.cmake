@@ -6,6 +6,7 @@
 add_library(libchiaking_vendored_headers INTERFACE)
 target_include_directories(libchiaking_vendored_headers SYSTEM
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/lib>")
+target_compile_definitions(libchiaking_vendored_headers INTERFACE GLZ_DISABLE_ALWAYS_INLINE)
 
 option(LIBCHIAKING_SYSTEM_SIMDUTF "Use an installed simdutf instead of the vendored copy" OFF)
 if(LIBCHIAKING_SYSTEM_SIMDUTF)
@@ -60,3 +61,6 @@ add_library(libchiaking_jerasure STATIC
 target_include_directories(libchiaking_jerasure SYSTEM
     PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/lib/jerasure/include>")
 target_link_libraries(libchiaking_jerasure PUBLIC libchiaking_gf_complete)
+
+set_target_properties(libchiaking_nanopb libchiaking_picohttpparser libchiaking_gf_complete libchiaking_jerasure
+    PROPERTIES UNITY_BUILD OFF)

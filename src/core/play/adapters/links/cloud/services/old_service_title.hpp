@@ -7,7 +7,7 @@
 #include "src/core/psn/gk/datacenter_ping.hpp"
 #include "src/core/utils/json/ps_reply.hpp"
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <cstddef>
 #include <cstdint>

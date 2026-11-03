@@ -3,7 +3,7 @@
 /// wrong type and out-of-range values, and its glaze reader.
 #pragma once
 
-#include <glaze/glaze.hpp>
+#include <glaze/json.hpp>
 
 #include <algorithm>
 #include <charconv>

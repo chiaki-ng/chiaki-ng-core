@@ -32,10 +32,6 @@ else()
 endif()
 
 set(libchiaking_unity_excluded_sources
-    src/core/play/adapters/links/internet/internet_link.cpp
-    src/core/play/adapters/links/internet/internet_pairer.cpp
-    src/core/play/adapters/links/internet/internet_start.cpp
-    src/platform/memory/secure_zero_darwin.cpp
     tests/unit/core/catalog/model/launch_verdict_tests.cpp
     tests/unit/core/catalog/usecases/played_games_tests.cpp
     tests/unit/core/catalog/usecases/show_details/concept_details_tests.cpp
@@ -81,21 +77,22 @@ set_source_files_properties(${libchiaking_unity_excluded_sources} PROPERTIES SKI
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/tests/googletest.cmake")
 
-libchiaking_gtest_domain(core/trophies LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/concurrency LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/containers LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/timing LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/numeric LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/memory LIBS libchiaking)
-libchiaking_gtest_domain(core/messages LIBS libchiaking)
+libchiaking_gtest_domain(core/utils LIBS libchiaking)
+libchiaking_gtest_domain(core/domains LIBS libchiaking
+    FOLDERS core/trophies core/messages core/users core/detail)
+libchiaking_gtest_domain(api/public LIBS libchiaking
+    FOLDERS api/catalog api/network api/consoles api/accounts api/cloud)
+libchiaking_gtest_domain(core/net/services LIBS libchiaking libchiaking_test_crypto
+    FOLDERS core/net/deadline core/net/ntp core/net/nat/holepunch core/net/nat/stun)
+libchiaking_gtest_domain(platform/services LIBS libchiaking
+    FOLDERS platform/threading platform/net/address platform/net/sockets platform/net/poller
+        platform/dtls/fake platform/factory platform/diagnostics platform/storage
+        platform/crypto/provider platform/http/provider platform/websocket/provider)
+libchiaking_gtest_domain(core/play/core LIBS libchiaking libchiaking_test_crypto
+    FOLDERS core/play/model core/play/usecases core/play/adapters/cloud_launch core/play/adapters/start)
 libchiaking_gtest_domain(platform/gateway LIBS libchiaking
     SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/platform/gateway/miniupnpc.cpp"
     IF LIBCHIAKING_MINIUPNPC AND LIBCHIAKING_MINIUPNPC_INCLUDE_DIR AND LIBCHIAKING_MINIUPNPC_LIBRARY)
-libchiaking_gtest_domain(core/utils/bytes LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/text LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/json LIBS libchiaking)
-libchiaking_gtest_domain(core/utils/diagnostics LIBS libchiaking)
-libchiaking_gtest_domain(core/users LIBS libchiaking)
 libchiaking_gtest_domain(core/psn
     LIBS libchiaking
     OPTIONAL_SOURCES graphql/query_documents_tests.cpp
@@ -138,36 +135,17 @@ libchiaking_gtest_domain(core/net/protocol/remote_play
         pairing/request_openssl_tests.cpp stream/forwarded_source_tests.cpp stream/launch_spec_openssl_tests.cpp
     OPTIONAL_LIBS libchiaking_crypto_openssl)
 libchiaking_gtest_domain(core/net/protocol/senkusha LIBS libchiaking)
-libchiaking_gtest_domain(api/catalog LIBS libchiaking)
-libchiaking_gtest_domain(api/network LIBS libchiaking)
 libchiaking_gtest_domain(api/chiaki_ng LIBS libchiaking_chiaki_ng libchiaking_crypto_openssl
     DEFINES LIBCHIAKING_TESTS_HAVE_KAKUSAN=${libchiaking_tests_have_kakusan}
     IF TARGET libchiaking_chiaki_ng AND TARGET libchiaking_crypto_openssl)
-libchiaking_gtest_domain(api/consoles LIBS libchiaking)
-libchiaking_gtest_domain(api/accounts LIBS libchiaking)
-libchiaking_gtest_domain(api/cloud LIBS libchiaking)
 libchiaking_gtest_domain(api/default_platform
     LIBS libchiaking_default_platform libchiaking libchiaking_chiaki_ng
     IF TARGET libchiaking_default_platform)
-libchiaking_gtest_domain(core/detail LIBS libchiaking)
-libchiaking_gtest_domain(core/net/deadline LIBS libchiaking)
-libchiaking_gtest_domain(core/net/ntp LIBS libchiaking)
-libchiaking_gtest_domain(core/net/nat/holepunch LIBS libchiaking libchiaking_test_crypto)
-libchiaking_gtest_domain(core/net/nat/stun LIBS libchiaking libchiaking_test_crypto)
 libchiaking_gtest_domain(core/net/nat/ice LIBS libchiaking libchiaking_test_crypto IF LIBCHIAKING_KAKUSAN)
 libchiaking_gtest_domain(core/net/transport
     LIBS libchiaking)
-libchiaking_gtest_domain(platform/threading LIBS libchiaking)
-libchiaking_gtest_domain(platform/net/address LIBS libchiaking)
-libchiaking_gtest_domain(platform/net/sockets LIBS libchiaking)
-libchiaking_gtest_domain(platform/net/poller LIBS libchiaking)
 libchiaking_gtest_domain(platform/net/posix LIBS libchiaking IF NOT WIN32)
 libchiaking_gtest_domain(platform/net/win32 LIBS libchiaking IF WIN32)
-libchiaking_gtest_domain(platform/dtls/fake LIBS libchiaking)
-libchiaking_gtest_domain(platform/factory LIBS libchiaking)
-libchiaking_gtest_domain(platform/diagnostics LIBS libchiaking)
-libchiaking_gtest_domain(platform/storage LIBS libchiaking)
-libchiaking_gtest_domain(platform/crypto/provider LIBS libchiaking)
 libchiaking_gtest_domain(platform/crypto/openssl LIBS libchiaking_crypto_openssl libchiaking
     IF TARGET libchiaking_crypto_openssl)
 libchiaking_gtest_domain(platform/crypto/boringssl LIBS libchiaking_crypto_boringssl libchiaking
@@ -178,24 +156,18 @@ libchiaking_gtest_domain(platform/crypto/armv8
 libchiaking_gtest_domain(platform/crypto/micro_ecc
     LIBS libchiaking_crypto_micro_ecc libchiaking_crypto_openssl libchiaking
     IF TARGET libchiaking_crypto_micro_ecc AND TARGET libchiaking_crypto_openssl)
-libchiaking_gtest_domain(platform/http/provider LIBS libchiaking)
 libchiaking_gtest_domain(platform/http/curl LIBS libchiaking_curl IF LIBCHIAKING_CURL)
-libchiaking_gtest_domain(platform/websocket/provider LIBS libchiaking)
 libchiaking_gtest_domain(platform/websocket/curl LIBS libchiaking_curl
     OPTIONAL_SOURCES aia_chain_tests.cpp
     OPTIONAL_LIBS libchiaking_crypto_openssl OpenSSL::Crypto
     IF LIBCHIAKING_CURL)
 libchiaking_gtest_domain(platform/curl LIBS libchiaking_curl IF LIBCHIAKING_CURL)
-libchiaking_gtest_domain(core/play/model LIBS libchiaking)
-libchiaking_gtest_domain(core/play/usecases LIBS libchiaking libchiaking_test_crypto)
-libchiaking_gtest_domain(core/play/adapters/cloud_launch LIBS libchiaking)
 libchiaking_gtest_domain(core/play/adapters/links
     LIBS libchiaking libchiaking_test_crypto)
 libchiaking_gtest_domain(core/play/adapters/media LIBS libchiaking
     OPTIONAL_SOURCES audio_decoder_tests.cpp microphone_encoder_tests.cpp opus_audio_decoder_tests.cpp
     OPTIONAL_LIBS libchiaking_media_opus PkgConfig::LIBCHIAKING_OPUS)
 libchiaking_gtest_domain(core/play/adapters/session LIBS libchiaking)
-libchiaking_gtest_domain(core/play/adapters/start LIBS libchiaking)
 libchiaking_gtest_domain(core/play/openssl LIBS libchiaking libchiaking_crypto_openssl
     IF TARGET libchiaking_crypto_openssl AND NOT WIN32)
 libchiaking_gtest_domain(core/play/default_platform LIBS libchiaking_default_platform libchiaking

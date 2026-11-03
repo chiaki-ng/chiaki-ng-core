@@ -1,5 +1,6 @@
 #include "src/core/psn/rest/commerce/commerce_client.hpp"
 
+#include "src/core/net/transport/http/response_document.hpp"
 #include "src/core/net/transport/http/status.hpp"
 #include "src/core/net/transport/http/url.hpp"
 #include "src/core/utils/text/ascii.hpp"

@@ -39,7 +39,7 @@ class PlayHomeStartAgainstARefusingConsole : public ::testing::Test {
     EXPECT_EQ(session->console(), paired.get());
     EXPECT_TRUE(home_.play.live() == session ||
                 session->state() == SessionState::ended);
-    ASSERT_TRUE(home_.skip_until(
+    ASSERT_TRUE(home_.skip_rests_until(
         [&] { return session->state() == SessionState::ended; }));
     outcome_ = session->wait_until_ended();
     console_.serve();

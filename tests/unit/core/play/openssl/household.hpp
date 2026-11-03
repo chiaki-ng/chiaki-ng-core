@@ -177,6 +177,24 @@ class Household {
     return testing::AssertionSuccess();
   }
 
+  template <class Ended>
+  auto skip_rests_until(const Ended& ended) -> testing::AssertionResult {
+    const auto deadline = LiveProviders::now() + std::chrono::seconds{60};
+    std::size_t rests = 0;
+    while (!ended()) {
+      if (LiveProviders::now() >= deadline)
+        return testing::AssertionFailure()
+               << "the session had not ended after a minute";
+      if (const auto reported = events.progress().size(); reported > rests) {
+        rests = reported;
+        clock.skip(std::chrono::ceil<std::chrono::seconds>(
+            libchiaking::play::StartPolicy::rest_between_attempts));
+      }
+      LiveProviders::nap(std::chrono::milliseconds{1});
+    }
+    return testing::AssertionSuccess();
+  }
+
   static auto refusal(const Started& started)
       -> std::optional<StartRefusal::Kind> {
     return started ? std::nullopt : std::optional{started.error().kind()};

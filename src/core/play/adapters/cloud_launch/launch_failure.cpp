@@ -26,6 +26,8 @@ auto LaunchFailure::Unmet::describe() const noexcept -> std::string_view {
     case Precondition::invalid_duid:
       return "the client DUID is not a 48-digit hex GK device ID with "
              "the expected prefix";
+    case Precondition::ps5_cloud_launch_not_built:
+      return "this build leaves out PS5 cloud streaming launches";
     case Precondition::game_not_released:
       break;
   }
@@ -33,6 +35,8 @@ auto LaunchFailure::Unmet::describe() const noexcept -> std::string_view {
 }
 
 auto LaunchFailure::Unmet::refused() const -> LaunchRefused {
+  if (precondition_ == Precondition::ps5_cloud_launch_not_built)
+    return LaunchRefused::not_built();
   return clearance_ ? LaunchRefused::not_cleared(*clearance_)
                     : LaunchRefused::unavailable();
 }

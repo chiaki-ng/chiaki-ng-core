@@ -88,11 +88,12 @@ function(libchiaking_gtest_domain folder)
     libchiaking_share_test_headers(${name})
     if(LIBCHIAKING_TESTS_PER_BINARY)
         add_test(NAME ${folder}
-            COMMAND ${name} --gtest_brief=1
+            COMMAND ${name} --gtest_brief=1 "--gtest_filter=${libchiaking_gtest_filter}"
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     else()
         gtest_discover_tests(${name}
             TEST_PREFIX "${folder}/"
+            TEST_FILTER "${libchiaking_gtest_filter}"
             DISCOVERY_MODE PRE_TEST
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()

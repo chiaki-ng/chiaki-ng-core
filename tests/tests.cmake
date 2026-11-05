@@ -33,6 +33,64 @@ endif()
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/tests/googletest.cmake")
 
+set(libchiaking_gtest_filter "*")
+if(NOT LIBCHIAKING_PS5_CLOUD_LAUNCH)
+    set(libchiaking_tests_needing_ps5_cloud_launch
+        ChiakiNgCloudStart.ClearsAndStartsATitleOrRefusesItTyped
+        ChiakiNgHttpCalls.AreRecordedWithTheirContextAndCredentials
+        CloudAudioRequest.CarriesTheSelectedLayoutIntoTheStartRequest
+        CloudDatacenterPick.AbortsCleanlyWhenCancelledWhileWaiting
+        CloudDatacenterPick.FallsBackToTheAutomaticChoiceAfterTheTimeout
+        CloudDatacenterPick.MakesNoForcedSelectionWhenAutomaticIsPicked
+        CloudDatacenterPick.TakesTheUsersPickAndRejectsUnknownNames
+        CloudDatacenters.AreNotRecordedByALaunchWithAForcedChoice
+        CloudLaunchChecks.AsksToAddACatalogTitleToTheLibraryFirst
+        CloudLaunchChecks.ProvisionsAClearedTitle
+        CloudLaunchChecks.RefusesAMissingUserBeforeAnyRequest
+        CloudLaunchChecks.StopsWhenTheCatalogCannotAnswer
+        CloudLaunchClearedTitle.AsksTheCatalogWhenClearedForAnotherTitle
+        CloudLaunchClearedTitle.ReportsARefusalWithoutAskingTheCatalog
+        CloudLaunchClearedTitle.RetriesWithoutAskingTheCatalog
+        CloudLaunchClearedTitle.StartsWithoutAskingTheCatalog
+        CloudLaunchRefusals.LogsARefusedTrialLaunchWithThePsReply
+        CloudLaunchRefusals.LogsThatARefusedTrialLaunchWasRemembered
+        CloudLaunchRefusals.ReportsANoGameRefusalToTheCatalogOnce
+        CloudLaunchRefusals.ReportsNoOtherRefusalToTheCatalog
+        CloudLaunchRefusals.ReportsNothingWhenARetryStarts
+        CloudLaunchRetry.RemembersACloudStreamRefusalOfAnOwnedTitle
+        CloudLaunchRun.LaunchesAGameReleasedByPsTime
+        CloudLaunchRun.LaunchesAnUnrestrictedGameWithoutPsTime
+        CloudLaunchRun.NamesAStoredDatacenterThatIsGone
+        CloudLaunchRun.ProvisionsAfterTheDeviceCheck
+        CloudLaunchRun.ReportsTheStatusOfAFailedGatewayRequest
+        CloudLaunchSteps.APs5LaunchReportsOnlyPs5Activities
+        CloudLaunchSteps.ReportsEachCatalogCheckBetweenClearingAndReserving
+        CloudLaunchTranscript.MatchesCloudStreamBusyLockAndEntitlementRetry
+        CloudLaunchTranscript.MatchesCloudStreamClearedTitle
+        CloudLaunchTranscript.MatchesCloudStreamMismatchedClearedTitle
+        CloudLaunchTranscript.MatchesCloudStreamOwnedTitle
+        CloudLaunchWaits.DoesNotRetryAnyOtherRefusal
+        CloudLaunchWaits.GivesUpOnATitleThatIsStillNotReady
+        CloudLaunchWaits.GivesUpWhenEveryFreshSessionIsRefused
+        CloudLaunchWaits.NamesTheReasonAndDelayOfEveryAllocationWait
+        CloudLaunchWaits.ReportsAHeldSessionLockAsThreeTypedReportsInOrder
+        CloudLaunchWaits.ReportsWaitingWithTypedCounts
+        CloudLaunchWaits.RetriesAPs5TitleThatIsNotReadyWithATypedReason
+        CloudLaunchWaits.StartsAFreshSessionWhenTheLockIsRefused
+        CloudLinkHandshake.EndsWithoutAFailureWhenTheServerShutsDown
+        CloudLinkHandshake.FailsWhenTheConsoleEndsTheSession
+        CloudLinkHandshake.ReportsEveryLaunchStepOnCloudStream
+        CloudLinkHandshakeStop.StopsCleanlyAfterTheHandshakeOnCloudStream
+        CloudProvisioning.ReturnsAStereoAllocationOnCloudStream
+        CloudProvisioning.ReturnsAStreamReadyAllocationOnCloudStream
+        PlayCloudStart.EndsWithTheTypedRefusalWhenTheCatalogRefuses
+        PlayCloudStart.LaunchesThroughTheCatalogWithTypedProgress
+        PlayCloudStart.PassesAHeldSessionLockOnAsTypedWaits
+        ProviderReach.KeepsACloudStartOnTheProviders
+    )
+    list(JOIN libchiaking_tests_needing_ps5_cloud_launch ":" libchiaking_tests_needing_ps5_cloud_launch)
+    set(libchiaking_gtest_filter "-${libchiaking_tests_needing_ps5_cloud_launch}")
+endif()
 libchiaking_gtest_domain(core/utils LIBS libchiaking)
 libchiaking_gtest_domain(core/domains LIBS libchiaking
     FOLDERS core/trophies core/messages core/users core/detail)
@@ -45,6 +103,7 @@ libchiaking_gtest_domain(platform/services LIBS libchiaking
         platform/dtls/fake platform/factory platform/diagnostics platform/storage
         platform/crypto/provider platform/http/provider platform/websocket/provider)
 libchiaking_gtest_domain(core/play/core LIBS libchiaking libchiaking_test_crypto
+    DEFINES LIBCHIAKING_HAS_PS5_CLOUD_LAUNCH=$<BOOL:${LIBCHIAKING_PS5_CLOUD_LAUNCH}>
     FOLDERS core/play/model core/play/usecases core/play/adapters/cloud_launch core/play/adapters/start)
 libchiaking_gtest_domain(platform/gateway LIBS libchiaking
     SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/platform/gateway/miniupnpc.cpp"

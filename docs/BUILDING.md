@@ -66,7 +66,7 @@ The public API is C++ only.
 
 | Target | Needs |
 |---|---|
-| `libchiaking` (the core) | nothing; the Kakusan sources only with `LIBCHIAKING_KAKUSAN` (ON by default), and without it `ChiakiNg::kakusan` answers `Kakusan::Unavailable::not_built` |
+| `libchiaking` (the core) | nothing; the Kakusan sources only with `LIBCHIAKING_KAKUSAN` (ON by default), and without it `ChiakiNg::kakusan` answers `Kakusan::Unavailable::not_built`. With `LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF` (ON by default) a launch on PS5 cloud streaming is refused with `LaunchRefused::Kind::not_built` before it reserves a server, and the older cloud service still launches |
 | `libchiaking_gateway`, `libchiaking_chiaki_ng` | the core |
 | `libchiaking_crypto_openssl` / `libchiaking_crypto_boringssl` | the crypto provider |
 | `libchiaking_dtls_openssl` | OpenSSL with `libssl` 3.2 or newer |

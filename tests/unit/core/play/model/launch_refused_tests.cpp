@@ -73,6 +73,7 @@ TEST(LaunchRefused, NamesTheRefusalsWithoutPayload) {
   EXPECT_EQ(LaunchRefused::outside_streaming_plan().kind(),
             Kind::outside_streaming_plan);
   EXPECT_EQ(LaunchRefused::store_region().kind(), Kind::store_region);
+  EXPECT_EQ(LaunchRefused::not_built().kind(), Kind::not_built);
   EXPECT_EQ(LaunchRefused::title_not_found().kind(), Kind::title_not_found);
   EXPECT_EQ(LaunchRefused::sign_in_expired().kind(), Kind::sign_in_expired);
 }
@@ -145,7 +146,7 @@ TEST(LaunchRefused, ReportsOnlyServiceRefusalsToTheCatalog) {
   for (const auto& other :
        {not_cleared, *privacy, *priced, LaunchRefused::membership_rejected(),
         LaunchRefused::outside_streaming_plan(), LaunchRefused::store_region(),
-        LaunchRefused::title_not_found(),
+        LaunchRefused::not_built(), LaunchRefused::title_not_found(),
         LaunchRefused::no_reachable_datacenter(milliseconds{140}),
         LaunchRefused::datacenter_unavailable(*DatacenterName::parse("usw2")),
         LaunchRefused::no_server(LaunchRefused::NoServer::queue_timed_out),

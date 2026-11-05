@@ -47,6 +47,9 @@ class LaunchFailure {
     /// @brief The catalog says the game is unannounced or not yet released, or
     /// trusted time is unknown.
     game_not_released,
+    /// @brief The launch would use PS5 cloud streaming, which this build leaves
+    /// out (`LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF`).
+    ps5_cloud_launch_not_built,
   };
 
   /// @brief A precondition that was not met.

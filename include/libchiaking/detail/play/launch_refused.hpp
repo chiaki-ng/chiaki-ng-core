@@ -69,6 +69,9 @@ class LaunchRefused {
     /// @brief The title's edition is sold in another PlayStation Store region
     /// than the account's, so the store will not license it to the account.
     store_region,
+    /// @brief This build leaves out PS5 cloud streaming launches
+    /// (`LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF`), so nothing was sent to PS.
+    not_built,
   };
 
   /// @brief Names why no server was obtained.
@@ -119,6 +122,10 @@ class LaunchRefused {
   ///
   /// @return The refusal.
   static auto store_region() -> LaunchRefused;
+  /// @brief Builds a Kind::not_built refusal.
+  ///
+  /// @return The refusal.
+  static auto not_built() -> LaunchRefused;
   /// @brief Builds a Kind::title_not_found refusal.
   ///
   /// @return The refusal.
@@ -300,12 +307,15 @@ class LaunchRefused {
   struct StoreRegion {
     static constexpr Kind kind = Kind::store_region;
   };
+  struct NotBuilt {
+    static constexpr Kind kind = Kind::not_built;
+  };
   using Detail =
       std::variant<NotCleared, PrivacySettings, LicenceNotFree,
                    MembershipRejected, TitleNotFound, RefusedByService,
                    NoReachableDatacenter, DatacenterUnavailable, NoServerFound,
                    SignInExpired, Unavailable, OutsideStreamingPlan,
-                   StoreRegion>;
+                   StoreRegion, NotBuilt>;
 
   explicit LaunchRefused(Detail detail) noexcept : detail_(std::move(detail)) {}
 

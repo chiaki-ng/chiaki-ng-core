@@ -331,6 +331,11 @@ auto CloudLaunch::Core::prior_rows() const -> std::vector<Ping> {
   return Datacenters::prior_rows(doors_.datacenters->known(service_));
 }
 
+auto CloudLaunch::Core::ps5_cloud_left_out() const noexcept -> bool {
+  return LIBCHIAKING_HAS_PS5_CLOUD_LAUNCH == 0 &&
+         service_ == catalog::ServiceGeneration::ps5_cloud;
+}
+
 auto CloudLaunch::Core::launch_spec(std::string_view entitlement,
                                     std::string_view language) const
     -> Expected<psn::gk::LaunchSpec, Precondition> {
@@ -360,6 +365,8 @@ auto CloudLaunch::Core::launch_spec(std::string_view entitlement,
 }
 
 auto CloudLaunch::Core::precondition() const -> std::optional<Precondition> {
+  if (ps5_cloud_left_out() && request_.product.platform())
+    return Precondition::ps5_cloud_launch_not_built;
   if (request_.time_zone.find('\0') != std::string::npos)
     return Precondition::invalid_spec;
   const auto spec = launch_spec(request_.product.text(), {});
@@ -590,6 +597,9 @@ auto CloudLaunch::Core::attempt(platform::HttpProvider& http)
     const platform::Lock lock{mutex_};
     service_ = cleared.value().service;
   }
+  if (ps5_cloud_left_out())
+    return unexpected(
+        LaunchFailure::precondition(Precondition::ps5_cloud_launch_not_built));
   trial_ = cleared.value().trial;
   if (service_ == catalog::ServiceGeneration::old_service) {
     title_http_.emplace(http, doors_.clock, request_.stop);

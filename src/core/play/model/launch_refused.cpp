@@ -40,6 +40,10 @@ auto LaunchRefused::store_region() -> LaunchRefused {
   return LaunchRefused{StoreRegion{}};
 }
 
+auto LaunchRefused::not_built() -> LaunchRefused {
+  return LaunchRefused{NotBuilt{}};
+}
+
 auto LaunchRefused::title_not_found() -> LaunchRefused {
   return LaunchRefused{TitleNotFound{}};
 }

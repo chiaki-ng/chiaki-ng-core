@@ -1,4 +1,5 @@
 option(LIBCHIAKING_KAKUSAN "Build Kakusan, which lets invited players join a live play session" ON)
+option(LIBCHIAKING_PS5_CLOUD_LAUNCH "Let cloud launches start on PS5 cloud streaming; the older service is unaffected" ON)
 
 set(libchiaking_core_excludes
     "^src/core/chiaki_ng\\.cpp$"
@@ -37,7 +38,8 @@ target_sources(libchiaking PUBLIC
 target_include_directories(libchiaking
     PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
     PUBLIC "$<BUILD_INTERFACE:${LIBCHIAKING_GENERATED_DIR}>")
-target_compile_definitions(libchiaking PRIVATE ${LIBCHIAKING_PLATFORM_DEFINITIONS})
+target_compile_definitions(libchiaking PRIVATE ${LIBCHIAKING_PLATFORM_DEFINITIONS}
+    LIBCHIAKING_HAS_PS5_CLOUD_LAUNCH=$<BOOL:${LIBCHIAKING_PS5_CLOUD_LAUNCH}>)
 target_link_libraries(libchiaking
     PUBLIC ${LIBCHIAKING_PLATFORM_LIBRARIES} libchiaking_vendored_headers libchiaking_simdutf
     PRIVATE libchiaking_nanopb libchiaking_picohttpparser libchiaking_jerasure)

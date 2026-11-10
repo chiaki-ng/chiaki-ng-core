@@ -95,6 +95,9 @@ enum class StreamableListReason : std::uint8_t {
   region_unsupported,
   /// @brief PS's reply could not be read, or the titles repeat a product.
   malformed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::get_streamable_list failed.
 using StreamableListFailure = CallFailure<StreamableListReason>;
@@ -108,6 +111,9 @@ enum class LibraryReason : std::uint8_t {
   user,
   /// @brief An entitlement reply could not be read.
   malformed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::library_of failed.
 using LibraryFailure = CallFailure<LibraryReason>;
@@ -130,6 +136,9 @@ enum class GamesReason : std::uint8_t {
   /// @brief No streamable list could be built because PS's reply could not
   /// be read.
   malformed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::process_library_and_list failed; also what
 /// FetchState::failure reports.
@@ -151,6 +160,9 @@ enum class RecentlyPlayedReason : std::uint8_t {
   region_unsupported,
   /// @brief The user's games could not be built; see GamesReason::malformed.
   malformed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::recently_played failed.
 using RecentlyPlayedFailure = CallFailure<RecentlyPlayedReason>;
@@ -176,6 +188,9 @@ enum class CloudCaptureReason : std::uint8_t {
   /// @brief The user is signed out, must sign in again, or PSN did not name
   /// the capture; see CallFailure::cause.
   user,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::cloud_capture failed.
 using CloudCaptureFailure = CallFailure<CloudCaptureReason>;
@@ -187,6 +202,9 @@ enum class CaptureDownloadReason : std::uint8_t {
   /// @brief The user is signed out, must sign in again, or PSN did not
   /// answer; see CallFailure::cause.
   user,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::cloud_capture_download failed.
 using CaptureDownloadFailure = CallFailure<CaptureDownloadReason>;
@@ -207,6 +225,9 @@ enum class StorefrontReason : std::uint8_t {
   malformed,
   /// @brief The store does not know the product.
   not_listed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::check_title_against_storefront failed.
 using StorefrontFailure = CallFailure<StorefrontReason>;
@@ -233,6 +254,9 @@ enum class OwnershipRecheckReason : std::uint8_t {
   /// @brief A LegacyCloudStream title was asked about while the library could
   /// not be read.
   ownership_unknown,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::recheck_ownership failed.
 using OwnershipRecheckFailure = CallFailure<OwnershipRecheckReason>;
@@ -247,6 +271,9 @@ enum class StorePageReason : std::uint8_t {
   /// @brief Neither a product page nor a concept page exists;
   /// CallFailure::http_status carries the store's status when it refused.
   not_listed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::store_page_of failed.
 using StorePageFailure = CallFailure<StorePageReason>;
@@ -266,6 +293,9 @@ enum class ProductDetailsReason : std::uint8_t {
   malformed,
   /// @brief The store does not know the product.
   not_listed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::details_of a product failed.
 using ProductDetailsFailure = CallFailure<ProductDetailsReason>;
@@ -282,6 +312,9 @@ enum class ConceptDetailsReason : std::uint8_t {
   malformed,
   /// @brief The store does not know the concept.
   not_listed,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::details_of a concept failed.
 using ConceptDetailsFailure = CallFailure<ConceptDetailsReason>;
@@ -310,6 +343,9 @@ enum class CloudAccessReason : std::uint8_t {
   /// @brief The user is signed out or must sign in again; see
   /// CallFailure::cause.
   user,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why Catalog::cloud_access_of failed.
 using CloudAccessFailure = CallFailure<CloudAccessReason>;
@@ -338,6 +374,9 @@ enum class LaunchCheckReason : std::uint8_t {
   /// is older than 24 hours and could not be refreshed, so no PS5 title may
   /// launch; carries the HTTP status of the failed fetch, if any.
   restriction_list_unavailable,
+  /// @brief This build leaves out cloud streaming
+  /// (`LIBCHIAKING_CLOUD=OFF`), so nothing was sent to PS.
+  not_built,
 };
 /// @brief Why a launch check could not be completed.
 using LaunchCheckFailure = CallFailure<LaunchCheckReason>;

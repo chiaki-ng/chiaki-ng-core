@@ -417,7 +417,7 @@ class Start final : public consoles::Starting {
   /// @brief Where measured datacenters are kept.
   DatacenterStore& store_;
   /// @brief The datacenter view given to cloud launches.
-  Datacenters& datacenters_;
+  [[maybe_unused]] Datacenters& datacenters_;
   /// @brief Tells whether a pairing is in progress.
   InternetPairer& pairer_;
   /// @brief The slot holding the one live session.

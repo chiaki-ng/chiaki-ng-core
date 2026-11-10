@@ -1,46 +1,36 @@
 /// @file
 /// @brief Declares usecases::ShowDetails, the use case behind a game's details
-/// page: its store details and its images.
+/// page: its store details.
 #pragma once
 
 #include "libchiaking/detail/catalog/catalog.hpp"
 #include "src/core/catalog/adapters/cache/held_answers.hpp"
 #include "src/core/catalog/usecases/list_games.hpp"
-#include "src/core/utils/concurrency/turnstile.hpp"
 
-#include <cstddef>
 #include <optional>
-#include <vector>
 
 namespace libchiaking::catalog::usecases {
 
-/// @brief Serves game details and images, from what is held or from the store.
+/// @brief Serves game details, from what is held or from the store.
 ///
-/// Concurrent callers asking the same details or image share one request.
-/// Image downloads are limited to downloads_at_once at a time with at most
-/// downloads_in_queue waiting. Borrows the provider, clock, log, held answers
-/// and ListGames, which must outlive it. Safe to call from several threads.
-/// Not copyable.
+/// Concurrent callers asking the same details share one request. Borrows the
+/// provider, clock, log, held answers and ListGames, which must outlive it.
+/// Safe to call from several threads. Not copyable.
 class ShowDetails {
  public:
   /// @brief The token that abandons a call.
   using Stop = platform::StopToken;
 
-  /// @brief The most image downloads running at once.
-  static constexpr std::size_t downloads_at_once = 4;
-  /// @brief The most image downloads waiting for a turn; more are refused.
-  static constexpr std::size_t downloads_in_queue = 64;
-
   /// @brief Sets up the use case.
   ///
   /// @param http Sends the requests. Must outlive this object.
-  /// @param threading Makes the download turnstile's lock and condition
-  ///     variable. Must outlive this object.
-  /// @param clock The monotonic clock the turnstile's waits measure on. Must
+  /// @param threading Starts the threads concept reads run on. Must outlive
+  ///     this object.
+  /// @param clock The monotonic clock request deadlines are measured on. Must
   ///     outlive this object.
   /// @param wall_clock Stamps the details. Must outlive this object.
   /// @param log Receives log lines; may be null.
-  /// @param held Where details and images are held. Must outlive this object.
+  /// @param held Where details are held. Must outlive this object.
   /// @param list_games Gives the held games, to find a product's concept. Must
   ///     outlive this object.
   ShowDetails(platform::HttpProvider& http,
@@ -49,9 +39,9 @@ class ShowDetails {
               const platform::ClockProvider& wall_clock,
               platform::DiagnosticsProvider* log, HeldAnswers& held,
               ListGames& list_games);
-  /// @brief Not copyable: it owns the download turnstile.
+  /// @brief Not copyable: it borrows what it was given.
   ShowDetails(const ShowDetails&) = delete;
-  /// @brief Not copyable: it owns the download turnstile.
+  /// @brief Not copyable: it borrows what it was given.
   auto operator=(const ShowDetails&) -> ShowDetails& = delete;
 
   /// @brief The details of a product.
@@ -84,19 +74,6 @@ class ShowDetails {
   [[nodiscard]] auto details(users::PsUser& user,
                              const ConceptId& grouped_under, const Stop& stop)
       -> Expected<GameDetails, Unanswered>;
-  /// @brief An image's bytes, from the image shelf or a download.
-  ///
-  /// A downloaded image is kept on the shelf; when the shelf cannot store it
-  /// the bytes are still returned.
-  ///
-  /// @param image The image.
-  /// @param stop Abandons the call, including the wait for a download turn.
-  /// @return The bytes; a cancellation; Unanswered::Reason::unavailable when
-  ///     the download queue is full; the download's failure; or
-  ///     Unanswered::Reason::rejected when the image is too large to keep.
-  [[nodiscard]] auto image(const ImageRef& image, const Stop& stop)
-      -> Expected<std::vector<std::byte>, Unanswered>;
-
  private:
   /// @brief The locale details are asked in.
   ///
@@ -127,14 +104,6 @@ class ShowDetails {
                                 const ConceptId& grouped_under,
                                 const Stop& stop)
       -> Expected<GameDetails, Unanswered>;
-  /// @brief Downloads an image once a download turn is free.
-  ///
-  /// @param image The image.
-  /// @param stop Abandons the call.
-  /// @return The bytes; a cancellation; Unanswered::Reason::unavailable when
-  ///     the queue is full; the download's failure.
-  [[nodiscard]] auto download(const ImageRef& image, const Stop& stop)
-      -> Expected<std::vector<std::byte>, Unanswered>;
   /// @brief The concept a product belongs to, from what is held.
   ///
   /// Tries the game listed under the product (or holding it), then the list's
@@ -162,8 +131,6 @@ class ShowDetails {
   HeldAnswers& held_;
   /// @brief Gives the held games; not owned.
   ListGames& list_games_;
-  /// @brief Limits concurrent image downloads.
-  concurrency::Turnstile downloads_;
 };
 
 }  // namespace libchiaking::catalog::usecases

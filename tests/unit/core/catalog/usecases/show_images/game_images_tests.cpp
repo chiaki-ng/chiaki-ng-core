@@ -1,4 +1,4 @@
-#include "src/core/catalog/usecases/show_details.hpp"
+#include "src/core/catalog/usecases/show_images.hpp"
 #include "tests/support/enum_printing.hpp"
 #include "tests/support/stop_states.hpp"
 #include "tests/unit/core/catalog/details_rig.hpp"
@@ -25,7 +25,7 @@ using libchiaking::catalog::CacheId;
 using libchiaking::catalog::Catalog;
 using libchiaking::catalog::ImageHost;
 using libchiaking::catalog::ImageReason;
-using libchiaking::catalog::usecases::ShowDetails;
+using libchiaking::catalog::usecases::ShowImages;
 using DetailsReply = DetailsRig::Reply;
 using Answer =
     std::optional<libchiaking::Expected<DetailsRig::Bytes,
@@ -327,13 +327,13 @@ TEST_F(GameImageDownloads, RunFourAtOnceForFiftyCovers) {
       tiles.push_back(DetailsRig::started(threading, [&, at] {
         got[at] = catalog.image_of(image(at % covers));
       }));
-    ps.wait_for_inside(ShowDetails::downloads_at_once);
+    ps.wait_for_inside(ShowImages::downloads_at_once);
     DetailsRig::pause_for(threading, std::chrono::milliseconds{50});
-    EXPECT_EQ(ps.inside(), ShowDetails::downloads_at_once);
+    EXPECT_EQ(ps.inside(), ShowImages::downloads_at_once);
     ps.open(true);
   }
-  EXPECT_EQ(ShowDetails::downloads_at_once, 4U);
-  EXPECT_EQ(ps.most(), ShowDetails::downloads_at_once);
+  EXPECT_EQ(ShowImages::downloads_at_once, 4U);
+  EXPECT_EQ(ps.most(), ShowImages::downloads_at_once);
   EXPECT_EQ(ps.asked(), covers);
   for (std::size_t at = 0; at < covers + duplicates; ++at) {
     ASSERT_TRUE(got[at]) << at;
@@ -349,7 +349,7 @@ TEST_F(GameImageDownloads, SkipAHeldCoverAndNeverStartAScrolledAwayOne) {
   EXPECT_TRUE(catalog.image_of(image(99)));
   ps.open(false);
 
-  const auto busy = ShowDetails::downloads_at_once;
+  const auto busy = ShowImages::downloads_at_once;
   auto waiting = std::make_shared<test_support::AtomicStop>();
   auto in_flight = std::make_shared<test_support::AtomicStop>();
   Answer queued;
@@ -363,7 +363,7 @@ TEST_F(GameImageDownloads, SkipAHeldCoverAndNeverStartAScrolledAwayOne) {
     for (std::size_t at = 1; at < busy; ++at)
       tiles.push_back(DetailsRig::started(
           threading, [&, at] { (void)catalog.image_of(image(at)); }));
-    ps.wait_for_inside(ShowDetails::downloads_at_once);
+    ps.wait_for_inside(ShowImages::downloads_at_once);
     auto scrolled = DetailsRig::started(threading, [&] {
       queued = catalog.image_of(image(busy),
                                 libchiaking::platform::StopToken{waiting});
@@ -379,7 +379,7 @@ TEST_F(GameImageDownloads, SkipAHeldCoverAndNeverStartAScrolledAwayOne) {
     waiting->stopped.store(true);
     static_cast<void>(scrolled.join());
     in_flight->stopped.store(true);
-    ps.wait_for_inside(ShowDetails::downloads_at_once - 1);
+    ps.wait_for_inside(ShowImages::downloads_at_once - 1);
     ps.open(true);
   }
   ASSERT_TRUE(queued);

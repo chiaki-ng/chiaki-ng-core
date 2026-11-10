@@ -238,14 +238,19 @@ auto Start::over_internet(
                 nullptr);
 }
 
-auto Start::on_cloud(std::shared_ptr<users::PsUser> player,
-                     const catalog::ProductId& title,
-                     const Preferences& preferences,
-                     const DatacenterPreference& datacenter,
-                     media::MediaSink& media, SessionEvents& events,
-                     std::optional<catalog::ClearedLaunch> cleared) -> Started {
+auto Start::on_cloud(
+    std::shared_ptr<users::PsUser> player,
+    [[maybe_unused]] const catalog::ProductId& title,
+    [[maybe_unused]] const Preferences& preferences,
+    [[maybe_unused]] const DatacenterPreference& datacenter,
+    [[maybe_unused]] media::MediaSink& media,
+    [[maybe_unused]] SessionEvents& events,
+    [[maybe_unused]] std::optional<catalog::ClearedLaunch> cleared) -> Started {
   const auto one_start = admit(Where::cloud, player);
   if (!one_start) return unexpected(one_start.error());
+#if !LIBCHIAKING_HAS_CLOUD
+  return unexpected(StartRefusal::launch_refused(LaunchRefused::not_built()));
+#else
   const auto resolved =
       LinkPreferences::on_cloud(preferences, expected_service(*player, title));
   if (!resolved) return unexpected(StartRefusal::invalid_preferences());
@@ -280,6 +285,7 @@ auto Start::on_cloud(std::shared_ptr<users::PsUser> player,
                         launch->service(), std::move(link.value()), stop, media,
                         events, preferences, std::move(share)),
                 launch);
+#endif
 }
 
 auto Start::scripted(std::shared_ptr<users::PsUser> player, Where where,

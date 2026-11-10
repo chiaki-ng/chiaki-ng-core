@@ -48,6 +48,7 @@ TEST_F(Ps5CloudLaunchFlag, StopsATitleClearedOntoPs5CloudBeforeReserving) {
 }
 
 TEST_F(Ps5CloudLaunchFlag, LeavesTheOlderServiceAlone) {
+  if (LIBCHIAKING_HAS_PS4_CLOUD_LAUNCH == 0) GTEST_SKIP();
   Launching old_service{old_service_case()};
   EXPECT_EQ(old_service.core().precondition(), std::nullopt);
   EXPECT_TRUE(old_service.core().run());

@@ -66,7 +66,7 @@ The public API is C++ only.
 
 | Target | Needs |
 |---|---|
-| `libchiaking` (the core) | nothing; the Kakusan sources only with `LIBCHIAKING_KAKUSAN` (ON by default), and without it `ChiakiNg::kakusan` answers `Kakusan::Unavailable::not_built`. With `LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF` (ON by default) a launch on PS5 cloud streaming is refused with `LaunchRefused::Kind::not_built` before it reserves a server, and the older cloud service still launches |
+| `libchiaking` (the core) | nothing; the Kakusan sources only with `LIBCHIAKING_KAKUSAN` (ON by default), and without it `ChiakiNg::kakusan` answers `Kakusan::Unavailable::not_built`. With `LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF` (ON by default) a launch on PS5 cloud streaming is refused with `LaunchRefused::Kind::not_built` before it reserves a server, and the older cloud service still launches. `LIBCHIAKING_PS4_CLOUD_LAUNCH=OFF` (ON by default) does the same for the older PS4 cloud service, and PS5 cloud streaming still launches. With `LIBCHIAKING_CLOUD=OFF` (the default; turn it ON for cloud streaming) the cloud launch, the cloud link, the GK client and the catalog's cloud listing and clearance are not compiled; the two launch gates above only matter with it ON. The catalog's cloud calls then answer `not_built`, `Catalog::can_launch` and `Catalog::clear_for_launch` refuse with `LaunchCheckReason::not_built`, and `Play::start_on_cloud` refuses with `LaunchRefused::Kind::not_built`; images, played games and the caches still work |
 | `libchiaking_gateway`, `libchiaking_chiaki_ng` | the core |
 | `libchiaking_crypto_openssl` / `libchiaking_crypto_boringssl` | the crypto provider |
 | `libchiaking_dtls_openssl` | OpenSSL with `libssl` 3.2 or newer |

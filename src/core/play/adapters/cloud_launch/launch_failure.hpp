@@ -50,6 +50,9 @@ class LaunchFailure {
     /// @brief The launch would use PS5 cloud streaming, which this build leaves
     /// out (`LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF`).
     ps5_cloud_launch_not_built,
+    /// @brief The launch would use the older PS4 cloud service, which this
+    /// build leaves out (`LIBCHIAKING_PS4_CLOUD_LAUNCH=OFF`).
+    ps4_cloud_launch_not_built,
   };
 
   /// @brief A precondition that was not met.

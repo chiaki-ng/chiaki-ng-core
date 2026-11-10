@@ -4,7 +4,6 @@
 #include "libchiaking/detail/users/ps_user.hpp"
 #include "libchiaking/platform/runtime/time_units.hpp"
 #include "src/core/consoles/paired_play.hpp"
-#include "src/core/psn/gk/launch_spec.hpp"
 
 #include <algorithm>
 #include <string_view>
@@ -67,69 +66,6 @@ auto HomeLinkConfiguration::create(const consoles::Console& console,
   configuration.tuning = preferences.tuning;
   if (!configuration.prefer_controller(preferences.controller))
     return unexpected(ConfigurationError::rejected);
-  auto accepted = std::move(configuration).validated();
-  if (!accepted) return unexpected(ConfigurationError::rejected);
-  return std::move(accepted.value());
-}
-
-auto CloudLinkConfiguration::credentials_valid(
-    const CloudLinkRequest& launch) noexcept -> bool {
-  return launch.user != nullptr && launch.user->has_psn_account() &&
-         launch.catalog != nullptr;
-}
-
-auto CloudLinkConfiguration::create(CloudLinkRequest launch,
-                                    const platform::UtcOffsetProvider& clock)
-    -> Expected<CloudLinkConfiguration, ConfigurationError> {
-  if (!credentials_valid(launch))
-    return unexpected(ConfigurationError::invalid_credential);
-  if (!launch.time_zone) {
-    auto time_zone = psn::gk::TimeZone::text_for(clock);
-    if (!time_zone)
-      return unexpected(time_zone.error() ==
-                                psn::gk::TimeZone::Unreadable::out_of_range
-                            ? ConfigurationError::time_zone_out_of_range
-                            : ConfigurationError::clock_unavailable);
-    launch.time_zone = std::move(time_zone.value());
-  }
-  return create(std::move(launch));
-}
-
-auto CloudLinkConfiguration::create(CloudLinkRequest launch)
-    -> Expected<CloudLinkConfiguration, ConfigurationError> {
-  if (!credentials_valid(launch))
-    return unexpected(ConfigurationError::invalid_credential);
-  if (!launch.time_zone)
-    return unexpected(ConfigurationError::clock_unavailable);
-  if (!psn::gk::TimeZone::is_canonical(*launch.time_zone))
-    return unexpected(ConfigurationError::time_zone_out_of_range);
-  CloudLinkConfiguration configuration;
-  configuration.user = std::move(launch.user);
-  configuration.catalog = launch.catalog;
-  configuration.product = std::move(launch.product);
-  configuration.cleared = std::move(launch.cleared);
-  configuration.datacenters = launch.datacenters;
-  configuration.time_zone = std::move(*launch.time_zone);
-  configuration.datacenter = launch.datacenter;
-  configuration.prior_datacenters = std::move(launch.prior_datacenters);
-  configuration.resolution = static_cast<int>(launch.video.height());
-  configuration.bitrate_kbps = static_cast<int>(launch.video.bitrate_kbps());
-  configuration.measure_bandwidth = launch.measure_bandwidth;
-  configuration.hdr =
-      launch.video.codec() == net::protocol::remote_play::VideoCodec::h265_hdr;
-  if (!configuration.prefer_controller(launch.controller))
-    return unexpected(ConfigurationError::rejected);
-  configuration.feedback = launch.feedback;
-  configuration.enable_idr_on_fec_failure = launch.idr_on_fec_failure;
-  configuration.tuning = launch.tuning;
-  configuration.high_quality = launch.quality == CloudQuality::high;
-  configuration.accessibility = {
-      .screen_reader = launch.accessibility.screen_reader(),
-      .screen_reader_speed = launch.accessibility.screen_reader_speed(),
-      .screen_reader_volume = launch.accessibility.screen_reader_volume(),
-      .text_size = launch.accessibility.text_size(),
-      .bold_text = launch.accessibility.bold_text(),
-      .higher_contrast = launch.accessibility.higher_contrast()};
   auto accepted = std::move(configuration).validated();
   if (!accepted) return unexpected(ConfigurationError::rejected);
   return std::move(accepted.value());

@@ -69,8 +69,10 @@ class LaunchRefused {
     /// @brief The title's edition is sold in another PlayStation Store region
     /// than the account's, so the store will not license it to the account.
     store_region,
-    /// @brief This build leaves out PS5 cloud streaming launches
-    /// (`LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF`), so nothing was sent to PS.
+    /// @brief This build leaves out cloud streaming
+    /// (`LIBCHIAKING_CLOUD=OFF`), PS5 cloud streaming launches
+    /// (`LIBCHIAKING_PS5_CLOUD_LAUNCH=OFF`) or PS4 cloud streaming launches
+    /// (`LIBCHIAKING_PS4_CLOUD_LAUNCH=OFF`), so nothing was sent to PS.
     not_built,
   };
 

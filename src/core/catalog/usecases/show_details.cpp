@@ -22,8 +22,7 @@ ShowDetails::ShowDetails(platform::HttpProvider& http,
       wall_(wall_clock),
       log_(log),
       held_(held),
-      list_games_(list_games),
-      downloads_(threading, clock, downloads_at_once, downloads_in_queue) {}
+      list_games_(list_games) {}
 
 auto ShowDetails::concept_of(const ListGames::View& seen, const Library* owned,
                              const ProductId& product)
@@ -119,36 +118,6 @@ auto ShowDetails::details(users::PsUser& user, const ConceptId& grouped_under,
   return grouped_as(listed ? listed->settled_locale()
                            : region.value_or(StoreLocale::english_us()),
                     grouped_under, stop);
-}
-
-auto ShowDetails::image(const ImageRef& image, const Stop& stop)
-    -> Expected<std::vector<std::byte>, Unanswered> {
-  return HeldAnswers::answer(
-             held_.in_flight().images, HeldAnswers::Question::showing(image),
-             stop, [&] { return held_.images().find(image); },
-             [&]() -> Expected<cache::ImageShelf::Bytes, Unanswered> {
-               auto bytes = download(image, stop);
-               if (!bytes) return unexpected(bytes.error());
-               auto kept = held_.images().keep(image, bytes.value());
-               if (kept || kept.error().reason() != Unanswered::Reason::storage)
-                 return kept;
-               return std::make_shared<const std::vector<std::byte>>(
-                   std::move(bytes.value()));
-             })
-      .transform([](const cache::ImageShelf::Bytes& held) {
-        return std::vector<std::byte>{*held};
-      });
-}
-
-auto ShowDetails::download(const ImageRef& image, const Stop& stop)
-    -> Expected<std::vector<std::byte>, Unanswered> {
-  const auto pass = downloads_.enter(stop);
-  if (!pass)
-    return unexpected(pass.error() == concurrency::Turnstile::Refusal::stopped
-                          ? Unanswered::cancelled()
-                          : Unanswered{Unanswered::Reason::unavailable});
-  net::http::Client client{http_, clock_, stop, log_};
-  return ps::StoreImages{client}.bytes_of(image);
 }
 
 }  // namespace libchiaking::catalog::usecases

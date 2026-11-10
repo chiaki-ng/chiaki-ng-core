@@ -28,6 +28,8 @@ auto LaunchFailure::Unmet::describe() const noexcept -> std::string_view {
              "the expected prefix";
     case Precondition::ps5_cloud_launch_not_built:
       return "this build leaves out PS5 cloud streaming launches";
+    case Precondition::ps4_cloud_launch_not_built:
+      return "this build leaves out PS4 cloud streaming launches";
     case Precondition::game_not_released:
       break;
   }
@@ -35,7 +37,8 @@ auto LaunchFailure::Unmet::describe() const noexcept -> std::string_view {
 }
 
 auto LaunchFailure::Unmet::refused() const -> LaunchRefused {
-  if (precondition_ == Precondition::ps5_cloud_launch_not_built)
+  if (precondition_ == Precondition::ps5_cloud_launch_not_built ||
+      precondition_ == Precondition::ps4_cloud_launch_not_built)
     return LaunchRefused::not_built();
   return clearance_ ? LaunchRefused::not_cleared(*clearance_)
                     : LaunchRefused::unavailable();
@@ -104,6 +107,7 @@ auto LaunchFailure::NotCleared::unanswered() const noexcept
     case Reason::unavailable:
     case Reason::ownership_unknown:
     case Reason::restriction_list_unavailable:
+    case Reason::not_built:
       break;
   }
   return Status::unavailable;

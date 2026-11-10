@@ -288,10 +288,12 @@ class CloudLaunch::Core final : private LaunchObserver {
   ///     Precondition::invalid_npsso without a PSN account,
   ///     Precondition::invalid_bitrate for a bitrate that is not positive,
   ///     Precondition::ps5_cloud_launch_not_built when the title is known to
-  ///     run on PS5 cloud streaming and this build leaves it out; empty when
-  ///     the request is sound. A title whose id names no platform passes, as
-  ///     it may belong to the older service; the launch stops once the catalog
-  ///     clears it for PS5 cloud streaming.
+  ///     run on PS5 cloud streaming and this build leaves it out,
+  ///     Precondition::ps4_cloud_launch_not_built when the title is known to
+  ///     run on the older PS4 cloud service and this build leaves it out;
+  ///     empty when the request is sound. A title whose id names no platform
+  ///     passes, as either service may own it; the launch stops once the
+  ///     catalog clears it for a service this build leaves out.
   auto precondition() const -> std::optional<Precondition>;
   /// @brief Checks the user's cloud device with PS.
   ///
@@ -458,6 +460,11 @@ class CloudLaunch::Core final : private LaunchObserver {
   ///
   /// @return `true` when the launch must stop before reaching PS.
   auto ps5_cloud_left_out() const noexcept -> bool;
+  /// @brief Reports whether the launch's current service is the older PS4
+  /// cloud service and this build leaves it out.
+  ///
+  /// @return `true` when the launch must stop before reaching PS.
+  auto ps4_cloud_left_out() const noexcept -> bool;
   /// @brief Works out what a reservation round launches.
   ///
   /// For PS5 cloud this is the cleared entitlement; for LegacyCloudStream the

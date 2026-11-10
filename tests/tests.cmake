@@ -31,13 +31,45 @@ else()
     set(libchiaking_tests_have_kakusan 0)
 endif()
 
+set(libchiaking_test_excludes)
+if(LIBCHIAKING_CLOUD)
+    list(APPEND libchiaking_test_excludes "/cloud_left_out_tests\\.cpp$")
+else()
+    list(APPEND libchiaking_test_excludes
+        "/tests/unit/core/cloud/"
+        "/tests/unit/api/cloud/"
+        "/tests/unit/core/psn/gk/"
+        "/tests/unit/core/play/adapters/cloud_launch/"
+        "/tests/unit/core/play/adapters/links/cloud/"
+        "/tests/unit/core/catalog/usecases/(cloud_stream|legacy_cloud_stream|show_details|list_games|clear_for_launch|launch_checks|recently_played|read_)"
+        "/tests/unit/core/catalog/model/(cloud_stream|legacy_cloud_stream|my_games)/"
+        "/tests/unit/api/catalog/(cloud_streaming|fetch_joining|fetch_progress|for_sale|held_answers|launch|library|listing|ownership_recheck|premium_category|refusal_memory|regional_store|shared_requests|storefront)_tests\\.cpp$"
+        "/tests/unit/core/catalog/adapters/ps/(cloud_game_resolver|old_service_shelves|ownership_records|ps5_library|ps5_store_lists|public_store_walk|store_app_title_[a-z]+|streaming_copies)_tests\\.cpp$"
+        "/tests/unit/core/catalog/model/(launch_verdict|library/learned_concepts)_tests\\.cpp$"
+        "/tests/unit/core/play/adapters/start/(cloud_link_configuration|link_request_preferences)_tests\\.cpp$"
+        "/tests/unit/core/play/adapters/links/(link_configuration_tuning|link_failure_cloud)_tests\\.cpp$"
+        "/tests/unit/core/net/protocol/senkusha/client_adapter_cloud_tests\\.cpp$"
+        "/tests/unit/api/catalog/(trusted_clock|users)_tests\\.cpp$"
+        "/tests/unit/api/chiaki_ng/cloud_start_tests\\.cpp$"
+        "/tests/unit/core/play/openssl/play_cloud_start_tests\\.cpp$"
+        "/tests/unit/api/default_platform/stream_kinds_cloud_tests\\.cpp$"
+        "/tests/unit/core/play/default_platform/adapters/(start/link_secret|links/link_driver_(idle|cancel|running|surround|versions))_tests\\.cpp$")
+    set(libchiaking_tests_needing_cloud
+        ChiakiNgHttpCalls.AreRecordedWithTheirContextAndCredentials
+        ClientsOnTheDefaultAssembly.TheCatalogIsCancelledByItsStop
+        EveryCatalogCache.*
+        GameImages.AreDroppedWhenRefreshedDetailsNoLongerShowThem
+        ProviderReach.KeepsACloudStartOnTheProviders)
+endif()
+
 include("${CMAKE_CURRENT_SOURCE_DIR}/tests/googletest.cmake")
 
-set(libchiaking_gtest_filter "*")
+set(libchiaking_tests_filtered_out ${libchiaking_tests_needing_cloud})
 if(NOT LIBCHIAKING_PS5_CLOUD_LAUNCH)
     set(libchiaking_tests_needing_ps5_cloud_launch
         ChiakiNgCloudStart.ClearsAndStartsATitleOrRefusesItTyped
         ChiakiNgHttpCalls.AreRecordedWithTheirContextAndCredentials
+        ClientsOnTheDefaultAssembly.TheCatalogIsCancelledByItsStop
         CloudAudioRequest.CarriesTheSelectedLayoutIntoTheStartRequest
         CloudDatacenterPick.AbortsCleanlyWhenCancelledWhileWaiting
         CloudDatacenterPick.FallsBackToTheAutomaticChoiceAfterTheTimeout
@@ -88,8 +120,37 @@ if(NOT LIBCHIAKING_PS5_CLOUD_LAUNCH)
         PlayCloudStart.PassesAHeldSessionLockOnAsTypedWaits
         ProviderReach.KeepsACloudStartOnTheProviders
     )
-    list(JOIN libchiaking_tests_needing_ps5_cloud_launch ":" libchiaking_tests_needing_ps5_cloud_launch)
-    set(libchiaking_gtest_filter "-${libchiaking_tests_needing_ps5_cloud_launch}")
+    list(APPEND libchiaking_tests_filtered_out ${libchiaking_tests_needing_ps5_cloud_launch})
+endif()
+if(NOT LIBCHIAKING_PS4_CLOUD_LAUNCH)
+    list(APPEND libchiaking_tests_filtered_out
+        CloudLaunchChecks.ResolvesAClearedLegacyTitle
+        CloudLaunchChecks.StopsALegacyTitleThatNeedsPremium
+        CloudLaunchClearedTitle.StartsAnOldServiceTitleWithoutAskingTheCatalog
+        CloudLaunchRefusals.ReportsAHeldOldServiceTitleRefusedTwice
+        CloudLaunchRefusals.ReportsAResolvedOldServiceTitleWithoutRetrying
+        CloudLaunchRefusals.RetriesAHeldOldServiceTitleAfterResolvingIt
+        CloudLaunchRetry.AsksForPrivacySettingsTheServiceNeeds
+        CloudLaunchRetry.DoesNotRetryAnUnrelatedRefusal
+        CloudLaunchRetry.RemembersARefusalThatPersistsAfterResolving
+        CloudLaunchRetry.ResolvesAnUnheldTitleOnce
+        CloudLaunchRetry.ResolvesTheTitleWhenTheHeldLicenceIsRefused
+        CloudLaunchRetry.SkipsTheAccountCheckWhenAsked
+        CloudLaunchSteps.AnOldServiceLaunchOfAHeldTitleSkipsResolvingIt
+        CloudLaunchSteps.AnOldServiceLaunchReportsItsOwnTitleSteps
+        CloudLaunchSteps.ReportsTheOldServiceCatalogChecks
+        CloudLaunchTranscript.MatchesLegacyCloudStreamResolvedTitle
+        CloudLaunchWaits.RetriesAnOldServiceTitleThatIsNotReadyAndResolvesIt
+        CloudLinkHandshake.ReportsEveryLaunchStepOnLegacyCloudStream
+        CloudLinkHandshakeStop.StopsCleanlyAfterTheHandshakeOnLegacyCloudStream
+        CloudProvisioning.ReturnsAStereoAllocationOnLegacyCloudStream
+        CloudProvisioning.ReturnsAStreamReadyAllocationOnLegacyCloudStream
+    )
+endif()
+set(libchiaking_gtest_filter "*")
+if(libchiaking_tests_filtered_out)
+    list(JOIN libchiaking_tests_filtered_out ":" libchiaking_tests_filtered_out)
+    set(libchiaking_gtest_filter "-${libchiaking_tests_filtered_out}")
 endif()
 libchiaking_gtest_domain(core/utils LIBS libchiaking)
 libchiaking_gtest_domain(core/domains LIBS libchiaking
@@ -104,6 +165,7 @@ libchiaking_gtest_domain(platform/services LIBS libchiaking
         platform/crypto/provider platform/http/provider platform/websocket/provider)
 libchiaking_gtest_domain(core/play/core LIBS libchiaking libchiaking_test_crypto
     DEFINES LIBCHIAKING_HAS_PS5_CLOUD_LAUNCH=$<BOOL:${LIBCHIAKING_PS5_CLOUD_LAUNCH}>
+        LIBCHIAKING_HAS_PS4_CLOUD_LAUNCH=$<BOOL:${LIBCHIAKING_PS4_CLOUD_LAUNCH}>
     FOLDERS core/play/model core/play/usecases core/play/adapters/cloud_launch core/play/adapters/start)
 libchiaking_gtest_domain(platform/gateway LIBS libchiaking
     SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/platform/gateway/miniupnpc.cpp"

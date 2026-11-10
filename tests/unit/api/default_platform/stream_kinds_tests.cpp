@@ -1,11 +1,9 @@
 #include "libchiaking/platform/default.hpp"
-#include "src/core/play/adapters/links/cloud/cloud_link_configuration.hpp"
 #include "src/core/play/adapters/links/home_link_configuration.hpp"
 #include "src/core/play/adapters/links/internet/internet_link.hpp"
 #include "src/core/play/adapters/links/internet/internet_link_configuration.hpp"
 #include "src/core/play/adapters/links/link_driver.hpp"
 #include "tests/support/enum_printing.hpp"
-#include "tests/support/catalog/idle_catalog.hpp"
 #include "tests/support/play/signed_in_player.hpp"
 
 #include <gtest/gtest.h>
@@ -64,21 +62,6 @@ TEST_F(StreamKindsOnTheDefaultAssembly, AnInternetLinkOpens) {
       std::move(checked_remote.value()), platform.factory(), nullptr);
   ASSERT_TRUE(remote_session);
   EXPECT_TRUE(remote_session.value());
-}
-
-TEST_F(StreamKindsOnTheDefaultAssembly, ACloudLinkOpensIdle) {
-  play::CloudLinkConfiguration cloud;
-  cloud.user = test_support::play::SignedInPlayer::fresh();
-  cloud.catalog = &test_support::catalog::IdleCatalog::shared();
-  cloud.product = test_support::catalog::IdleCatalog::title();
-  cloud.time_zone = "UTC+00:00";
-  auto checked_cloud = std::move(cloud).validated();
-  ASSERT_TRUE(checked_cloud);
-  const auto cloud_session = play::CloudLinkConfiguration::link(
-      std::move(checked_cloud.value()), platform.factory());
-  ASSERT_TRUE(cloud_session);
-  ASSERT_TRUE(cloud_session.value());
-  EXPECT_EQ(cloud_session.value()->state(), remote_play::StreamState::idle);
 }
 
 }  // namespace

@@ -9,6 +9,7 @@
 #include "src/core/catalog/usecases/played_games.hpp"
 #include "src/core/catalog/usecases/recently_played.hpp"
 #include "src/core/catalog/usecases/show_details.hpp"
+#include "src/core/catalog/usecases/show_images.hpp"
 #include "src/core/net/transport/http/client.hpp"
 #include "src/core/users/ports/catalog_calls.hpp"
 #include "src/core/users/request_budget_core.hpp"
@@ -45,6 +46,7 @@ class Catalog::Holdings {
                           held_, list_games_),
         show_details_(http, threading, clock, wall_clock, diagnostics, held_,
                       list_games_),
+        show_images_(http, threading, clock, diagnostics, held_),
         recently_played_(http, clock, diagnostics, list_games_),
         played_games_(http, clock, diagnostics, held_, pacer_),
         inspect_caches_(held_) {}
@@ -56,6 +58,7 @@ class Catalog::Holdings {
   auto show_details() noexcept -> usecases::ShowDetails& {
     return show_details_;
   }
+  auto show_images() noexcept -> usecases::ShowImages& { return show_images_; }
   auto recently_played() noexcept -> usecases::RecentlyPlayed& {
     return recently_played_;
   }
@@ -142,6 +145,7 @@ class Catalog::Holdings {
   usecases::ListGames list_games_;
   usecases::ClearForLaunch clear_for_launch_;
   usecases::ShowDetails show_details_;
+  usecases::ShowImages show_images_;
   usecases::RecentlyPlayed recently_played_;
   usecases::PlayedGames played_games_;
   usecases::InspectCaches inspect_caches_;
@@ -322,7 +326,7 @@ auto Catalog::details_of(users::PsUser& user, const ConceptId& grouped_under,
 
 auto Catalog::image_of(const ImageRef& image, const platform::StopToken& stop)
     -> Expected<std::vector<std::byte>, ImageFailure> {
-  return holdings_->show_details()
+  return holdings_->show_images()
       .image(image, stop)
       .transform_error([](const Unanswered& why) {
         return why.as(ImageReason::unavailable);

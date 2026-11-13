@@ -42,6 +42,18 @@ if(LIBCHIAKING_CURL)
         target_link_libraries(libchiaking_curl PRIVATE OpenSSL::Crypto)
         target_sources(libchiaking_curl PRIVATE "${LIBCHIAKING_PLATFORM_AIA_ROOTS_SOURCE}")
         target_link_libraries(libchiaking_curl PRIVATE ${LIBCHIAKING_PLATFORM_AIA_ROOTS_LIBRARIES})
+    elseif(LIBCHIAKING_CURL_AIA_MBEDTLS)
+        find_path(LIBCHIAKING_MBEDTLS_INCLUDE_DIR mbedtls/x509_crt.h REQUIRED)
+        find_library(LIBCHIAKING_MBEDX509_LIBRARY mbedx509 REQUIRED)
+        find_library(LIBCHIAKING_MBEDCRYPTO_LIBRARY mbedcrypto REQUIRED)
+        target_sources(libchiaking_curl PRIVATE
+            src/platform/websocket/curl/aia_chain_mbedtls.cpp
+            "${LIBCHIAKING_PLATFORM_AIA_ROOTS_SOURCE}")
+        target_compile_definitions(libchiaking_curl PRIVATE LIBCHIAKING_CURL_AIA=1)
+        target_include_directories(libchiaking_curl SYSTEM PRIVATE "${LIBCHIAKING_MBEDTLS_INCLUDE_DIR}")
+        target_link_libraries(libchiaking_curl PRIVATE
+            "${LIBCHIAKING_MBEDX509_LIBRARY}" "${LIBCHIAKING_MBEDCRYPTO_LIBRARY}"
+            ${LIBCHIAKING_PLATFORM_AIA_ROOTS_LIBRARIES})
     else()
         target_compile_definitions(libchiaking_curl PRIVATE LIBCHIAKING_CURL_AIA=0)
     endif()

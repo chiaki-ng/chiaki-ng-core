@@ -90,6 +90,13 @@ class ActiveWebSocketConnection final : public WebSocketConnection {
                std::string_view::npos;
   }
 
+  static bool aia_libnx_backend() noexcept {
+    const curl_version_info_data* version = curl_version_info(CURLVERSION_NOW);
+    return version != nullptr && version->ssl_version != nullptr &&
+           std::string_view(version->ssl_version).find("libnx") !=
+               std::string_view::npos;
+  }
+
   static bool aia_backend_supported() noexcept {
     const curl_version_info_data* version = curl_version_info(CURLVERSION_NOW);
     if (version == nullptr || version->ssl_version == nullptr) return false;
@@ -288,6 +295,7 @@ class ActiveWebSocketConnection final : public WebSocketConnection {
       if (trust.roots.empty()) return std::nullopt;
       return trust;
     }
+    if (aia_libnx_backend()) return trust;
     if (file == nullptr) return std::nullopt;
     trust.ca_file = file;
     if (path != nullptr) trust.ca_path = path;
@@ -303,7 +311,7 @@ class ActiveWebSocketConnection final : public WebSocketConnection {
       intermediates = cache.intermediates;
     }
     if (intermediates.empty()) return std::nullopt;
-    if (aia_schannel_backend()) return intermediates;
+    if (aia_schannel_backend() || aia_libnx_backend()) return intermediates;
     std::FILE* file = std::fopen(trust.ca_file.c_str(), "rb");
     if (file == nullptr) return std::nullopt;
     std::string bundle;

@@ -6,7 +6,7 @@ option(LIBCHIAKING_PS4_CLOUD_LAUNCH "Let cloud launches start on the older PS4 c
 set(libchiaking_core_excludes
     "^src/core/chiaki_ng\\.cpp$"
     "^src/core/media/adapters/(microphone_encoder|audio_decoder)\\.cpp$"
-    "^src/platform/.*/(posix|win32|darwin|switch|utc_offset_[a-z0-9]+)\\.cpp$")
+    "^src/platform/.*/(posix|win32|darwin|switch|ounce|utc_offset_[a-z0-9]+)\\.cpp$")
 if(NOT LIBCHIAKING_KAKUSAN)
     list(APPEND libchiaking_core_excludes "^src/core/kakusan/" "^src/core/net/kakusan/")
 endif()

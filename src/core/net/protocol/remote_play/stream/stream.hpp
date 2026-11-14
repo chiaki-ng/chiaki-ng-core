@@ -470,6 +470,20 @@ struct SessionTuning {
   /// @brief Whether to pass on the audio of the speaker built into each
   /// controller instead of dropping it.
   bool controller_speaker{};
+  /// @brief Whether a stereo request to a PS5 console also sends its audio
+  /// profile list; a surround request always sends it.
+  bool audio_profiles{true};
+
+  /// @brief The audio channels the console launch specification names.
+  ///
+  /// @return requested_audio_channels, or 0 for a stereo request without the
+  ///     audio profile list, which leaves the console on its default stereo
+  ///     path.
+  constexpr auto launch_audio_channels() const noexcept -> std::uint64_t {
+    return !audio_profiles && requested_audio_channels == 2
+               ? 0
+               : requested_audio_channels;
+  }
 
   /// @brief Whether the tuning is usable.
   ///

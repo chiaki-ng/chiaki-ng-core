@@ -34,6 +34,7 @@ auto LinkPreferences::tuning(const DeveloperTuning& developer,
   tuning.requested_audio_channels = sound.channels();
   tuning.max_audio_channels = sound.ceiling();
   tuning.controller_speaker = sound.wants_controller_speaker();
+  tuning.audio_profiles = sound.wants_audio_profiles();
   return tuning;
 }
 

@@ -150,6 +150,33 @@ INSTANTIATE_TEST_SUITE_P(
                           remote_play::RegistrationTarget::ps5_1),
         ::testing::Values(9U, 12U, 20U)));
 
+TEST(LocalStartLaunchAudio, NamesTheRequestedChannelsInTheLaunchByDefault) {
+  remote_play::SessionTuning tuning;
+  EXPECT_TRUE(tuning.audio_profiles);
+  for (const std::uint64_t channels :
+       {std::uint64_t{0}, std::uint64_t{2}, std::uint64_t{6},
+        std::uint64_t{8}, std::uint64_t{12}}) {
+    SCOPED_TRACE(channels);
+    tuning.requested_audio_channels = channels;
+    EXPECT_EQ(tuning.launch_audio_channels(), channels);
+  }
+}
+
+TEST(LocalStartLaunchAudio, LeavesOnlyStereoOutOfTheLaunchWithoutProfiles) {
+  remote_play::SessionTuning tuning;
+  tuning.audio_profiles = false;
+  tuning.requested_audio_channels = 2;
+  EXPECT_EQ(tuning.launch_audio_channels(), 0u);
+  EXPECT_TRUE(tuning.valid());
+  for (const std::uint64_t channels :
+       {std::uint64_t{0}, std::uint64_t{6}, std::uint64_t{8},
+        std::uint64_t{12}}) {
+    SCOPED_TRACE(channels);
+    tuning.requested_audio_channels = channels;
+    EXPECT_EQ(tuning.launch_audio_channels(), channels);
+  }
+}
+
 TEST_F(LocalStartActive, PassesRequestedAudioChannelsToThePs5) {
   console.target = remote_play::RegistrationTarget::ps5_1;
   auto active_inputs = inputs(random, crypto, console);

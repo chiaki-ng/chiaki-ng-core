@@ -57,6 +57,20 @@ TEST(SoundRequest, KeepsControllerSpeakerAudioOnlyOnThePs5Cloud) {
   EXPECT_EQ(surround.on_cloud(ServiceGeneration::old_service), SoundRequest{});
 }
 
+TEST(SoundRequest, SendsTheAudioProfilesUnlessTurnedOff) {
+  const auto stereo = *SoundRequest::create(2);
+  EXPECT_TRUE(SoundRequest{}.wants_audio_profiles());
+  EXPECT_TRUE(stereo.wants_audio_profiles());
+  const auto plain = stereo.with_audio_profiles(false);
+  EXPECT_FALSE(plain.wants_audio_profiles());
+  EXPECT_NE(plain, stereo);
+  EXPECT_EQ(plain.channels(), 2u);
+  EXPECT_FALSE(plain.on_console(Generation::ps5).wants_audio_profiles());
+  EXPECT_FALSE(plain.on_cloud(ServiceGeneration::ps5_cloud)
+                   .wants_audio_profiles());
+  EXPECT_EQ(plain.with_audio_profiles(true), stereo);
+}
+
 TEST(SoundRequest, IsSurroundOnlyOnAPs5Console) {
   const auto stereo = *SoundRequest::create(2);
   const auto surround = *SoundRequest::create(6);

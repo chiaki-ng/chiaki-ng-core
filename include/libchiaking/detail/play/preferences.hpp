@@ -364,6 +364,31 @@ class SoundRequest {
     return controller_speaker_;
   }
 
+  /// @brief Builds a copy that sends or leaves out the PS5 console's audio
+  /// profile list with a stereo request.
+  ///
+  /// A PS5 console given the list captures audio in its multichannel mode and
+  /// selects the requested profile from it, which also lets the profile change
+  /// during the session. Without the list it uses its default stereo path. A
+  /// surround request always sends the list, so this only affects stereo.
+  ///
+  /// @param enabled Whether a stereo request sends the profile list.
+  /// @return This request with the profile list choice replaced.
+  [[nodiscard]] constexpr auto with_audio_profiles(bool enabled) const noexcept
+      -> SoundRequest {
+    auto copy = *this;
+    copy.audio_profiles_ = enabled;
+    return copy;
+  }
+
+  /// @brief Reports whether a stereo request sends the PS5 console's audio
+  /// profile list.
+  ///
+  /// @return `true` unless with_audio_profiles() turned it off.
+  constexpr auto wants_audio_profiles() const noexcept -> bool {
+    return audio_profiles_;
+  }
+
   /// @brief Fits this request to a console of the given generation.
   ///
   /// @param generation Generation of the console the session will run on.
@@ -414,8 +439,8 @@ class SoundRequest {
     return service == catalog::ServiceGeneration::ps5_cloud;
   }
 
-  /// @brief Compares the requested channel counts, ceilings and controller
-  /// speaker choices.
+  /// @brief Compares the requested channel counts, ceilings, controller
+  /// speaker choices and audio profile choices.
   friend constexpr auto operator==(const SoundRequest&,
                                    const SoundRequest&) noexcept
       -> bool = default;
@@ -427,6 +452,7 @@ class SoundRequest {
   std::uint8_t channels_{};
   std::uint8_t ceiling_{};
   bool controller_speaker_{};
+  bool audio_profiles_{true};
 };
 
 /// @brief Names the controller the stream should present to the console or

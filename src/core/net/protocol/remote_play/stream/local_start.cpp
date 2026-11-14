@@ -92,7 +92,7 @@ auto LocalStart::start_active(EstablishedRoute route,
       route.calibration,
       inputs.session_id,
       inputs.nonce,
-      static_cast<std::uint8_t>(inputs.tuning.requested_audio_channels)};
+      static_cast<std::uint8_t>(inputs.tuning.launch_audio_channels())};
   auto prepared = LocalStreamPreparation::prepare(prepare_inputs);
   if (!prepared) return unexpected(LocalActiveStartError::prepare_failed);
 

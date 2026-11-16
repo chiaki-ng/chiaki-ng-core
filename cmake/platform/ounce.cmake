@@ -1,2 +1,7 @@
 include("${CMAKE_CURRENT_LIST_DIR}/switch.cmake")
 set(LIBCHIAKING_PLATFORM_THREADING_SOURCE src/platform/threading/ounce.cpp)
+
+set(LIBCHIAKING_HORIZON_CORE_MASK "0x3F" CACHE STRING
+    "Cores the Horizon threading provider may place threads on")
+set(LIBCHIAKING_PLATFORM_PUBLIC_DEFINITIONS
+    LIBCHIAKING_HORIZON_CORE_MASK=${LIBCHIAKING_HORIZON_CORE_MASK})

@@ -6,11 +6,16 @@
 #include <libchiaking/platform/runtime/threading.hpp>
 
 #include <array>
+#include <bit>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <optional>
+
+#ifndef LIBCHIAKING_HORIZON_CORE_MASK
+#define LIBCHIAKING_HORIZON_CORE_MASK 0xF
+#endif
 
 namespace libchiaking::platform::horizon {
 
@@ -21,7 +26,9 @@ namespace libchiaking::platform::horizon {
 class ThreadPlacement {
  public:
   /// @brief The highest core number a placement may name.
-  static constexpr std::uint8_t last_core = 3;
+  static constexpr std::uint64_t core_mask = LIBCHIAKING_HORIZON_CORE_MASK;
+  static constexpr std::uint8_t last_core =
+      static_cast<std::uint8_t>(std::bit_width(core_mask) - 1);
   /// @brief The lowest scheduling priority a placement may name; larger
   /// numbers run later.
   static constexpr std::uint8_t lowest_priority = 0x3f;
@@ -85,7 +92,7 @@ class ThreadPlacementPolicy {
  public:
   /// @brief The number of roles a policy places.
   static constexpr std::size_t role_count =
-      static_cast<std::size_t>(ThreadRole::crypto) + 1;
+      static_cast<std::size_t>(ThreadRole::input) + 1;
 
   /// @brief Builds the standard policy described above.
   ThreadPlacementPolicy() noexcept;

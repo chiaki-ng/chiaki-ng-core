@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <bit>
 #include <chrono>
 #include <cstdint>
 #include <memory>
@@ -38,12 +39,14 @@ ThreadPlacementPolicy::ThreadPlacementPolicy() noexcept
     : placements_([] {
         constexpr std::uint8_t priority = 0x2c;
         constexpr std::size_t stack_size = 0x40000;
-        constexpr ThreadPlacement network{0, priority, stack_size};
-        constexpr ThreadPlacement feedback{1, priority, stack_size};
-        constexpr ThreadPlacement session{2, priority, stack_size};
+        constexpr ThreadPlacement stream{0, priority, stack_size};
+        constexpr ThreadPlacement link{1, priority, stack_size};
+        constexpr ThreadPlacement video{2, priority, stack_size};
+        constexpr ThreadPlacement background{5, priority, stack_size};
         return std::array<ThreadPlacement, role_count>{
-            session, network, network,  network, network, network, network,
-            network, network, feedback, session, session, session,
+            background, link,   link,       background, background,
+            link,       link,   link,       link,       link,
+            stream,     background, background, video,  link,
         };
       }()) {}
 
@@ -140,8 +143,8 @@ class ThreadingProvider::Shared {
   Shared() : ledger_(std::make_shared<DefaultThreadingProvider::Ledger>()) {
     std::uint64_t mask = 0;
     if (R_FAILED(::svcGetInfo(&mask, InfoType_CoreMask, CUR_PROCESS_HANDLE, 0)))
-      mask = 0b0111;
-    core_mask_ = mask;
+      mask = ThreadPlacement::core_mask;
+    core_mask_ = mask & ThreadPlacement::core_mask;
   }
 
   Shared(const Shared&) = delete;
@@ -161,10 +164,8 @@ class ThreadingProvider::Shared {
   [[nodiscard]] auto core_for(const ThreadPlacement& placement) const noexcept
       -> std::optional<std::uint8_t> {
     if (usable(placement.core())) return placement.core();
-    for (std::uint8_t core = 0; core < ThreadPlacement::last_core; ++core) {
-      if (usable(core)) return core;
-    }
-    return std::nullopt;
+    if (core_mask_ == 0) return std::nullopt;
+    return static_cast<std::uint8_t>(std::countr_zero(core_mask_));
   }
 
   void adopt(std::unique_ptr<Run> run) noexcept {

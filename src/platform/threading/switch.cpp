@@ -42,8 +42,9 @@ ThreadPlacementPolicy::ThreadPlacementPolicy() noexcept
         constexpr ThreadPlacement feedback{1, priority, stack_size};
         constexpr ThreadPlacement session{2, priority, stack_size};
         return std::array<ThreadPlacement, role_count>{
-            session, network, network,  network, network, network, network,
-            network, network, feedback, session, session, session,
+            session, network, network,  network, network,  network, network,
+            network, network, feedback, session, session, session, feedback,
+            feedback,
         };
       }()) {}
 

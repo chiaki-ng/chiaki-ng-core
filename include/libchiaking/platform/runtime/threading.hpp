@@ -77,6 +77,8 @@ enum class ThreadRole : std::uint8_t {
   registration,
   /// @brief Cryptographic work.
   crypto,
+  video,
+  input,
 };
 
 /// @brief Hook a provider runs on a new thread before the thread's entry

@@ -22,7 +22,8 @@ ShowDetails::ShowDetails(platform::HttpProvider& http,
       wall_(wall_clock),
       log_(log),
       held_(held),
-      list_games_(list_games) {}
+      list_games_(list_games),
+      grouped_(http, threading, clock, wall_clock, log, held) {}
 
 auto ShowDetails::concept_of(const ListGames::View& seen, const Library* owned,
                              const ProductId& product)
@@ -72,23 +73,6 @@ auto ShowDetails::sold_as(const StoreLocale& locale, int age,
       });
 }
 
-auto ShowDetails::grouped_as(const StoreLocale& locale,
-                             const ConceptId& grouped_under, const Stop& stop)
-    -> Expected<GameDetails, Unanswered> {
-  return HeldAnswers::answer(
-      held_.in_flight().details,
-      HeldAnswers::Question::grouped_as(locale, grouped_under), stop,
-      [&] { return held_.fresh_details(locale, std::nullopt, grouped_under); },
-      [&]() -> Expected<GameDetails, Unanswered> {
-        net::http::Client client{http_, clock_, stop, log_};
-        auto found = ps::StoreDetails{client, threading_, wall_}.of_concept(
-            grouped_under, locale);
-        if (!found) return unexpected(found.error());
-        if (found.value().whole) held_.keep(found.value().details);
-        return std::move(found.value().details);
-      });
-}
-
 auto ShowDetails::details(users::PsUser& user, const ProductId& product,
                           const Stop& stop)
     -> Expected<GameDetails, Unanswered> {
@@ -105,7 +89,7 @@ auto ShowDetails::details(users::PsUser& user, const ProductId& product,
   const auto grouped_under =
       concept_of(*seen, owned ? owned->titles.get() : nullptr, product);
   if (!grouped_under) return sold;
-  auto grouped = grouped_as(locale, *grouped_under, stop);
+  auto grouped = grouped_.details(locale, *grouped_under, stop);
   if (grouped) grouped.value().product = product;
   return grouped;
 }
@@ -113,11 +97,7 @@ auto ShowDetails::details(users::PsUser& user, const ProductId& product,
 auto ShowDetails::details(users::PsUser& user, const ConceptId& grouped_under,
                           const Stop& stop)
     -> Expected<GameDetails, Unanswered> {
-  const auto region = Asker::region_of(user);
-  const auto listed = region ? held_.held_list(*region) : nullptr;
-  return grouped_as(listed ? listed->settled_locale()
-                           : region.value_or(StoreLocale::english_us()),
-                    grouped_under, stop);
+  return grouped_.details(user, grouped_under, stop);
 }
 
 }  // namespace libchiaking::catalog::usecases

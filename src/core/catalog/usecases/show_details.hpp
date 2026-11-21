@@ -5,6 +5,7 @@
 
 #include "libchiaking/detail/catalog/catalog.hpp"
 #include "src/core/catalog/adapters/cache/held_answers.hpp"
+#include "src/core/catalog/usecases/grouped_details.hpp"
 #include "src/core/catalog/usecases/list_games.hpp"
 
 #include <optional>
@@ -74,6 +75,7 @@ class ShowDetails {
   [[nodiscard]] auto details(users::PsUser& user,
                              const ConceptId& grouped_under, const Stop& stop)
       -> Expected<GameDetails, Unanswered>;
+
  private:
   /// @brief The locale details are asked in.
   ///
@@ -93,16 +95,6 @@ class ShowDetails {
   /// @return The details; the request's failure.
   [[nodiscard]] auto sold_as(const StoreLocale& locale, int age,
                              const ProductId& product, const Stop& stop)
-      -> Expected<GameDetails, Unanswered>;
-  /// @brief Concept details, held or fetched once for every concurrent asker.
-  ///
-  /// @param locale The locale.
-  /// @param grouped_under The concept.
-  /// @param stop Abandons the call.
-  /// @return The details; the request's failure.
-  [[nodiscard]] auto grouped_as(const StoreLocale& locale,
-                                const ConceptId& grouped_under,
-                                const Stop& stop)
       -> Expected<GameDetails, Unanswered>;
   /// @brief The concept a product belongs to, from what is held.
   ///
@@ -131,6 +123,7 @@ class ShowDetails {
   HeldAnswers& held_;
   /// @brief Gives the held games; not owned.
   ListGames& list_games_;
+  GroupedDetails grouped_;
 };
 
 }  // namespace libchiaking::catalog::usecases

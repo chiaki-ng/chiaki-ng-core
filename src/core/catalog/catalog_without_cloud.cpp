@@ -3,6 +3,7 @@
 #include "src/core/catalog/adapters/cache/held_answers.hpp"
 #include "src/core/catalog/model/unanswered.hpp"
 #include "src/core/catalog/usecases/asker.hpp"
+#include "src/core/catalog/usecases/grouped_details.hpp"
 #include "src/core/catalog/usecases/inspect_caches.hpp"
 #include "src/core/catalog/usecases/played_games.hpp"
 #include "src/core/catalog/usecases/show_images.hpp"
@@ -30,6 +31,8 @@ class Catalog::Holdings {
         held_(cache_location, threading, clock, wall_clock),
         pacer_(budget.core().pacer()),
         played_games_(http, clock, diagnostics, held_, pacer_),
+        grouped_details_(http, threading, clock, wall_clock, diagnostics,
+                         held_),
         show_images_(http, threading, clock, diagnostics, held_),
         inspect_caches_(held_) {}
 
@@ -45,6 +48,9 @@ class Catalog::Holdings {
 
   auto played_games() noexcept -> usecases::PlayedGames& {
     return played_games_;
+  }
+  auto grouped_details() noexcept -> usecases::GroupedDetails& {
+    return grouped_details_;
   }
   auto show_images() noexcept -> usecases::ShowImages& { return show_images_; }
   auto inspect_caches() noexcept -> usecases::InspectCaches& {
@@ -72,6 +78,7 @@ class Catalog::Holdings {
   HeldAnswers held_;
   users::RequestPacer& pacer_;
   usecases::PlayedGames played_games_;
+  usecases::GroupedDetails grouped_details_;
   usecases::ShowImages show_images_;
   usecases::InspectCaches inspect_caches_;
 };
@@ -184,10 +191,14 @@ auto Catalog::details_of(users::PsUser&, const ProductId&,
   return unexpected(Holdings::left_out<ProductDetailsReason>());
 }
 
-auto Catalog::details_of(users::PsUser&, const ConceptId&,
-                         const platform::StopToken&)
+auto Catalog::details_of(users::PsUser& user, const ConceptId& grouped_under,
+                         const platform::StopToken& stop)
     -> Expected<GameDetails, ConceptDetailsFailure> {
-  return unexpected(Holdings::left_out<ConceptDetailsReason>());
+  return holdings_->grouped_details()
+      .details(user, grouped_under, stop)
+      .transform_error([](const Unanswered& why) {
+        return why.as(ConceptDetailsReason::unavailable);
+      });
 }
 
 auto Catalog::image_of(const ImageRef& image, const platform::StopToken& stop)

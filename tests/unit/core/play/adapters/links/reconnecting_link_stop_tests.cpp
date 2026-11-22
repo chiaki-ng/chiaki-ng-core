@@ -10,7 +10,7 @@ namespace play_test {
 namespace {
 
 namespace rp = libchiaking::net::protocol::remote_play;
-using reconnecting_links::Rig;
+using ReconnectingRig = reconnecting_links::Rig;
 
 class ReconnectingLinkResting : public ::testing::Test {
  protected:
@@ -20,10 +20,10 @@ class ReconnectingLinkResting : public ::testing::Test {
     ASSERT_TRUE(rig_.link().pump_once());
   }
 
-  auto rig() -> Rig& { return rig_; }
+  auto rig() -> ReconnectingRig& { return rig_; }
 
  private:
-  Rig rig_;
+  ReconnectingRig rig_;
 };
 
 TEST_F(ReconnectingLinkResting, HaltsOnceWhenStopped) {
@@ -52,7 +52,7 @@ TEST_F(ReconnectingLinkResting, HaltsOnTheNextPumpWhenAStopIsRequested) {
 }
 
 TEST(ReconnectingLinkStop, HaltsBeforeTheStart) {
-  Rig rig;
+  ReconnectingRig rig;
   EXPECT_TRUE(rig.link().stop());
   EXPECT_EQ(rig.sink().states(), std::vector{rp::StreamState::stopped});
   EXPECT_EQ(rig.link().state(), rp::StreamState::stopped);
@@ -62,7 +62,7 @@ TEST(ReconnectingLinkStop, HaltsBeforeTheStart) {
 }
 
 TEST(ReconnectingLinkStop, KeepsTheLastStateOfTheAttemptItEnds) {
-  Rig rig;
+  ReconnectingRig rig;
   ASSERT_TRUE(rig.link().start());
   rig.current().stream();
   EXPECT_TRUE(rig.link().stop());

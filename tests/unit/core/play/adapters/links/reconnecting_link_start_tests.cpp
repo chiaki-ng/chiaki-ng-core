@@ -15,7 +15,7 @@ namespace {
 namespace play = libchiaking::play;
 namespace rp = libchiaking::net::protocol::remote_play;
 using reconnecting_links::FakeLink;
-using reconnecting_links::Rig;
+using ReconnectingRig = reconnecting_links::Rig;
 using reconnecting_links::Script;
 using reconnecting_links::Watcher;
 
@@ -26,11 +26,11 @@ class ReconnectingLinkUnopened : public ::testing::Test {
     started_ = rig_.link().start();
   }
 
-  auto rig() -> Rig& { return rig_; }
+  auto rig() -> ReconnectingRig& { return rig_; }
   auto started() const -> const play::Link::Result& { return started_; }
 
  private:
-  Rig rig_;
+  ReconnectingRig rig_;
   play::Link::Result started_;
 };
 
@@ -73,7 +73,7 @@ TEST(ReconnectingLinkStart, NeedsAnEventSink) {
 }
 
 TEST(ReconnectingLinkStart, StartsOnlyOnce) {
-  Rig rig;
+  ReconnectingRig rig;
   EXPECT_TRUE(rig.link().start());
   const auto twice = rig.link().start();
   ASSERT_FALSE(twice);

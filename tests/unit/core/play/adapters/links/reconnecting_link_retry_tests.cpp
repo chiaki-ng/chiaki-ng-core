@@ -12,7 +12,7 @@ namespace {
 
 namespace play = libchiaking::play;
 namespace rp = libchiaking::net::protocol::remote_play;
-using reconnecting_links::Rig;
+using ReconnectingRig = reconnecting_links::Rig;
 
 class ReconnectingLinkRetry : public ::testing::Test {
  protected:
@@ -26,10 +26,10 @@ class ReconnectingLinkRetry : public ::testing::Test {
     ASSERT_TRUE(rig_.link().pump_once());
   }
 
-  auto rig() -> Rig& { return rig_; }
+  auto rig() -> ReconnectingRig& { return rig_; }
 
  private:
-  Rig rig_;
+  ReconnectingRig rig_;
 };
 
 TEST_F(ReconnectingLinkRetry, WakesTheConsoleAndAnnouncesTheNextAttempt) {
@@ -85,7 +85,7 @@ TEST_F(ReconnectingLinkRetry, ReconnectsWithoutWakingAfterAStreamFails) {
 
 TEST(ReconnectingLinkReconnecting,
      ReconnectsAnInternetStreamTheConsoleWentSilentOn) {
-  Rig rig{play::Where::internet};
+  ReconnectingRig rig{play::Where::internet};
   ASSERT_TRUE(rig.link().start());
   rig.current().stream();
   rig.current().lose(play::LinkFailure::lost(
@@ -132,10 +132,10 @@ class ReconnectingLinkOffline : public ::testing::Test {
     fail_after(play::StartPolicy::rest_between_attempts, false);
   }
 
-  auto rig() -> Rig& { return rig_; }
+  auto rig() -> ReconnectingRig& { return rig_; }
 
  private:
-  Rig rig_{play::Where::internet};
+  ReconnectingRig rig_{play::Where::internet};
 };
 
 TEST_F(ReconnectingLinkOffline, KeepsReconnectingWithoutCountingWhileOffline) {
@@ -177,7 +177,7 @@ TEST_F(ReconnectingLinkOffline,
 }
 
 TEST(ReconnectingLinkGivingUp, ReleasesAFailureNotWorthAnotherTry) {
-  Rig rig;
+  ReconnectingRig rig;
   ASSERT_TRUE(rig.link().start());
   rig.current().fail(rp::StreamError::pipeline_failed);
   EXPECT_EQ(rig.sink().failures(), 0U);
@@ -195,7 +195,7 @@ TEST(ReconnectingLinkGivingUp, ReleasesAFailureNotWorthAnotherTry) {
 }
 
 TEST(ReconnectingLinkGivingUp, EndsTheLinkWhenTheConsoleWillNotWake) {
-  Rig rig;
+  ReconnectingRig rig;
   rig.watcher().refuse_to_wake();
   ASSERT_TRUE(rig.link().start());
   rig.current().fail(rp::StreamError::ctrl_timeout);
@@ -207,7 +207,7 @@ TEST(ReconnectingLinkGivingUp, EndsTheLinkWhenTheConsoleWillNotWake) {
 }
 
 TEST(ReconnectingLinkOverTheInternet, TriesAgainOnceWithoutWaking) {
-  Rig rig{play::Where::internet};
+  ReconnectingRig rig{play::Where::internet};
   ASSERT_TRUE(rig.link().start());
   rig.current().fail(rp::StreamError::ctrl_network_failure);
   EXPECT_TRUE(rig.link().pump_once());

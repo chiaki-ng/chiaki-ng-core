@@ -123,6 +123,7 @@ class ShowDetails {
   HeldAnswers& held_;
   /// @brief Gives the held games; not owned.
   ListGames& list_games_;
+  /// @brief Answers details asked for by concept.
   GroupedDetails grouped_;
 };
 

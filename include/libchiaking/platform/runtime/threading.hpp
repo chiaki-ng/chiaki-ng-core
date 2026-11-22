@@ -77,7 +77,9 @@ enum class ThreadRole : std::uint8_t {
   registration,
   /// @brief Cryptographic work.
   crypto,
+  /// @brief Video decoding and presentation, run by the app.
   video,
+  /// @brief Controller input reading, run by the app.
   input,
 };
 

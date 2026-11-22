@@ -14,6 +14,8 @@
 #include <optional>
 
 #ifndef LIBCHIAKING_HORIZON_CORE_MASK
+/// @brief The cores threads may be placed on, one bit per core; a build
+/// overrides it to keep threads off cores the system owns.
 #define LIBCHIAKING_HORIZON_CORE_MASK 0xF
 #endif
 
@@ -25,8 +27,9 @@ namespace libchiaking::platform::horizon {
 /// Always valid: make() refuses values the kernel would reject.
 class ThreadPlacement {
  public:
-  /// @brief The highest core number a placement may name.
+  /// @brief The cores a placement may name, one bit per core.
   static constexpr std::uint64_t core_mask = LIBCHIAKING_HORIZON_CORE_MASK;
+  /// @brief The highest core number a placement may name.
   static constexpr std::uint8_t last_core =
       static_cast<std::uint8_t>(std::bit_width(core_mask) - 1);
   /// @brief The lowest scheduling priority a placement may name; larger

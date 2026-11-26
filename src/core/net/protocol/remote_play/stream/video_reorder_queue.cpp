@@ -16,7 +16,7 @@ void VideoReorderQueue::push(takion::AvPacketValues unit, std::uint64_t now_us,
     head_wait_sequence_ = begin_;
     initialized_ = true;
   }
-  insert(sequence, std::move(unit));
+  insert(sequence, std::move(unit), ready);
   flush(now_us, ready);
 }
 
@@ -88,7 +88,8 @@ auto VideoReorderQueue::slot(std::uint16_t sequence) noexcept
 }
 
 void VideoReorderQueue::insert(std::uint16_t sequence,
-                               takion::AvPacketValues unit) {
+                               takion::AvPacketValues unit,
+                               std::vector<takion::AvPacketValues>& ready) {
   const auto end = static_cast<std::uint16_t>(begin_ + count_);
   const auto offset = static_cast<std::uint16_t>(sequence - begin_);
   if (offset < count_) {
@@ -101,7 +102,7 @@ void VideoReorderQueue::insert(std::uint16_t sequence,
   }
   if (numeric::SequenceNumber{begin_}.is_newer_than(
           numeric::SequenceNumber{sequence})) {
-    ++dropped_;
+    ready.push_back(std::move(unit));
     return;
   }
   if (sequence != end && !numeric::SequenceNumber{sequence}.is_newer_than(
@@ -119,8 +120,8 @@ void VideoReorderQueue::insert(std::uint16_t sequence,
     const auto required = distance - capacity;
     for (std::size_t index = 0; index < required && count_ != 0; ++index) {
       if (slot(begin_)) {
+        ready.push_back(std::move(*slot(begin_)));
         slot(begin_).reset();
-        ++dropped_;
       }
       ++begin_;
       --count_;

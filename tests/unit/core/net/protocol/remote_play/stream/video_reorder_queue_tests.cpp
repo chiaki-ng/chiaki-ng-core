@@ -56,7 +56,7 @@ TEST_F(VideoReorderQueue, ReordersPacketsThatArriveWithinTheTimeout) {
   EXPECT_EQ(queue.dropped(), 0U);
 }
 
-TEST_F(VideoReorderQueue, SkipsALostHeadAfterTheTimeoutAndDropsItWhenLate) {
+TEST_F(VideoReorderQueue, SkipsALostHeadAfterTheTimeoutAndDeliversItWhenLate) {
   push(30, 0);
   EXPECT_EQ(take(), Indices{30});
   push(33, 100);
@@ -68,17 +68,17 @@ TEST_F(VideoReorderQueue, SkipsALostHeadAfterTheTimeoutAndDropsItWhenLate) {
   EXPECT_EQ(queue.skipped(), 2U);
   EXPECT_FALSE(queue.waiting());
   push(31, 16'200);
-  EXPECT_TRUE(ready.empty());
-  EXPECT_EQ(queue.dropped(), 1U);
+  EXPECT_EQ(take(), Indices{31});
+  EXPECT_EQ(queue.dropped(), 0U);
 }
 
-TEST_F(VideoReorderQueue, DropsDuplicates) {
+TEST_F(VideoReorderQueue, DropsDuplicatesInsideTheWindow) {
   push(40, 0);
   push(42, 0);
   push(42, 0);
   push(40, 0);
-  EXPECT_EQ(take(), Indices{40});
-  EXPECT_EQ(queue.dropped(), 2U);
+  EXPECT_EQ(take(), (Indices{40, 40}));
+  EXPECT_EQ(queue.dropped(), 1U);
 }
 
 TEST_F(VideoReorderQueue, StartsAtTheFirstUnitOfAFrame) {
@@ -92,7 +92,7 @@ TEST_F(VideoReorderQueue, StartsAtTheFirstUnitOfAFrame) {
   EXPECT_EQ(queue.skipped(), 1U);
 }
 
-TEST_F(VideoReorderQueue, DropsFromTheBeginWhenTheWindowIsExceeded) {
+TEST_F(VideoReorderQueue, DeliversFromTheBeginWhenTheWindowIsExceeded) {
   push(100, 0);
   EXPECT_EQ(take(), Indices{100});
   push(102, 0);
@@ -102,8 +102,8 @@ TEST_F(VideoReorderQueue, DropsFromTheBeginWhenTheWindowIsExceeded) {
   EXPECT_TRUE(queue.waiting());
   EXPECT_EQ(queue.dropped(), 0U);
   push(230, 0);
-  EXPECT_EQ(take(), Indices{230});
-  EXPECT_EQ(queue.dropped(), 1U);
+  EXPECT_EQ(take(), (Indices{165, 230}));
+  EXPECT_EQ(queue.dropped(), 0U);
   EXPECT_FALSE(queue.waiting());
 }
 

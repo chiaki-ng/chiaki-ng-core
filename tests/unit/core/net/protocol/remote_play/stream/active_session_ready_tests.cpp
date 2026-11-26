@@ -111,11 +111,11 @@ TEST_F(ActiveSessionReady, CapsReportedLossAtThePacketLossMaximum) {
   const auto sent = rig.congestion_packets();
   ASSERT_FALSE(sent.empty());
   const auto& last = sent.back();
-  const auto server_sent = (std::to_integer<unsigned>(last[2]) << 8U) |
-                           std::to_integer<unsigned>(last[3]);
+  const auto received = (std::to_integer<unsigned>(last[2]) << 8U) |
+                        std::to_integer<unsigned>(last[3]);
   const auto lost = (std::to_integer<unsigned>(last[4]) << 8U) |
                     std::to_integer<unsigned>(last[5]);
-  EXPECT_EQ(server_sent, 10U);
+  EXPECT_EQ(received, 8U);
   EXPECT_EQ(lost, 2U);
   EXPECT_TRUE(session().request_stop());
 }
@@ -263,7 +263,8 @@ TEST_F(ActiveSessionReady, CountsSendDropsApartFromInboundRejections) {
   rig.next_video_packet = 0;
   ASSERT_NO_FATAL_FAILURE(rig.enqueue_video(1, H264Bits::frame(true)));
   ASSERT_TRUE(session().pump_once());
-  EXPECT_EQ(session().diagnostics().reorder_dropped, 1U);
+  EXPECT_EQ(session().diagnostics().reorder_dropped, 0U);
+  EXPECT_EQ(session().diagnostics().video_stale, before.video_stale + 1);
   EXPECT_TRUE(session().request_stop());
 }
 

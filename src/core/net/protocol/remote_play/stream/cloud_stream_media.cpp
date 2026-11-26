@@ -372,11 +372,12 @@ auto MediaPacketStats::take(double packet_loss_max) noexcept
   audio_received_ = 0;
   audio_min_ = audio_max_;
   constexpr std::uint64_t most = 0xffff;
-  const auto reported_sent = std::min(server_sent, most);
-  const auto reported_lost =
-      server_sent > most ? lost * most / server_sent : lost;
-  return {0, static_cast<std::uint16_t>(reported_sent),
-          static_cast<std::uint16_t>(reported_lost)};
+  const auto received = server_sent - lost;
+  const auto scale = [&](std::uint64_t count) {
+    return static_cast<std::uint16_t>(
+        server_sent > most ? count * most / server_sent : count);
+  };
+  return {0, scale(received), scale(lost)};
 }
 
 void MediaPacketStats::reset() noexcept { *this = {}; }

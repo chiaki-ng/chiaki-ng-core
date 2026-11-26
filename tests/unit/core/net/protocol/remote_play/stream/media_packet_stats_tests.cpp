@@ -37,12 +37,12 @@ TEST_F(MediaPacketStatistics, CountSkippedVideoPacketIndexes) {
     stats.video(packet);
   }
   auto measured = stats.take(1.0);
-  EXPECT_EQ(measured.server_sent, 5U);
+  EXPECT_EQ(measured.server_sent, 4U);
   EXPECT_EQ(measured.lost, 1U);
   packet.packet_index = 17;
   stats.video(packet);
   measured = stats.take(1.0);
-  EXPECT_EQ(measured.server_sent, 3U);
+  EXPECT_EQ(measured.server_sent, 1U);
   EXPECT_EQ(measured.lost, 2U);
   measured = stats.take(1.0);
   EXPECT_EQ(measured.server_sent, 0U);
@@ -53,9 +53,8 @@ TEST_F(MediaPacketStatistics, SaturateAReportAfterALongGapInsteadOfWrapping) {
   stats.audio(0, 4);
   stats.audio(30000, 4);
   const auto measured = stats.take(1.0);
-  EXPECT_EQ(measured.server_sent, 0xffffU);
+  EXPECT_LE(measured.server_sent + measured.lost, 0xffffU);
   EXPECT_GT(measured.lost, 0xfff0U);
-  EXPECT_LE(measured.lost, measured.server_sent);
 }
 
 TEST_F(MediaPacketStatistics, CountLateAndRepeatedVideoAsReceived) {
@@ -74,7 +73,7 @@ TEST_F(MediaPacketStatistics, CountVideoAcrossTheIndexWrap) {
     stats.video(packet);
   }
   const auto measured = stats.take(1.0);
-  EXPECT_EQ(measured.server_sent, 4U);
+  EXPECT_EQ(measured.server_sent, 3U);
   EXPECT_EQ(measured.lost, 1U);
 }
 
@@ -99,7 +98,7 @@ TEST_F(MediaPacketStatistics, CountMissingAudioFramesByUnit) {
     stats.audio(13, 3);
   }
   const auto measured = stats.take(1.0);
-  EXPECT_EQ(measured.server_sent, 9U);
+  EXPECT_EQ(measured.server_sent, 6U);
   EXPECT_EQ(measured.lost, 3U);
 }
 
@@ -108,7 +107,7 @@ TEST_F(MediaPacketStatistics, CapLossAtPacketLossMax) {
   capped.audio(1);
   capped.audio(10);
   auto values = capped.take(0.2);
-  EXPECT_EQ(values.server_sent, 10U);
+  EXPECT_EQ(values.server_sent, 8U);
   EXPECT_EQ(values.lost, 2U);
   remote_play::MediaPacketStats standard;
   standard.audio(1);
@@ -120,16 +119,16 @@ TEST_F(MediaPacketStatistics, CapLossAtPacketLossMax) {
 
 TEST_F(MediaPacketStatistics, CongestionLossCapFollowsPacketLossMax) {
   const auto uncapped = congestion_after_a_restored_frame(1.0);
-  EXPECT_EQ(uncapped.server_sent, 5U);
+  EXPECT_EQ(uncapped.server_sent, 4U);
   EXPECT_EQ(uncapped.lost, 1U);
   const auto loose = congestion_after_a_restored_frame(0.5);
-  EXPECT_EQ(loose.server_sent, 5U);
+  EXPECT_EQ(loose.server_sent, 4U);
   EXPECT_EQ(loose.lost, 1U);
   const auto tight = congestion_after_a_restored_frame(0.05);
   EXPECT_EQ(tight.server_sent, 5U);
   EXPECT_EQ(tight.lost, 0U);
   const auto fifth = congestion_after_a_restored_frame(0.2);
-  EXPECT_EQ(fifth.server_sent, 5U);
+  EXPECT_EQ(fifth.server_sent, 4U);
   EXPECT_EQ(fifth.lost, 1U);
   const auto tenth = congestion_after_a_restored_frame(0.1);
   EXPECT_EQ(tenth.server_sent, 5U);

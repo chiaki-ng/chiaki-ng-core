@@ -76,7 +76,8 @@ class VideoReorderQueue {
   ///
   /// @param sequence The unit's packet index.
   /// @param unit The unit.
-  void insert(std::uint16_t sequence, takion::AvPacketValues unit);
+  void insert(std::uint16_t sequence, takion::AvPacketValues unit,
+              std::vector<takion::AvPacketValues>& ready);
 
   /// @brief The held units, by packet index modulo capacity.
   std::array<std::optional<takion::AvPacketValues>, capacity> slots_{};

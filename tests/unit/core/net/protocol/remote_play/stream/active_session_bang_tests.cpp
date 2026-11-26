@@ -380,7 +380,7 @@ class ActiveSessionHandshake : public ::testing::Test {
     ASSERT_TRUE(session().pump_once());
     ASSERT_TRUE(session().pump_once());
     const std::array expected_counts{std::byte{0},  std::byte{0}, std::byte{0},
-                                     std::byte{21}, std::byte{0}, std::byte{1}};
+                                     std::byte{20}, std::byte{0}, std::byte{1}};
     const auto congestion = rig->congestion_packets();
     EXPECT_FALSE(congestion.empty());
     for (const auto& packet : congestion)

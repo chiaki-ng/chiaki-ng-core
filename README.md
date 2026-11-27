@@ -4,7 +4,7 @@
 
 chiaki-ng's protocol as a standalone library.
 
-Licensed under the GNU Affero General Public License, version 3 or (at your option) any later version, with additional permissions for linking with OpenSSL and for distribution through application stores such as the Apple App Store. See [LICENSE](LICENSE).
+Licensed under the GNU Affero General Public License, version 3 or (at your option) any later version, for linking with OpenSSL and with additional permissions granted expressly to the maintainers of chiaki-ng for distribution through application stores such as the Apple App Store. See [LICENSE](LICENSE).
 
 ## Disclaimer ⚠️
 

@@ -292,13 +292,13 @@ libchiaking_add_guard(platform_provider_boundaries PlatformProviderBoundaryGuard
     -DPLATFORM_SOURCE_DIR=${libchiaking_source_dir}/src/platform)
 libchiaking_add_guard(play_launch_secrets_guard PlayLaunchSecretsGuard -DSOURCE_DIR=${libchiaking_source_dir})
 libchiaking_add_guard(threading_through_the_provider ProviderBypassGuard
-    -DSOURCE_ROOT=${libchiaking_source_dir} -DRULE=threading)
+    -DSOURCE_ROOT=${libchiaking_source_dir} -DBYPASS_RULE=threading)
 libchiaking_add_guard(clocks_through_the_provider ProviderBypassGuard
-    -DSOURCE_ROOT=${libchiaking_source_dir} -DRULE=clocks)
+    -DSOURCE_ROOT=${libchiaking_source_dir} -DBYPASS_RULE=clocks)
 libchiaking_add_guard(core_builds_no_stock_clock ProviderBypassGuard
-    -DSOURCE_ROOT=${libchiaking_source_dir} -DRULE=core_stock_clocks)
+    -DSOURCE_ROOT=${libchiaking_source_dir} -DBYPASS_RULE=core_stock_clocks)
 libchiaking_add_guard(core_has_no_os_conditionals ProviderBypassGuard
-    -DSOURCE_ROOT=${libchiaking_source_dir} -DRULE=core_os_conditionals)
+    -DSOURCE_ROOT=${libchiaking_source_dir} -DBYPASS_RULE=core_os_conditionals)
 
 set(libchiaking_package_prefix_path ${CMAKE_PREFIX_PATH})
 list(JOIN libchiaking_package_prefix_path "|" libchiaking_package_prefix_argument)
